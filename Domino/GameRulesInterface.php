@@ -4,7 +4,7 @@ namespace Domino;
 
 interface GameRulesInterface
 {
-   public function getMinPlayers(): int;
+    public const MIN_PLAYERS_COUNT = 2;
 
-   public function getMaxPlayers(): int;
+    public const MAX_PLAYERS_COUNT = 4;
 }
