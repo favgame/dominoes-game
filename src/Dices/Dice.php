@@ -10,7 +10,7 @@ final class Dice
 
     private ?PlayerInterface $owner = null;
 
-    public function __construct(DiceSide $sideA, DiceSide $sideB)
+    public function __construct(Id $id, DiceSide $sideA, DiceSide $sideB)
     {
         $this->sideA = $sideA;
         $this->sideB = $sideB;
