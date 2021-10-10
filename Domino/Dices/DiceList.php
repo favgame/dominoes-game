@@ -1,8 +1,9 @@
 <?php
 
-namespace Domino\Dices;
+namespace Dominos\Dices;
 
 use ArrayObject;
+use Dominos/AbstractList;
 
 final class DiceList extends AbstractList
 {
@@ -18,8 +19,8 @@ final class DiceList extends AbstractList
 
     public function getItemsByOwner(Player $owner): ArrayObject
     {
-        $filter = fn (Dice $dice) => $dice->getOwner() === $owner;
+        $callback = fn (Dice $dice) => $dice->getOwner() === $owner;
 
-        return $this->filterItems($filter);
+        return $this->filterItems($callback);
     }
 }
