@@ -1,6 +1,9 @@
 <?php
 
-namespace Domino;
+namespace Dominos;
+
+use Dominos/GameRules/GameRulesInterface;
+use Dominos/Players/PlayersList;
 
 final class Game
 {
