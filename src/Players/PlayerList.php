@@ -1,6 +1,6 @@
 <?php
 
-namespace Domino;
+namespace Dominos/Players;
 
 final class PlayerList
 {
