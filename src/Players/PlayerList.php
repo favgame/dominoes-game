@@ -2,17 +2,17 @@
 
 namespace Dominos/Players;
 
-final class PlayerList
-{
-    private array $players = [];
+use Dominos\AbstractList;
 
-    public function addPlayer(PlayerInterface $player): void
+final class PlayerList extends AbstractList
+{
+    public function addItem(PlayerInterface $item): void
     {
-        $this->players[] = $player;
+        $this->items[] = $item;
     }
 
-    public function getAll(): array
+    public function getItems(): ArrayObject
     {
-        return $this->players;
+        return new ArrayObject($this->items);
     }
 }
