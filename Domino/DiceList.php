@@ -4,17 +4,22 @@ namespace Domino\Dices;
 
 use ArrayObject;
 
-final class DiceList
+final class DiceList extends AbstractList
 {
-    private array $items;
-
-    public function addItem(Dice $dice): void
+    public function addItem(Dice $item): void
     {
-        $this->items[] = $dice;
+        $this->items[] = $item;
     }
 
-    public function getIterator(): ArrayIterrator
+    public function getItems(): ArrayObject
     {
-        return new ArrayItetator(,);
+        return new ArrayObject($this->items);
+    }
+
+    public function getItemsByOwner(Player $owner): ArrayObject
+    {
+        $filter = fn (Dice $dice) => $dice->getOwner() === $owner;
+
+        return $this->filterItems($filter);
     }
 }
