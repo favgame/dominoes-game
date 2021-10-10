@@ -1,6 +1,6 @@
 <?php
 
-namespace Domino;
+namespace Dominos/GameRules;
 
 final class ClassicGameRules implements GameRulesInterface
 {
