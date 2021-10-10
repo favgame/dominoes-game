@@ -1,6 +1,6 @@
 <?php
 
-namespace Dominos/GameRules;
+namespace Domino\/GameRules;
 
 interface GameRulesInterface
 {
