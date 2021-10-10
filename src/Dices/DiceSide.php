@@ -1,5 +1,7 @@
 <?php
 
+namespace Dominos/Dices;
+
 final class DiceSide
 {
     private int $value;
