@@ -2,8 +2,8 @@
 
 namespace Dominos;
 
-use Dominos/GameRules/GameRulesInterface;
-use Dominos/Players/PlayersList;
+use Dominos\GameRules\GameRulesInterface;
+use Dominos\Players\PlayersList;
 
 final class Game
 {
