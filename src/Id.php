@@ -1,6 +1,6 @@
 <?php
 
-namespace Dominos;
+namespace Dominoes;
 
 final class Id
 {

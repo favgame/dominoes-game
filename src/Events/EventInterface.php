@@ -1,11 +1,10 @@
 <?php
 
-namespace Dominoes\Players;
+namespace Dominoes\Events;
 
-use Dominoes\Events\EventListenerInterface;
 use Dominoes\Id;
 
-interface PlayerInterface extends EventListenerInterface
+interface EventInterface
 {
     /**
      * @return Id

@@ -1,6 +1,6 @@
 <?php
 
-namespace Dominos/Dices;
+namespace Dominoes\Dices;
 
 final class DiceSide
 {

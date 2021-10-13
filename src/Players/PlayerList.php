@@ -1,16 +1,24 @@
 <?php
 
-namespace Dominos/Players;
+namespace Dominoes\Players;
 
-use Dominos\AbstractList;
+use Dominoes\AbstractList;
+
+use ArrayObject;
 
 final class PlayerList extends AbstractList
 {
+    /**
+     * @param PlayerInterface $item
+     */
     public function addItem(PlayerInterface $item): void
     {
         $this->items[] = $item;
     }
 
+    /**
+     * @return ArrayObject|PlayerInterface[]
+     */
     public function getItems(): ArrayObject
     {
         return new ArrayObject($this->items);

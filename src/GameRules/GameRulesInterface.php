@@ -1,10 +1,26 @@
 <?php
 
-namespace Domino\GameRules;
+namespace Dominoes\GameRules;
 
 interface GameRulesInterface
 {
-    public const MIN_PLAYERS_COUNT = 2;
+    /**
+     * @return int
+     */
+    public function getMinPlayerCount(): int;
 
-    public const MAX_PLAYERS_COUNT = 4;
+    /**
+     * @return int
+     */
+    public function getMaxPlayerCount(): int;
+
+    /**
+     * @return int
+     */
+    public function getMaxSideValue(): int;
+
+    /**
+     * @return int
+     */
+    public function getInitialDiceCount(): int;
 }

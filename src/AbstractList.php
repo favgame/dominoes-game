@@ -1,13 +1,25 @@
 <?php
 
-namespace Dominos;
+namespace Dominoes;
+
+use ArrayObject;
 
 abstract class AbstractList
 {
-    protected array $items;
+    /**
+     * @var array
+     */
+    protected array $items = [];
 
+    /**
+     * @return ArrayObject
+     */
     abstract public function getItems(): ArrayObject;
 
+    /**
+     * @param callable $callable
+     * @return ArrayObject
+     */
     protected function filterItems(callable $callable): ArrayObject
     {
         $items = array_filter($this->items);
