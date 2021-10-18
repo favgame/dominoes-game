@@ -27,7 +27,7 @@ final class DiceStepList extends AbstractList
     /**
      * @return DiceStep|null
      */
-    public function getRandomStep(): ?DiceStep
+    public function getRandomItem(): ?DiceStep
     {
         /** @var DiceStep $step */
         $step = null;
