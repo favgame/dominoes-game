@@ -2,7 +2,6 @@
 
 namespace Dominoes\Bots;
 
-use Dominoes\Game;
 use Dominoes\Id;
 use Dominoes\Players\PlayerInterface;
 
@@ -27,17 +26,5 @@ abstract class AbstractBot implements PlayerInterface
     public function getId(): Id
     {
         return $this->id;
-    }
-
-    /**
-     * @param Game $game
-     */
-    public function onGameUpdate(Game $game): void
-    {
-
-    }
-
-    public function getGameStep(Game $game): ?GameStep
-    {
     }
 }

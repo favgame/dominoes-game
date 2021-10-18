@@ -57,4 +57,12 @@ final class DiceList extends AbstractList
 
         return null;
     }
+
+    /**
+     * @return ArrayObject|Dice[]
+     */
+    public function getActiveItems(): ArrayObject
+    {
+        return $this->filterItems(fn (Dice $dice) => $dice->isUsed());
+    }
 }

@@ -26,4 +26,13 @@ abstract class AbstractList
 
         return new ArrayObject($items);
     }
+
+    /**
+     * @param $item
+     * @return bool
+     */
+    public function isExist($item): bool
+    {
+        return (array_search($item, $this->items, true) !== null);
+    }
 }

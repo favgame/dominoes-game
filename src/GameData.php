@@ -3,6 +3,7 @@
 namespace Dominoes;
 
 use Dominoes\Dices\DiceList;
+use Dominoes\Dices\DiceListFactory;
 use Dominoes\GameRules\GameRulesInterface;
 use Dominoes\Players\PlayerInterface;
 use Dominoes\Players\PlayerList;
@@ -31,14 +32,13 @@ final class GameData
 
     /**
      * @param GameRulesInterface $rules
-     * @param DiceList $diceList
      * @param PlayerList $playerList
      */
-    public function __construct(GameRulesInterface $rules, DiceList $diceList, PlayerList $playerList)
+    public function __construct(GameRulesInterface $rules, PlayerList $playerList)
     {
         $this->rules = $rules;
-        $this->diceList = $diceList;
         $this->playerList = $playerList;
+        $this->diceList = (new DiceListFactory())->createDiceList($this->rules->getMaxSideValue());
     }
 
     /**
@@ -75,6 +75,7 @@ final class GameData
 
     /**
      * @param PlayerInterface $player
+     * @return void
      */
     public function setActivePlayer(PlayerInterface $player): void
     {

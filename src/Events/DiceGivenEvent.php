@@ -3,17 +3,13 @@
 namespace Dominoes\Events;
 
 use Dominoes\Dices\Dice;
+use Dominoes\GameData;
 use Dominoes\Id;
 
-final class DiceGivenEvent implements EventInterface
+final class DiceGivenEvent extends AbstractGameEvent
 {
     /** @var string */
     public const EVENT_NAME = 'Dice given';
-
-    /**
-     * @var Id
-     */
-    private Id $id;
 
     /**
      * @var Dice
@@ -22,28 +18,14 @@ final class DiceGivenEvent implements EventInterface
 
     /**
      * @param Id $id
+     * @param GameData $gameData
      * @param Dice $dice
      */
-    public function __construct(Id $id, Dice $dice)
+    public function __construct(Id $id, GameData $gameData, Dice $dice)
     {
-        $this->id = $id;
         $this->dice = $dice;
-    }
 
-    /**
-     * @inheritDoc
-     */
-    public function getId(): Id
-    {
-        return $this->id;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getName(): string
-    {
-        return self::EVENT_NAME;
+        parent::__construct($id, $gameData, self::EVENT_NAME);
     }
 
     /**

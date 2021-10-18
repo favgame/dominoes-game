@@ -18,7 +18,7 @@ final class EventSubscription
      * @param EventListenerInterface $eventListener
      * @param string $eventName
      */
-    public function __construct(EventListenerInterface $listener, string $eventName)
+    public function __construct(EventListenerInterface $eventListener, string $eventName)
     {
         $this->eventListener = $eventListener;
         $this->eventName = $eventName;
