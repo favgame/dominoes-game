@@ -50,17 +50,9 @@ final class DiceList extends AbstractList
      */
     public function getItemsByOwner(PlayerInterface $owner): ArrayObject
     {
-        $callback = fn (Dice $dice) => $dice->getOwner() === $owner;
+        $callback = fn (Dice $dice) => ($dice->getOwner() === $owner && !$dice->isUsed());
 
         return $this->filterItems($callback);
-    }
-
-    /**
-     * @return ArrayObject|Dice[]
-     */
-    public function getOwnedItems(): ArrayObject
-    {
-        return $this->filterItems(fn (Dice $dice) => $dice->hasOwner());
     }
 
     /**

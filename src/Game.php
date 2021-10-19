@@ -6,11 +6,13 @@ use Dominoes\Dices\Dice;
 use Dominoes\Dices\InvalidBindingException;
 use Dominoes\Events\DiceGivenEvent;
 use Dominoes\Events\EventManager;
+use Dominoes\Events\GameEndEvent;
 use Dominoes\Events\GameStepEvent;
 use Dominoes\Events\PlayerChangeEvent;
-use Dominoes\GameSteps\GameStepList;
+use Dominoes\GameSteps\GameStepListFactory;
 use Dominoes\Players\PlayerInterface;
 use Dominoes\Players\PlayerQueue;
+use Dominoes\Players\PlayerScoreList;
 
 final class Game
 {
@@ -25,6 +27,11 @@ final class Game
     private GameData $gameData;
 
     /**
+     * @var GameStepListFactory
+     */
+    private GameStepListFactory $stepListFactory;
+
+    /**
      * @var PlayerQueue
      */
     private PlayerQueue $playerQueue;
@@ -37,6 +44,7 @@ final class Game
         $this->gameData = $gameData;
         $this->eventManager = new EventManager();
         $this->playerQueue = new PlayerQueue($this->gameData->getPlayerList());
+        $this->stepListFactory = new GameStepListFactory($this->gameData->getDiceList());
 
         $this->subscribePlayers();
         $this->distributeDices();
@@ -54,7 +62,10 @@ final class Game
             return;
         }
 
-        if ($this->isPlayerWin() || $this->isGameEnd()) { // Игра закончена
+        if ($this->isPlayerWin() || !$this->hasGameSteps()) { // Игра закончена
+            $event = new GameEndEvent(Id::next(), $this->gameData, new PlayerScoreList($this->gameData));
+            $this->eventManager->addEvent($event);
+
             return;
         }
 
@@ -64,9 +75,19 @@ final class Game
     /**
      * @return bool
      */
-    private function isGameEnd(): bool
+    private function hasGameSteps(): bool
     {
-        return false; // TODO
+        if ($this->gameData->getDiceList()->getFreeItem() !== null) { // На базаре есть кости
+            return true;
+        }
+
+        foreach ($this->gameData->getPlayerList()->getItems() as $player) {
+            if ($this->stepListFactory->createList($player)->getItems()->count() > 0) { // У игрока есть ход
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -91,7 +112,7 @@ final class Game
     private function handlePlayerStep(): bool
     {
         $player = $this->playerQueue->current(); // Текущий игрок
-        $stepList = GameStepList::createInstance($this->gameData->getDiceList(), $player); // Возможные ходы
+        $stepList = $this->stepListFactory->createList($player); // Возможные ходы
 
         if ($stepList->getItems()->count() == 0) { // Поход на базар
             if (!$this->distributeDice($player)) { // На базаре пусто
@@ -103,7 +124,7 @@ final class Game
 
         $step = $player->getStep($stepList); // Ожидание хода игрока
 
-        if ($step) {
+        if ($step) { // Игрок сделал ход
             $step->getChosenDice()->setBinding($step->getDestinationDice());
             $this->eventManager->addEvent(new GameStepEvent(Id::next(), $this->gameData, $step));
 

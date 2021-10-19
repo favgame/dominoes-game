@@ -6,10 +6,10 @@ use Dominoes\GameData;
 use Dominoes\GameSteps\GameStep;
 use Dominoes\Id;
 
-class GameStepEvent extends AbstractGameEvent
+final class GameStepEvent extends AbstractGameEvent
 {
     /** @var string */
-    public const EVENT_NAME = 'Game Step';
+    public const EVENT_NAME = 'Game step';
 
     /**
      * @var GameStep
