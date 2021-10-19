@@ -11,11 +11,5 @@ use ArrayObject;
  */
 final class PlayerList extends AbstractList
 {
-    /**
-     * @param PlayerInterface $item
-     */
-    public function addItem(PlayerInterface $item): void
-    {
-        $this->items[] = $item;
-    }
+
 }

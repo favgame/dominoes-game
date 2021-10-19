@@ -28,16 +28,16 @@ final class GameStepListFactory
     {
         $activeDices = $this->diceList->getActiveItems();
         $playerDices = $this->diceList->getItemsByOwner($player);
-        $stepList = new GameStepList();
+        $items = [];
 
         foreach ($playerDices as $playerDice) {
             foreach ($activeDices as $activeDice) {
                 if ($playerDice->canBinding($activeDice)) {
-                    $stepList->addItem(new GameStep($playerDice, $activeDice));
+                    $items[] = new GameStep($playerDice, $activeDice);
                 }
             }
         }
 
-        return $stepList;
+        return new GameStepList($items);
     }
 }

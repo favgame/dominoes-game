@@ -26,12 +26,13 @@ final class GameData
     /**
      * @param GameRulesInterface $rules
      * @param PlayerList $playerList
+     * @param DiceList $diceList
      */
-    public function __construct(GameRulesInterface $rules, PlayerList $playerList)
+    public function __construct(GameRulesInterface $rules, PlayerList $playerList, DiceList $diceList)
     {
         $this->rules = $rules;
         $this->playerList = $playerList;
-        $this->diceList = new DiceList($this->rules->getMaxSideValue());
+        $this->diceList = $diceList;
     }
 
     /**

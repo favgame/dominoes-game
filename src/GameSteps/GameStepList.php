@@ -11,15 +11,6 @@ use Dominoes\AbstractList;
 final class GameStepList extends AbstractList
 {
     /**
-     * @param GameStep $gameStep
-     * @return void
-     */
-    public function addItem(GameStep $gameStep): void
-    {
-        $this->items[] = $gameStep;
-    }
-
-    /**
      * @return GameStep|null
      */
     public function getRandomItem(): ?GameStep

@@ -63,7 +63,7 @@ final class Game
         }
 
         if ($this->isPlayerWin() || !$this->hasGameSteps()) { // Игра закончена
-            $event = new GameEndEvent(Id::next(), $this->gameData, new PlayerScoreList($this->gameData));
+            $event = new GameEndEvent(Id::next(), $this->gameData, PlayerScoreList::createList($this->gameData));
             $this->eventManager->addEvent($event);
 
             return;

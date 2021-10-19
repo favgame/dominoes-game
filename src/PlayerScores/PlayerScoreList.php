@@ -15,16 +15,19 @@ final class PlayerScoreList extends AbstractList
 {
     /**
      * @param GameData $gameData
+     * @return static
      */
-    public function __construct(GameData $gameData)
+    public static function createList(GameData $gameData): self
     {
-        parent::__construct();
+        $items = [];
 
         foreach ($gameData->getPlayerList()->getItems() as $player) {
             $dices = $gameData->getDiceList()->getItemsByOwner($player);
             $points = array_map(fn (Dice $dice) => $dice->getPointAmount(), $dices);
-            $this->items[] = new PlayerScore($player, array_sum($points));
+            $items[] = new PlayerScore($player, array_sum($points));
         }
+
+        return new self($items);
     }
 
     /**

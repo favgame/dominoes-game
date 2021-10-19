@@ -5,6 +5,7 @@ namespace Dominoes\Bots;
 use Dominoes\GameSteps\GameStep;
 use Dominoes\GameSteps\GameStepList;
 use Dominoes\Events\EventInterface;
+use Dominoes\Id;
 
 final class MelissaBot extends AbstractBot
 {
@@ -12,11 +13,12 @@ final class MelissaBot extends AbstractBot
     private const PLAYER_NAME = 'Bot Melissa';
 
     /**
-     * @inheritDoc
+     * @param Id $id
+     * @param string $name
      */
-    public function getName(): string
+    public function __construct(Id $id, string $name)
     {
-        return self::PLAYER_NAME;
+        parent::__construct($id, self::PLAYER_NAME);
     }
 
     /**

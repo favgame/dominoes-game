@@ -12,12 +12,18 @@ abstract class AbstractBot implements PlayerInterface
      */
     private Id $id;
 
+    /**
+     * @var string
+     */
+    private string $name;
+
     /***
      * @param Id $id
      */
-    public function __construct(Id $id)
+    public function __construct(Id $id, string $name)
     {
         $this->id = $id;
+        $this->name = $name;
     }
 
     /**
@@ -26,5 +32,13 @@ abstract class AbstractBot implements PlayerInterface
     public function getId(): Id
     {
         return $this->id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
     }
 }
