@@ -2,15 +2,15 @@
 
 namespace Dominoes\Bots;
 
+use Dominoes\Events\EventInterface;
 use Dominoes\GameSteps\GameStep;
 use Dominoes\GameSteps\GameStepList;
-use Dominoes\Events\EventInterface;
 use Dominoes\Id;
 
-final class MelissaBot extends AbstractBot
+final class SusannaBot extends AbstractBot
 {
     /** @var string */
-    private const PLAYER_NAME = 'Bot Melissa';
+    private const PLAYER_NAME = 'Bot Susanna';
 
     /**
      * @param Id $id
