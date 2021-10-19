@@ -1,8 +1,10 @@
 <?php
 
-namespace Dominoes\Dices;
+namespace Dominoes\GameSteps;
 
-final class DiceStep
+use Dominoes\Dices\Dice;
+
+final class GameStep
 {
     /**
      * @var Dice|null

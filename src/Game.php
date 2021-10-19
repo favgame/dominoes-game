@@ -3,13 +3,14 @@
 namespace Dominoes;
 
 use Dominoes\Dices\Dice;
-use Dominoes\Dices\DiceStepException;
-use Dominoes\Dices\DiceStepListFactory;
 use Dominoes\Dices\InvalidBindingException;
 use Dominoes\Events\DiceGivenEvent;
 use Dominoes\Events\EventManager;
+use Dominoes\Events\GameStepEvent;
 use Dominoes\Events\PlayerChangeEvent;
+use Dominoes\GameSteps\GameStepList;
 use Dominoes\Players\PlayerInterface;
+use Dominoes\Players\PlayerQueue;
 
 final class Game
 {
@@ -24,48 +25,89 @@ final class Game
     private GameData $gameData;
 
     /**
-     * @param GameData $data
+     * @var PlayerQueue
      */
-    public function __construct(GameData $data)
+    private PlayerQueue $playerQueue;
+
+    /**
+     * @param GameData $gameData
+     */
+    public function __construct(GameData $gameData)
     {
-        $this->gameData = $data;
+        $this->gameData = $gameData;
         $this->eventManager = new EventManager();
+        $this->playerQueue = new PlayerQueue($this->gameData->getPlayerList());
 
         $this->subscribePlayers();
         $this->distributeDices();
         $this->selectActivePlayer();
     }
 
+    /**
+     * @throws InvalidBindingException
+     */
     public function run(): void
     {
         $this->eventManager->fireEvents();
+
+        if (!$this->handlePlayerStep()) { // Игрок не закончил ход
+            return;
+        }
+
+        if ($this->isPlayerWin() || $this->isGameEnd()) { // Игра закончена
+            return;
+        }
+
+        $this->changePlayer();
     }
 
     /**
-     * @throws DiceStepException
+     * @return bool
+     */
+    private function isGameEnd(): bool
+    {
+        return false; // TODO
+    }
+
+    /**
+     * @return bool
+     */
+    private function isPlayerWin(): bool
+    {
+        $player = $this->playerQueue->current();
+        $diceCount = $this->gameData->getDiceList()->getItemsByOwner($player)->count(); // Кол-во костей на руках
+
+        if ($diceCount == 0) { // У игрока закончились кости
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * @return bool
      * @throws InvalidBindingException
      */
-    private function doPlayerStep(): bool
+    private function handlePlayerStep(): bool
     {
-        $player = $this->gameData->getActivePlayer();
-        $diceCount = $this->gameData->getDiceList()->getItemsByOwner($player)->count();
+        $player = $this->playerQueue->current(); // Текущий игрок
+        $stepList = GameStepList::createInstance($this->gameData->getDiceList(), $player); // Возможные ходы
 
-        if ($diceCount == 0) {
-            throw new DiceStepException(DiceStepException::OUT_OF_DICE); // Конец игры
+        if ($stepList->getItems()->count() == 0) { // Поход на базар
+            if (!$this->distributeDice($player)) { // На базаре пусто
+                return true; // Ход окончен
+            }
+
+            return false;
         }
 
-        $stepList = (new DiceStepListFactory($this->gameData->getDiceList()))->createList($player);
-
-        if ($stepList->getItems()->count() == 0) {
-            throw new DiceStepException(DiceStepException::NO_DICE_TO_STEP); // Поход на базар
-        }
-
-        $step = $player->doStep($stepList);
+        $step = $player->getStep($stepList); // Ожидание хода игрока
 
         if ($step) {
             $step->getChosenDice()->setBinding($step->getDestinationDice());
+            $this->eventManager->addEvent(new GameStepEvent(Id::next(), $this->gameData, $step));
 
-            return true;
+            return true; // Ход окончен
         }
 
         return false;
@@ -99,13 +141,20 @@ final class Game
 
     /**
      * @param PlayerInterface $player
-     * @return void
+     * @return bool
      */
-    public function distributeDice(PlayerInterface $player): void
+    public function distributeDice(PlayerInterface $player): bool
     {
         $dice = $this->gameData->getDiceList()->getFreeItem();
-        $dice->setOwner($player);
-        $this->eventManager->addEvent(new DiceGivenEvent(Id::next(), $this->gameData, $dice));
+
+        if ($dice) {
+            $dice->setOwner($player);
+            $this->eventManager->addEvent(new DiceGivenEvent(Id::next(), $this->gameData, $dice));
+
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -119,9 +168,23 @@ final class Game
         array_walk($items, function (Dice $item) use (&$maxPointAmount): void {
             if ($item->hasOwner() && $item->getPointAmount() >= $maxPointAmount) {
                 $maxPointAmount = $item->getPointAmount();
-                $this->gameData->setActivePlayer($item->getOwner());
-                $this->eventManager->addEvent(new PlayerChangeEvent(Id::next(), $this->gameData, $item->getOwner()));
+                $this->changePlayer($item->getOwner());
             }
         });
+    }
+
+    /**
+     * @param PlayerInterface|null $player
+     */
+    private function changePlayer(?PlayerInterface $player = null): void
+    {
+        if ($player) {
+            while ($this->playerQueue->current() !== $player) {
+                $this->playerQueue->next();
+            }
+        }
+
+        $event = new PlayerChangeEvent(Id::next(), $this->gameData, $this->playerQueue->current());
+        $this->eventManager->addEvent($event);
     }
 }

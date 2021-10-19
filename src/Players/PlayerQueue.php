@@ -2,20 +2,18 @@
 
 namespace Dominoes\Players;
 
-use Dominoes\GameData;
+use InfiniteIterator;
 
-final class PlayerQueue
+/**
+ * @method PlayerInterface current()
+ */
+final class PlayerQueue extends InfiniteIterator
 {
     /**
-     * @var GameData
+     * @param PlayerList $playerList
      */
-    private GameData $gameData;
-
-    /**
-     * @param GameData $gameData
-     */
-    public function __construct(GameData $gameData)
+    public function __construct(PlayerList $playerList)
     {
-        $this->gameData = $gameData;
+        parent::__construct($playerList->getItems()->getIterator());
     }
 }
