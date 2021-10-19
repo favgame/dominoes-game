@@ -12,9 +12,20 @@ abstract class AbstractList
     protected array $items = [];
 
     /**
+     * @param array $items
+     */
+    public function __construct(array $items = [])
+    {
+        $this->items = $items;
+    }
+
+    /**
      * @return ArrayObject
      */
-    abstract public function getItems(): ArrayObject;
+    public function getItems(): ArrayObject
+    {
+        return new ArrayObject($this->items);
+    }
 
     /**
      * @param callable $callable
@@ -22,7 +33,7 @@ abstract class AbstractList
      */
     protected function filterItems(callable $callable): ArrayObject
     {
-        $items = array_filter($this->items);
+        $items = array_filter($this->items, $callable);
 
         return new ArrayObject($items);
     }

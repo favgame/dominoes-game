@@ -5,6 +5,9 @@ namespace Dominoes\GameSteps;
 use ArrayObject;
 use Dominoes\AbstractList;
 
+/**
+ * @method ArrayObject|GameStep[] getItems()
+ */
 final class GameStepList extends AbstractList
 {
     /**
@@ -14,14 +17,6 @@ final class GameStepList extends AbstractList
     public function addItem(GameStep $gameStep): void
     {
         $this->items[] = $gameStep;
-    }
-
-    /**
-     * @return ArrayObject|GameStep[]
-     */
-    public function getItems(): ArrayObject
-    {
-        return $this->items;
     }
 
     /**

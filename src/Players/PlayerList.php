@@ -6,6 +6,9 @@ use Dominoes\AbstractList;
 
 use ArrayObject;
 
+/**
+ * @method ArrayObject|PlayerInterface[] getItems()
+ */
 final class PlayerList extends AbstractList
 {
     /**
@@ -14,13 +17,5 @@ final class PlayerList extends AbstractList
     public function addItem(PlayerInterface $item): void
     {
         $this->items[] = $item;
-    }
-
-    /**
-     * @return ArrayObject|PlayerInterface[]
-     */
-    public function getItems(): ArrayObject
-    {
-        return new ArrayObject($this->items);
     }
 }

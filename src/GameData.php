@@ -31,7 +31,7 @@ final class GameData
     {
         $this->rules = $rules;
         $this->playerList = $playerList;
-        $this->diceList = DiceList::createInstance($this->rules->getMaxSideValue());
+        $this->diceList = new DiceList($this->rules->getMaxSideValue());
     }
 
     /**

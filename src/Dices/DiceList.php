@@ -7,41 +7,23 @@ use Dominoes\AbstractList;
 use Dominoes\Id;
 use Dominoes\Players\PlayerInterface;
 
+/**
+ * @method ArrayObject|Dice[] getItems()
+ */
 final class DiceList extends AbstractList
 {
     /**
      * @param int $maxSideValue
-     * @return self
      */
-    public static function createInstance(int $maxSideValue): self
+    public function __construct(int $maxSideValue)
     {
-        $list = new self();
+        parent::__construct();
 
         for ($sideB = 0; $sideB <= $maxSideValue; $sideB++) {
             for ($sideA = 0; $sideA <= $sideB; $sideA++) {
-                $item = new Dice(Id::next(), new DiceSide($sideB), new DiceSide($sideA));
-                $list->addItem($item);
+                $this->items[] = new Dice(Id::next(), new DiceSide($sideB), new DiceSide($sideA));
             }
         }
-
-        return $list;
-    }
-
-    /**
-     * @param Dice $item
-     * @return void
-     */
-    public function addItem(Dice $item): void
-    {
-        $this->items[] = $item;
-    }
-
-    /**
-     * @return ArrayObject|Dice[]
-     */
-    public function getItems(): ArrayObject
-    {
-        return new ArrayObject($this->items);
     }
 
     /**
