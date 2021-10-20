@@ -62,7 +62,7 @@ final class Game
             return;
         }
 
-        if ($this->isPlayerWin() || !$this->hasGameSteps()) { // Игра закончена
+        if ($this->isPlayerWon() || !$this->hasGameSteps()) { // Игра закончена
             $event = new GameEndEvent(Id::next(), $this->gameData, PlayerScoreList::createList($this->gameData));
             $this->eventManager->addEvent($event);
 
@@ -93,7 +93,7 @@ final class Game
     /**
      * @return bool
      */
-    private function isPlayerWin(): bool
+    private function isPlayerWon(): bool
     {
         $player = $this->playerQueue->current();
         $diceCount = $this->gameData->getDiceList()->getItemsByOwner($player)->count(); // Кол-во костей на руках
