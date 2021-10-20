@@ -2,8 +2,8 @@
 
 namespace Dominoes\Bots;
 
-use Dominoes\GameSteps\GameStep;
-use Dominoes\GameSteps\GameStepList;
+use Dominoes\GameSteps\Step;
+use Dominoes\GameSteps\StepList;
 use Dominoes\Events\EventInterface;
 use Dominoes\Id;
 
@@ -31,7 +31,7 @@ final class MelissaBot extends AbstractBot
     /**
      * @inheritDoc
      */
-    public function getStep(GameStepList $availableSteps): ?GameStep
+    public function getStep(StepList $availableSteps): ?Step
     {
         return $availableSteps->getRandomItem();
     }

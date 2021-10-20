@@ -19,6 +19,7 @@ abstract class AbstractBot implements PlayerInterface
 
     /***
      * @param Id $id
+     * @param string $name
      */
     public function __construct(Id $id, string $name)
     {

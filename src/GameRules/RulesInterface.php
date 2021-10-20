@@ -2,7 +2,7 @@
 
 namespace Dominoes\GameRules;
 
-interface GameRulesInterface
+interface RulesInterface
 {
     /**
      * @return int

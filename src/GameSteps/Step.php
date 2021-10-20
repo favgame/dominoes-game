@@ -4,7 +4,7 @@ namespace Dominoes\GameSteps;
 
 use Dominoes\Dices\Dice;
 
-final class GameStep
+final class Step
 {
     /**
      * @var Dice|null

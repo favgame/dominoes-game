@@ -3,11 +3,13 @@
 namespace Dominoes\Events;
 
 use Dominoes\Dices\Dice;
-use Dominoes\GameData;
 use Dominoes\Id;
+use Dominoes\RoundData;
 
-final class DiceGivenEvent extends AbstractGameEvent
+final class DiceGivenEvent extends AbstractEvent
 {
+    use RoundDataTrait;
+
     /** @var string */
     public const EVENT_NAME = 'Dice given';
 
@@ -18,14 +20,15 @@ final class DiceGivenEvent extends AbstractGameEvent
 
     /**
      * @param Id $id
-     * @param GameData $gameData
+     * @param RoundData $roundData
      * @param Dice $dice
      */
-    public function __construct(Id $id, GameData $gameData, Dice $dice)
+    public function __construct(Id $id, RoundData $roundData, Dice $dice)
     {
+        $this->roundData = $roundData;
         $this->dice = $dice;
 
-        parent::__construct($id, $gameData, self::EVENT_NAME);
+        parent::__construct($id, self::EVENT_NAME);
     }
 
     /**

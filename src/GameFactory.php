@@ -5,12 +5,12 @@ namespace Dominoes;
 use Dominoes\Dices\Dice;
 use Dominoes\Dices\DiceList;
 use Dominoes\Dices\DiceSide;
-use Dominoes\GameRules\GameRulesInterface;
+use Dominoes\GameRules\RulesInterface;
 use Dominoes\Players\PlayerList;
 
 final class GameFactory
 {
-    public function createGame(GameRulesInterface $gameRules): Game
+    public function createGame(RulesInterface $gameRules): Game
     {
         $playersList = new PlayerList();
         $diceList = $this->createDiceList($gameRules);
@@ -20,10 +20,10 @@ final class GameFactory
     }
 
     /**
-     * @param GameRulesInterface $gameRules
+     * @param RulesInterface $gameRules
      * @return DiceList
      */
-    private function createDiceList(GameRulesInterface $gameRules): DiceList
+    private function createDiceList(RulesInterface $gameRules): DiceList
     {
         $items = [];
 

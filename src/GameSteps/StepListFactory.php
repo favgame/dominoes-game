@@ -5,7 +5,7 @@ namespace Dominoes\GameSteps;
 use Dominoes\Dices\DiceList;
 use Dominoes\Players\PlayerInterface;
 
-final class GameStepListFactory
+final class StepListFactory
 {
     /**
      * @var DiceList
@@ -22,9 +22,9 @@ final class GameStepListFactory
 
     /**
      * @param PlayerInterface $player
-     * @return GameStepList
+     * @return StepList
      */
-    public function createList(PlayerInterface $player): GameStepList
+    public function createList(PlayerInterface $player): StepList
     {
         $activeDices = $this->diceList->getActiveItems();
         $playerDices = $this->diceList->getItemsByOwner($player);
@@ -33,11 +33,11 @@ final class GameStepListFactory
         foreach ($playerDices as $playerDice) {
             foreach ($activeDices as $activeDice) {
                 if ($playerDice->canBinding($activeDice)) {
-                    $items[] = new GameStep($playerDice, $activeDice);
+                    $items[] = new Step($playerDice, $activeDice);
                 }
             }
         }
 
-        return new GameStepList($items);
+        return new StepList($items);
     }
 }

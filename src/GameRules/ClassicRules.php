@@ -2,7 +2,7 @@
 
 namespace Dominoes\GameRules;
 
-final class ClassicGameRules implements GameRulesInterface
+final class ClassicRules implements RulesInterface
 {
     /** @var int */
     private const MIN_PLAYERS_COUNT = 2;

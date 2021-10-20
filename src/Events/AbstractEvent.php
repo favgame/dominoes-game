@@ -2,20 +2,14 @@
 
 namespace Dominoes\Events;
 
-use Dominoes\GameData;
 use Dominoes\Id;
 
-abstract class AbstractGameEvent implements EventInterface
+abstract class AbstractEvent implements EventInterface
 {
     /**
      * @var Id
      */
     private Id $id;
-
-    /**
-     * @var GameData $gameData
-     */
-    private GameData $gameData;
 
     /**
      * @var string
@@ -24,13 +18,11 @@ abstract class AbstractGameEvent implements EventInterface
 
     /**
      * @param Id $id
-     * @param GameData $gameData
      * @param string $eventName
      */
-    public function __construct(Id $id, GameData $gameData, string $eventName)
+    public function __construct(Id $id, string $eventName)
     {
         $this->id = $id;
-        $this->gameData = $gameData;
         $this->eventName = $eventName;
     }
 
@@ -48,13 +40,5 @@ abstract class AbstractGameEvent implements EventInterface
     public final function getName(): string
     {
         return $this->eventName;
-    }
-
-    /**
-     * @return GameData
-     */
-    public final function getGameData(): GameData
-    {
-        return $this->gameData;
     }
 }

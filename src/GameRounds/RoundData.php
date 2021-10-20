@@ -3,15 +3,14 @@
 namespace Dominoes;
 
 use Dominoes\Dices\DiceList;
-use Dominoes\GameRules\RulesInterface;
 use Dominoes\Players\PlayerList;
 
-final class GameData
+final class RoundData
 {
     /**
-     * @var RulesInterface
+     * @var Id
      */
-    private RulesInterface $rules;
+    private Id $id;
 
     /**
      * @var PlayerList
@@ -24,18 +23,20 @@ final class GameData
     private DiceList $diceList;
 
     /**
-     * @param RulesInterface $rules
+     * @param Id $id
      * @param PlayerList $playerList
      * @param DiceList $diceList
      */
-    public function __construct(
-        RulesInterface $rules,
-        PlayerList $playerList,
-        DiceList $diceList
-    ) {
-        $this->rules = $rules;
+    public function __construct(Id $id, DiceList $diceList, PlayerList $playerList)
+    {
+        $this->id = $id;
         $this->playerList = $playerList;
         $this->diceList = $diceList;
+    }
+
+    public function Id(): Id
+    {
+        return $this->id;
     }
 
     /**
@@ -44,14 +45,6 @@ final class GameData
     public function getPlayerList(): PlayerList
     {
         return $this->playerList;
-    }
-
-    /**
-     * @return RulesInterface
-     */
-    public function getRules(): RulesInterface
-    {
-        return $this->rules;
     }
 
     /**

@@ -4,7 +4,7 @@ namespace Dominoes\PlayerScores;
 
 use Dominoes\Players\PlayerInterface;
 
-final class PlayerScore
+final class Score
 {
     /**
      * @var PlayerInterface

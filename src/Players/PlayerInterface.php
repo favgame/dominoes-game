@@ -2,8 +2,8 @@
 
 namespace Dominoes\Players;
 
-use Dominoes\GameSteps\GameStep;
-use Dominoes\GameSteps\GameStepList;
+use Dominoes\GameSteps\Step;
+use Dominoes\GameSteps\StepList;
 use Dominoes\Events\EventListenerInterface;
 use Dominoes\Id;
 
@@ -20,8 +20,8 @@ interface PlayerInterface extends EventListenerInterface
     public function getName(): string;
 
     /**
-     * @param GameStepList $availableSteps
-     * @return GameStep
+     * @param StepList $availableSteps
+     * @return Step
      */
-    public function getStep(GameStepList $availableSteps): ?GameStep;
+    public function getStep(StepList $availableSteps): ?Step;
 }

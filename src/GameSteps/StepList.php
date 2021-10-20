@@ -6,16 +6,16 @@ use ArrayObject;
 use Dominoes\AbstractList;
 
 /**
- * @method ArrayObject|GameStep[] getItems()
+ * @method ArrayObject|Step[] getItems()
  */
-final class GameStepList extends AbstractList
+final class StepList extends AbstractList
 {
     /**
-     * @return GameStep|null
+     * @return Step|null
      */
-    public function getRandomItem(): ?GameStep
+    public function getRandomItem(): ?Step
     {
-        /** @var GameStep $step */
+        /** @var Step $step */
         $step = null;
 
         if ($this->getItems()->count()) {
