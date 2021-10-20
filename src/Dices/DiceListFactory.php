@@ -1,10 +1,7 @@
 <?php
 
-namespace Dominoes\Ga;
+namespace Dominoes\Dices;
 
-use Dominoes\Dices\Dice;
-use Dominoes\Dices\DiceList;
-use Dominoes\Dices\DiceSide;
 use Dominoes\GameRules\RulesInterface;
 use Dominoes\Id;
 

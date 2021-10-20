@@ -2,11 +2,13 @@
 
 namespace Dominoes;
 
+use Dominoes\Dices\DiceList;
+use Dominoes\Dices\DiceListFactory;
 use Dominoes\Dices\InvalidBindingException;
 use Dominoes\Events\DiceGivenEvent;
 use Dominoes\Events\EventManager;
-use Dominoes\Ga\DiceListFactory;
 use Dominoes\GameRounds\Round;
+use Dominoes\GameRounds\RoundList;
 use Dominoes\Players\PlayerInterface;
 
 final class Game
@@ -20,6 +22,11 @@ final class Game
      * @var GameData
      */
     private GameData $gameData;
+
+    /**
+     * @var RoundList
+     */
+    private RoundList $roundList;
 
     /**
      * @param GameData $gameData
@@ -61,5 +68,24 @@ final class Game
         $roundData = new RoundData(Id::next(), $diceList, $this->gameData->getPlayerList());
 
         return new Round($roundData, $this->gameData->getRules(), $this->eventManager);
+    }
+
+    /**
+     * @param DiceList $diceList
+     * @return PlayerInterface
+     */
+    private function getActivePlayer(DiceList $diceList): PlayerInterface
+    {
+        $activePlayer = null;
+        $maxPointAmount = 0;
+
+        foreach ($diceList->getItems() as $item) {
+            if ($item->hasOwner() && $item->getPointAmount() >= $maxPointAmount) {
+                $maxPointAmount = $item->getPointAmount();
+                $activePlayer = $item->getOwner();
+            }
+        }
+
+        return $activePlayer;
     }
 }

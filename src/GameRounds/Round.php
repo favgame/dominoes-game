@@ -58,7 +58,7 @@ final class Round
 
         $this->subscribePlayers();
         $this->distributeDices();
-        $this->selectActivePlayer();
+
     }
 
     /**
@@ -186,22 +186,6 @@ final class Round
         }
 
         return false;
-    }
-
-    /**
-     * @return void
-     */
-    private function selectActivePlayer(): void // TODO: move to game
-    {
-        $items = $this->roundData->getDiceList()->getItems();
-        $maxPointAmount = 0;
-
-        array_walk($items, function (Dice $item) use (&$maxPointAmount): void {
-            if ($item->hasOwner() && $item->getPointAmount() >= $maxPointAmount) {
-                $maxPointAmount = $item->getPointAmount();
-                $this->changePlayer($item->getOwner());
-            }
-        });
     }
 
     /**
