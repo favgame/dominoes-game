@@ -1,9 +1,7 @@
 <?php
 
-namespace Dominoes\GameRounds;
+namespace Dominoes\Players;
 
-use Dominoes\Players\PlayerInterface;
-use Dominoes\Players\PlayerList;
 use InfiniteIterator;
 
 /**

@@ -6,7 +6,10 @@ use Dominoes\Dices\Dice;
 use Dominoes\Dices\DiceList;
 use Dominoes\Dices\DiceSide;
 use Dominoes\GameRules\RulesInterface;
+use Dominoes\Players\PlayerInterface;
 use Dominoes\Players\PlayerList;
+use Dominoes\Players\ScoreList;
+use Dominoes\PlayerScores\Score;
 
 final class GameFactory
 {
@@ -14,7 +17,8 @@ final class GameFactory
     {
         $playersList = new PlayerList();
         $diceList = $this->createDiceList($gameRules);
-        $gameData = new GameData($gameRules, $playersList, $diceList);
+        $scoreList = $this->createScoreList($playersList);
+        $gameData = new GameData(Id::next(), $gameRules, $playersList, $scoreList, $diceList);
 
         return new Game($gameData);
     }
@@ -34,5 +38,16 @@ final class GameFactory
         }
 
         return new DiceList($items);
+    }
+
+    /**
+     * @param PlayerList $playerList
+     * @return ScoreList
+     */
+    private function createScoreList(PlayerList $playerList): ScoreList
+    {
+        $items = array_map(fn (PlayerInterface $player) => new Score($player), $playerList->getItems());
+
+        return new ScoreList($items);
     }
 }

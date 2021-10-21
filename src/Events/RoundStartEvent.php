@@ -2,24 +2,20 @@
 
 namespace Dominoes\Events;
 
+use Dominoes\GameData;
 use Dominoes\Id;
-use Dominoes\RoundData;
 
-final class RoundStartEvent extends AbstractEvent
+final class RoundStartEvent extends AbstractGameEvent
 {
-    use RoundDataTrait;
-
     /** @var string */
     private const EVENT_NAME = 'Round start';
 
     /**
      * @param Id $id
-     * @param RoundData $roundData
+     * @param GameData $gameData
      */
-    public function __construct(Id $id, RoundData $roundData)
+    public function __construct(Id $id, GameData $gameData)
     {
-        $this->roundData = $roundData;
-
-        parent::__construct($id, self::EVENT_NAME);
+        parent::__construct($id, $gameData, self::EVENT_NAME);
     }
 }

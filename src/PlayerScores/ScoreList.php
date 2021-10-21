@@ -5,8 +5,8 @@ namespace Dominoes\Players;
 use ArrayObject;
 use Dominoes\AbstractList;
 use Dominoes\Dices\Dice;
+use Dominoes\GameData;
 use Dominoes\PlayerScores\Score;
-use Dominoes\RoundData;
 
 /**
  * @method ArrayObject|Score[] getItems()
@@ -14,15 +14,16 @@ use Dominoes\RoundData;
 final class ScoreList extends AbstractList
 {
     /**
-     * @param RoundData $roundData
+     * @param GameData $gameData
      * @return static
+     * @deprecated
      */
-    public static function createList(RoundData $roundData): self
+    public static function createList(GameData $gameData): self
     {
         $items = [];
 
-        foreach ($roundData->getPlayerList()->getItems() as $player) {
-            $dices = $roundData->getDiceList()->getItemsByOwner($player);
+        foreach ($gameData->getPlayerList()->getItems() as $player) {
+            $dices = $gameData->getDiceList()->getItemsByOwner($player);
             $points = array_map(fn (Dice $dice) => $dice->getPointAmount(), $dices);
             $items[] = new Score($player, array_sum($points));
         }

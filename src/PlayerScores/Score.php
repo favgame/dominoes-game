@@ -20,7 +20,7 @@ final class Score
      * @param PlayerInterface $player
      * @param int $pointAmount
      */
-    public function __construct(PlayerInterface $player, int $pointAmount)
+    public function __construct(PlayerInterface $player, int $pointAmount = 0)
     {
         $this->player = $player;
         $this->pointAmount = $pointAmount;
@@ -40,5 +40,14 @@ final class Score
     public function getPointAmount(): int
     {
         return $this->pointAmount;
+    }
+
+    /**
+     * @param int $pointAmount
+     * @return void
+     */
+    public function setPointAmount(int $pointAmount): void
+    {
+        $this->pointAmount = $pointAmount;
     }
 }
