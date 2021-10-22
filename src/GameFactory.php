@@ -13,12 +13,17 @@ use Dominoes\PlayerScores\Score;
 
 final class GameFactory
 {
+    /**
+     * @param RulesInterface $gameRules
+     * @return Game
+     */
     public function createGame(RulesInterface $gameRules): Game
     {
+        $gameState = new GameState();
         $playersList = new PlayerList();
         $diceList = $this->createDiceList($gameRules);
         $scoreList = $this->createScoreList($playersList);
-        $gameData = new GameData(Id::next(), $gameRules, $playersList, $scoreList, $diceList);
+        $gameData = new GameData(Id::next(), $gameState, $gameRules, $playersList, $scoreList, $diceList);
 
         return new Game($gameData);
     }

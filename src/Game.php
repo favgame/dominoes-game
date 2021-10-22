@@ -2,13 +2,14 @@
 
 namespace Dominoes;
 
-use Dominoes\Dices\DiceList;
 use Dominoes\Dices\InvalidBindingException;
 use Dominoes\Events\DiceGivenEvent;
 use Dominoes\Events\EventManager;
+use Dominoes\Events\GameStartEvent;
 use Dominoes\Events\GameStepEvent;
 use Dominoes\Events\PlayerChangeEvent;
 use Dominoes\Events\RoundEndEvent;
+use Dominoes\Events\RoundStartEvent;
 use Dominoes\GameSteps\StepListFactory;
 use Dominoes\Players\PlayerInterface;
 use Dominoes\Players\PlayerQueue;
@@ -46,29 +47,44 @@ final class Game
         $this->stepListFactory = new StepListFactory($this->gameData->getDiceList());
         $this->eventManager = new EventManager();
 
-        $this->distributeDices();
         $this->subscribePlayers();
     }
 
     /**
      * @throws InvalidBindingException
+     * @return bool
      */
-    public function run(): void
+    public function run(): bool
     {
+        if ($this->gameData->getState()->isDone()) {
+            return false;
+        }
+
         $this->eventManager->fireEvents();
 
+        if ($this->gameData->getState()->isInitial()) {
+            $this->gameData->getState()->setValueInProgress();
+            $this->distributeDices();
+            $this->eventManager->addEvent(new GameStartEvent(Id::next(), $this->gameData));
+            $this->eventManager->addEvent(new RoundStartEvent(Id::next(), $this->gameData));
+            $this->changePlayer($this->getActivePlayer());
+        }
+
         if (!$this->handlePlayerStep()) { // Игрок не закончил ход
-            return;
+            return true;
         }
 
         if ($this->isPlayerWon() || !$this->hasGameSteps()) { // Игра закончена
             $event = new RoundEndEvent(Id::next(), $this->gameData, ScoreList::createList($this->gameData));
             $this->eventManager->addEvent($event);
+            $this->gameData->getState()->setValueDone();
 
-            return;
+            return false;
         }
 
         $this->changePlayer();
+
+        return true;
     }
 
     /**
@@ -146,15 +162,14 @@ final class Game
     }
 
     /**
-     * @param DiceList $diceList
      * @return PlayerInterface
      */
-    private function getActivePlayer(DiceList $diceList): PlayerInterface
+    private function getActivePlayer(): PlayerInterface
     {
         $activePlayer = null;
         $maxPointAmount = 0;
 
-        foreach ($diceList->getItems() as $item) {
+        foreach ($this->gameData->getDiceList()->getItems() as $item) {
             if ($item->hasOwner() && $item->getPointAmount() >= $maxPointAmount) {
                 $maxPointAmount = $item->getPointAmount();
                 $activePlayer = $item->getOwner();
