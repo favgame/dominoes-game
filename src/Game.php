@@ -10,6 +10,13 @@ use Dominoes\Events\GameStepEvent;
 use Dominoes\Events\PlayerChangeEvent;
 use Dominoes\Events\RoundEndEvent;
 use Dominoes\Events\RoundStartEvent;
+use Dominoes\GameHandlers\DistributeDiceHandler;
+use Dominoes\GameHandlers\GameEndHandler;
+use Dominoes\GameHandlers\GameStartHandler;
+use Dominoes\GameHandlers\GameStepHandler;
+use Dominoes\GameHandlers\HandlerInterface;
+use Dominoes\GameHandlers\RoundEndHandler;
+use Dominoes\GameHandlers\RoundStartHandler;
 use Dominoes\GameSteps\StepListFactory;
 use Dominoes\Players\PlayerInterface;
 use Dominoes\Players\PlayerQueue;
@@ -38,6 +45,11 @@ final class Game
     private StepListFactory $stepListFactory;
 
     /**
+     * @var HandlerInterface
+     */
+    private HandlerInterface $mainHandler;
+
+    /**
      * @param GameData $gameData
      */
     public function __construct(GameData $gameData)
@@ -47,6 +59,21 @@ final class Game
         $this->stepListFactory = new StepListFactory($this->gameData->getDiceList());
         $this->eventManager = new EventManager();
 
+        $gameStartHandler = new GameStartHandler($this->eventManager);
+        $roundStartHandler = new RoundStartHandler($this->eventManager);
+        $diceHandler = new DistributeDiceHandler($this->eventManager);
+        $stepHandler = new GameStepHandler($this->eventManager);
+        $roundEndHandler = new RoundEndHandler($this->eventManager);
+        $gameEndHandler = new GameEndHandler($this->eventManager);
+
+        $gameStartHandler->setNextHandler($roundStartHandler);
+        $roundStartHandler->setNextHandler($diceHandler);
+        $diceHandler->setNextHandler($stepHandler);
+        $stepHandler->setNextHandler($roundEndHandler);
+        $roundEndHandler->setNextHandler($gameEndHandler);
+        $gameEndHandler->setNextHandler($roundStartHandler);
+
+        $this->mainHandler = $gameStartHandler;
         $this->subscribePlayers();
     }
 
@@ -61,13 +88,17 @@ final class Game
         }
 
         $this->eventManager->fireEvents();
+        $this->mainHandler->handleData($this->gameData);
+
+        return true;
 
         if ($this->gameData->getState()->isInitial()) {
-            $this->gameData->getState()->setValueInProgress();
             $this->distributeDices();
             $this->eventManager->addEvent(new GameStartEvent(Id::next(), $this->gameData));
             $this->eventManager->addEvent(new RoundStartEvent(Id::next(), $this->gameData));
             $this->changePlayer($this->getActivePlayer());
+
+            $this->gameData->getState()->setValueInProgress();
         }
 
         if (!$this->handlePlayerStep()) { // Игрок не закончил ход

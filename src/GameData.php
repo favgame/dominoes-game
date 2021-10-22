@@ -121,15 +121,6 @@ final class GameData
     }
 
     /**
-     * @param GameState $gameState
-     * @return void
-     */
-    public function setState(GameState $gameState): void
-    {
-        $this->gameState = $gameState;
-    }
-
-    /**
      * @return PlayerInterface
      * @return void
      */
