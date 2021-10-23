@@ -18,11 +18,18 @@ abstract class AbstractGameHandler implements HandlerInterface
     protected EventManager $eventManager;
 
     /**
-     * @param EventManager $eventManager
+     * @var GameData
      */
-    public function __construct(EventManager $eventManager)
+    protected GameData $gameData;
+
+    /**
+     * @param EventManager $eventManager
+     * @param GameData $gameData
+     */
+    public function __construct(EventManager $eventManager, GameData $gameData)
     {
         $this->eventManager = $eventManager;
+        $this->gameData = $gameData;
     }
 
     /**
@@ -35,13 +42,12 @@ abstract class AbstractGameHandler implements HandlerInterface
     }
 
     /**
-     * @param GameData $gameData
      * @return void
      */
-    protected function handleNext(GameData $gameData): void
+    protected function handleNext(): void
     {
         if ($this->nextHandler) {
-            $this->nextHandler->handleData($gameData);
+            $this->nextHandler->handleData();
         }
     }
 }

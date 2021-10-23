@@ -3,23 +3,21 @@
 namespace Dominoes\GameHandlers;
 
 use Dominoes\Events\GameStartEvent;
-use Dominoes\GameData;
 use Dominoes\Id;
 
 final class GameStartHandler extends AbstractGameHandler
 {
     /**
-     * @param GameData $gameData
-     * @return void
+     * @inheritDoc
      */
-    public function handleData(GameData $gameData): void
+    public function handleData(): void
     {
-        if ($gameData->getState()->isInitial()) {
-            $this->eventManager->addEvent(new GameStartEvent(Id::next(), $gameData));
+        if ($this->gameData->getState()->isInitial()) {
+            $this->eventManager->addEvent(new GameStartEvent(Id::next(), $this->gameData));
         }
 
-        if (!$gameData->getState()->isDone()) {
-            $this->handleNext($gameData);
+        if (!$this->gameData->getState()->isDone()) {
+            $this->handleNext();
         }
     }
 }

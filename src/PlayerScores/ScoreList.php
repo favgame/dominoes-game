@@ -34,7 +34,7 @@ final class ScoreList extends AbstractList
     /**
      * @return Score|null
      */
-    public function getWinnerItem(): ?Score
+    public function getLeaderItem(): ?Score
     {
         $points = array_map(fn (Score $playerScore) => $playerScore->getPointAmount(), $this->getItems());
         $index = array_keys($points, min($points), true);

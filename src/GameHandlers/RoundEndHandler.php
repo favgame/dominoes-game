@@ -2,12 +2,20 @@
 
 namespace Dominoes\GameHandlers;
 
-use Dominoes\GameData;
+use Dominoes\Events\RoundEndEvent;
+use Dominoes\Id;
+use Dominoes\Players\ScoreList;
 
 final class RoundEndHandler extends AbstractGameHandler
 {
-    public function handleData(GameData $gameData): void
+    /**
+     * @inheritDoc
+     */
+    public function handleData(): void
     {
-        $this->handleNext($gameData);
+        $event = new RoundEndEvent(Id::next(), $this->gameData, ScoreList::createList($this->gameData));
+        $this->eventManager->addEvent($event);
+
+        $this->handleNext();
     }
 }

@@ -105,6 +105,14 @@ final class GameData
     }
 
     /**
+     * @param DiceList $diceList
+     */
+    public function setDiceList(DiceList $diceList): void
+    {
+        $this->diceList = $diceList;
+    }
+
+    /**
      * @return ScoreList
      */
     public function getScoreList(): ScoreList

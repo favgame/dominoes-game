@@ -2,15 +2,15 @@
 
 namespace Dominoes\GameHandlers;
 
-use Dominoes\GameData;
-
 final class GameEndHandler extends AbstractGameHandler
 {
     /**
      * @inheritDoc
      */
-    public function handleData(GameData $gameData): void
+    public function handleData(): void
     {
-        $this->handleNext($gameData);
+        $this->handleNext();
+
+        $this->gameData->getState()->setValueDone();
     }
 }
