@@ -2,9 +2,7 @@
 
 namespace Dominoes\GameHandlers;
 
-use Dominoes\Dices\Dice;
 use Dominoes\Dices\DiceList;
-use Dominoes\Dices\DiceSide;
 use Dominoes\Events\DiceGivenEvent;
 use Dominoes\Events\EventManager;
 use Dominoes\GameData;
@@ -56,7 +54,7 @@ final class DiceDistributor
      */
     public function distributeDices(): void
     {
-        $this->gameData->setDiceList($this->createDiceList());
+        $this->gameData->setDiceList(new DiceList($this->gameData->getRules()));
         $players = $this->gameData->getPlayerList()->getItems();
 
         array_walk($players, function (PlayerInterface $player) {
@@ -64,21 +62,5 @@ final class DiceDistributor
                 $this->distributeDice($player);
             }
         });
-    }
-
-    /**
-     * @return DiceList
-     */
-    private function createDiceList(): DiceList
-    {
-        $items = [];
-
-        for ($sideB = 0; $sideB <= $this->gameData->getRules()->getMaxSideValue(); $sideB++) {
-            for ($sideA = 0; $sideA <= $sideB; $sideA++) {
-                $items[] = new Dice(Id::next(), new DiceSide($sideB), new DiceSide($sideA));
-            }
-        }
-
-        return new DiceList($items);
     }
 }

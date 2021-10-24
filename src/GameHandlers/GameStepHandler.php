@@ -4,7 +4,7 @@ namespace Dominoes\GameHandlers;
 
 use Dominoes\Dices\InvalidBindingException;
 use Dominoes\Events\GameStepEvent;
-use Dominoes\GameSteps\StepListFactory;
+use Dominoes\GameSteps\StepList;
 use Dominoes\Id;
 
 final class GameStepHandler extends AbstractGameHandler implements HandlerInterface
@@ -36,7 +36,7 @@ final class GameStepHandler extends AbstractGameHandler implements HandlerInterf
     private function handlePlayerStep(): bool
     {
         $player = $this->gameData->getActivePlayer();
-        $stepList = (new StepListFactory($this->gameData->getDiceList()))->createList($player); // Возможные ходы
+        $stepList = new StepList($this->gameData->getDiceList(), $player); // Возможные ходы
 
         if ($stepList->getItems()->count() == 0) { // Поход на базар
             $diceDistributor = new DiceDistributor($this->eventManager, $this->gameData);
@@ -69,10 +69,10 @@ final class GameStepHandler extends AbstractGameHandler implements HandlerInterf
             return true;
         }
 
-        $stepListFactory = new StepListFactory($this->gameData->getDiceList());
-
         foreach ($this->gameData->getPlayerList()->getItems() as $player) {
-            if ($stepListFactory->createList($player)->getItems()->count() > 0) { // У игрока есть ход
+            $stepList = (new StepList($this->gameData->getDiceList(), $player));
+
+            if ($stepList->getItems()->count() > 0) { // У игрока есть ход
                 return true;
             }
         }

@@ -27,15 +27,15 @@ final class Step
     }
 
     /**
-     * @return Dice|null
+     * @return Dice
      */
-    public function getChosenDice(): ?Dice
+    public function getChosenDice(): Dice
     {
         return $this->chosenDice;
     }
 
     /**
-     * @return Dice|null
+     * @return Dice
      */
     public function getDestinationDice(): ?Dice
     {

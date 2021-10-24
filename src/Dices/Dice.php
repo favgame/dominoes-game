@@ -151,6 +151,12 @@ final class Dice
     {
         $side = null;
 
+        if ($dice === $this) {
+            $this->isUsed = true;
+
+            return;
+        }
+
         if (!$dice->isUsed()) {
             throw new InvalidBindingException();
         }

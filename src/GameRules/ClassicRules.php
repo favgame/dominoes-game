@@ -11,6 +11,9 @@ final class ClassicRules implements RulesInterface
     private const MAX_PLAYERS_COUNT = 4;
 
     /** @var int */
+    private const MAX_POINT_AMOUNT = 100;
+
+    /** @var int */
     private const MAX_SIDE_VALUE = 6;
 
     /** @var int */
@@ -30,6 +33,14 @@ final class ClassicRules implements RulesInterface
     public function getMaxPlayerCount(): int
     {
         return self::MAX_PLAYERS_COUNT;
+    }
+
+    /**
+     * @return int
+     */
+    public function getMaxPointAmount(): int
+    {
+        return self::MAX_POINT_AMOUNT;
     }
 
     /**

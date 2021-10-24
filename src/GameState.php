@@ -7,11 +7,14 @@ final class GameState
     /** @var int */
     public const INITIAL = 0;
 
+    /** @var int */
+    public const READY = 1;
+
     /** @var int  */
-    public const IN_PROGRESS = 1;
+    public const IN_PROGRESS = 2;
 
     /** @var int */
-    public const DONE = 2;
+    public const DONE = 3;
 
     /**
      * @var int
@@ -37,23 +40,39 @@ final class GameState
     /**
      * @return bool
      */
-    public function isDone(): bool
-    {
-        return ($this->value === self::DONE);
-    }
-
-    /**
-     * @return bool
-     */
     public function isInitial(): bool
     {
         return ($this->value === self::INITIAL);
     }
 
     /**
+     * @return bool
+     */
+    public function isReady(): bool
+    {
+        return ($this->value === self::READY);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isDone(): bool
+    {
+        return ($this->value === self::DONE);
+    }
+
+    /**
      * @return void
      */
-    public function setValueInProgress(): void
+    public function setReady(): void
+    {
+        $this->value = self::READY;
+    }
+
+    /**
+     * @return void
+     */
+    public function setInProgress(): void
     {
         $this->value = self::IN_PROGRESS;
     }
@@ -61,7 +80,7 @@ final class GameState
     /**
      * @return void
      */
-    public function setValueDone(): void
+    public function setDone(): void
     {
         $this->value = self::DONE;
     }

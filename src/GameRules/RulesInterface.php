@@ -17,6 +17,11 @@ interface RulesInterface
     /**
      * @return int
      */
+    public function getMaxPointAmount(): int;
+
+    /**
+     * @return int
+     */
     public function getMaxSideValue(): int;
 
     /**

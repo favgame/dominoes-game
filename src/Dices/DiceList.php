@@ -4,6 +4,8 @@ namespace Dominoes\Dices;
 
 use ArrayObject;
 use Dominoes\AbstractList;
+use Dominoes\GameRules\RulesInterface;
+use Dominoes\Id;
 use Dominoes\Players\PlayerInterface;
 
 /**
@@ -11,6 +13,22 @@ use Dominoes\Players\PlayerInterface;
  */
 final class DiceList extends AbstractList
 {
+    /**
+     * @param RulesInterface $gameRules
+     */
+    public function __construct(RulesInterface $gameRules)
+    {
+        $items = [];
+
+        for ($sideB = 0; $sideB <= $gameRules->getMaxSideValue(); $sideB++) {
+            for ($sideA = 0; $sideA <= $sideB; $sideA++) {
+                $items[] = new Dice(Id::next(), new DiceSide($sideB), new DiceSide($sideA));
+            }
+        }
+
+        parent::__construct($items);
+    }
+
     /**
      * @param PlayerInterface $owner
      * @return ArrayObject|Dice[]

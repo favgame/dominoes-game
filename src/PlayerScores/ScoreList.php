@@ -5,7 +5,7 @@ namespace Dominoes\Players;
 use ArrayObject;
 use Dominoes\AbstractList;
 use Dominoes\Dices\Dice;
-use Dominoes\GameData;
+use Dominoes\Dices\DiceList;
 use Dominoes\PlayerScores\Score;
 
 /**
@@ -14,21 +14,26 @@ use Dominoes\PlayerScores\Score;
 final class ScoreList extends AbstractList
 {
     /**
-     * @param GameData $gameData
-     * @return static
-     * @deprecated
+     * @param PlayerList $playerList
      */
-    public static function createList(GameData $gameData): self
+    public function __construct(PlayerList $playerList)
     {
-        $items = [];
+        $items = array_map(fn (PlayerInterface $player) => new Score($player), $playerList->getItems());
 
-        foreach ($gameData->getPlayerList()->getItems() as $player) {
-            $dices = $gameData->getDiceList()->getItemsByOwner($player);
+        parent::__construct($items);
+    }
+
+    /**
+     * @param DiceList $diceList
+     * @return void
+     */
+    public function updateScore(DiceList $diceList): void
+    {
+        array_walk($this->items, function (Score $item) use ($diceList): void {
+            $dices = $diceList->getItemsByOwner($item->getPlayer());
             $points = array_map(fn (Dice $dice) => $dice->getPointAmount(), $dices);
-            $items[] = new Score($player, array_sum($points));
-        }
-
-        return new self($items);
+            $item->setPointAmount($item->getPointAmount() + $points);
+        });
     }
 
     /**
@@ -44,5 +49,16 @@ final class ScoreList extends AbstractList
         }
 
         return $this->getItems()[$index[0]];
+    }
+
+    /**
+     * @param PlayerInterface $owner
+     * @return Score|null
+     */
+    public function getItemByOwner(PlayerInterface $owner): ?Score
+    {
+        $callback = fn (PlayerInterface $player) => ($player === $owner);
+
+        return $this->filterItems($callback)->getIterator()->current();
     }
 }

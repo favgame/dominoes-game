@@ -2,6 +2,7 @@
 
 namespace Dominoes\GameHandlers;
 
+use Dominoes\Events\GameStartEvent;
 use Dominoes\Events\RoundStartEvent;
 use Dominoes\Id;
 use Dominoes\Players\PlayerInterface;
@@ -13,9 +14,16 @@ final class RoundStartHandler extends AbstractGameHandler
      */
     public function handleData(): void
     {
-        if ($this->gameData->getState()->isInitial()) {
-            $this->gameData->getState()->setValueInProgress();
+        if ($this->gameData->getState()->isDone()) {
+            return;
+        }
 
+        if ($this->gameData->getState()->isInitial()) {
+            $this->gameData->getState()->setReady();
+            $this->eventManager->addEvent(new GameStartEvent(Id::next(), $this->gameData));
+        }
+
+        if ($this->gameData->getState()->isReady()) {
             $diceDistributor = new DiceDistributor($this->eventManager, $this->gameData);
             $diceDistributor->distributeDices();
 
@@ -23,6 +31,8 @@ final class RoundStartHandler extends AbstractGameHandler
 
             $playerQueue = new PlayerQueue($this->eventManager, $this->gameData);
             $playerQueue->changePlayer($this->getActivePlayer());
+
+            $this->gameData->getState()->setInProgress();
         }
 
         $this->handleNext();
