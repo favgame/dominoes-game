@@ -3,9 +3,9 @@
 namespace Dominoes\GameHandlers;
 
 use Dominoes\Events\GameStartEvent;
+use Dominoes\Events\PlayerChangeEvent;
 use Dominoes\Events\RoundStartEvent;
 use Dominoes\Id;
-use Dominoes\Players\PlayerInterface;
 
 final class RoundStartHandler extends AbstractGameHandler
 {
@@ -29,30 +29,12 @@ final class RoundStartHandler extends AbstractGameHandler
 
             $this->eventManager->addEvent(new RoundStartEvent(Id::next(), $this->gameData));
 
-            $playerQueue = new PlayerQueue($this->eventManager, $this->gameData);
-            $playerQueue->changePlayer($this->getActivePlayer());
-
-            $this->gameData->getState()->setInProgress();
+            $player = $this->gameData->getActivePlayer() ?: $this->gameData->getDiceList()->getStartItem()->getOwner();
+            $this->gameData->setActivePlayer($player);
+            $this->eventManager->addEvent(new PlayerChangeEvent(Id::next(), $this->gameData, $player));
         }
 
+        $this->gameData->getState()->setInProgress();
         $this->handleNext();
-    }
-
-    /**
-     * @return PlayerInterface
-     */
-    private function getActivePlayer(): PlayerInterface
-    {
-        $activePlayer = null;
-        $maxPointAmount = 0;
-
-        foreach ($this->gameData->getDiceList()->getItems() as $item) {
-            if ($item->hasOwner() && $item->getPointAmount() >= $maxPointAmount) {
-                $maxPointAmount = $item->getPointAmount();
-                $activePlayer = $item->getOwner();
-            }
-        }
-
-        return $activePlayer;
     }
 }

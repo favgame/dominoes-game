@@ -16,10 +16,10 @@ final class RoundEndHandler extends AbstractGameHandler
     {
         $scoreList = new ScoreList($this->gameData->getPlayerList());
         $scoreList->updateScore($this->gameData->getDiceList());
-
         $this->gameData->getScoreList()->updateScore($this->gameData->getDiceList());
-        $event = new RoundEndEvent(Id::next(), $this->gameData, $scoreList);
-        $this->eventManager->addEvent($event);
+        $this->eventManager->addEvent(new RoundEndEvent(Id::next(), $this->gameData, $scoreList));
+        $this->gameData->setActivePlayer($scoreList->getLeaderItem()->getPlayer() ?? null);
+        $this->gameData->getState()->setReady();
 
         if ($this->isGameEnd()) {
             $this->eventManager->addEvent(new GameEndEvent(Id::next(), $this->gameData));
@@ -28,7 +28,6 @@ final class RoundEndHandler extends AbstractGameHandler
             return;
         }
 
-        $this->gameData->getState()->setReady();
         $this->handleNext();
     }
 

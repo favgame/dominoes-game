@@ -4,13 +4,16 @@ namespace Dominoes\GameHandlers;
 
 use Dominoes\Dices\InvalidBindingException;
 use Dominoes\Events\GameStepEvent;
+use Dominoes\Events\PlayerChangeEvent;
 use Dominoes\GameSteps\StepList;
 use Dominoes\Id;
+use InfiniteIterator;
 
 final class GameStepHandler extends AbstractGameHandler implements HandlerInterface
 {
     /**
      * @inheritDoc
+     * @throws InvalidStepException
      * @throws InvalidBindingException
      */
     public function handleData(): void
@@ -25,12 +28,12 @@ final class GameStepHandler extends AbstractGameHandler implements HandlerInterf
             return;
         }
 
-        $playerQueue = new PlayerQueue($this->eventManager, $this->gameData);
-        $playerQueue->changeNextPlayer();
+        $this->changeNextPlayer();
     }
 
     /**
      * @return bool
+     * @throws InvalidStepException
      * @throws InvalidBindingException
      */
     private function handlePlayerStep(): bool
@@ -51,6 +54,10 @@ final class GameStepHandler extends AbstractGameHandler implements HandlerInterf
         $step = $player->getStep($stepList); // Ожидание хода игрока
 
         if ($step) { // Игрок сделал ход
+            if (!$stepList->hasItem($step)) {
+                throw new InvalidStepException();
+            }
+
             $step->getChosenDice()->setBinding($step->getDestinationDice());
             $this->eventManager->addEvent(new GameStepEvent(Id::next(), $this->gameData, $step));
 
@@ -93,5 +100,26 @@ final class GameStepHandler extends AbstractGameHandler implements HandlerInterf
         }
 
         return false;
+    }
+
+    /**
+     * @return void
+     */
+    private function changeNextPlayer(): void
+    {
+        $iterator = new InfiniteIterator($this->gameData->getPlayerList()->getItems()->getIterator());
+        $player = $this->gameData->getActivePlayer();
+
+        if ($player) {
+            while ($iterator->current() !== $player) {
+                $iterator->next();
+            }
+        }
+
+        $iterator->next();
+        $player = $iterator->current();
+
+        $this->gameData->setActivePlayer($player);
+        $this->eventManager->addEvent(new PlayerChangeEvent(Id::next(), $this->gameData, $player));
     }
 }

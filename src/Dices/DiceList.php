@@ -61,4 +61,22 @@ final class DiceList extends AbstractList
     {
         return $this->filterItems(fn (Dice $dice) => $dice->isUsed());
     }
+
+    /**
+     * @return Dice|null
+     */
+    public function getStartItem(): ?Dice
+    {
+        $dice = null;
+        $maxPointAmount = 0;
+
+        foreach ($this->getItems() as $item) {
+            if ($item->hasOwner() && $item->getPointAmount() >= $maxPointAmount) {
+                $maxPointAmount = $item->getPointAmount();
+                $dice = $item;
+            }
+        }
+
+        return $dice;
+    }
 }

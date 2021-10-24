@@ -138,10 +138,10 @@ final class GameData
     }
 
     /**
-     * @param PlayerInterface $player
+     * @param PlayerInterface|null $player
      * @return void
      */
-    public function setActivePlayer(PlayerInterface $player): void
+    public function setActivePlayer(?PlayerInterface $player): void
     {
         $this->activePlayer = $player;
     }

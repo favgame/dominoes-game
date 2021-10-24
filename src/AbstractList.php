@@ -39,10 +39,10 @@ abstract class AbstractList
     }
 
     /**
-     * @param $item
+     * @param mixed $item
      * @return bool
      */
-    public function isExist($item): bool
+    public function hasItem($item): bool
     {
         return (array_search($item, $this->items, true) !== null);
     }
