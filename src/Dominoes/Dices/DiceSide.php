@@ -7,9 +7,9 @@ final class DiceSide
     private int $value;
 
     /**
-     * @var static
+     * @var static|null
      */
-    private self $binding;
+    private ?self $binding = null;
 
     /**
      * @param int $value

@@ -5,7 +5,7 @@ namespace Dominoes\GameHandlers;
 use Dominoes\Events\GameEndEvent;
 use Dominoes\Events\RoundEndEvent;
 use Dominoes\Id;
-use Dominoes\Players\ScoreList;
+use Dominoes\PlayerScores\ScoreList;
 
 final class RoundEndHandler extends AbstractGameHandler
 {
@@ -16,9 +16,10 @@ final class RoundEndHandler extends AbstractGameHandler
     {
         $scoreList = new ScoreList($this->gameData->getPlayerList());
         $scoreList->updateScore($this->gameData->getDiceList());
+        $leaderScore = $scoreList->getLeaderItem();
         $this->gameData->getScoreList()->updateScore($this->gameData->getDiceList());
         $this->eventManager->addEvent(new RoundEndEvent(Id::next(), $this->gameData, $scoreList));
-        $this->gameData->setActivePlayer($scoreList->getLeaderItem()->getPlayer() ?? null);
+        $this->gameData->setActivePlayer($leaderScore ? $leaderScore->getPlayer() : null);
         $this->gameData->getState()->setReady();
 
         if ($this->isGameEnd()) {

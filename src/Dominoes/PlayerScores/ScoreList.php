@@ -1,12 +1,13 @@
 <?php
 
-namespace Dominoes\Players;
+namespace Dominoes\PlayerScores;
 
 use ArrayObject;
 use Dominoes\AbstractList;
 use Dominoes\Dices\Dice;
 use Dominoes\Dices\DiceList;
-use Dominoes\PlayerScores\Score;
+use Dominoes\Players\PlayerInterface;
+use Dominoes\Players\PlayerList;
 
 /**
  * @method ArrayObject|Score[] getItems()
@@ -18,7 +19,7 @@ final class ScoreList extends AbstractList
      */
     public function __construct(PlayerList $playerList)
     {
-        $items = array_map(fn (PlayerInterface $player) => new Score($player), $playerList->getItems());
+        $items = array_map(fn (PlayerInterface $player) => new Score($player), $playerList->getItems()->getArrayCopy());
 
         parent::__construct($items);
     }
@@ -31,8 +32,8 @@ final class ScoreList extends AbstractList
     {
         $this->eachItems(function (Score $item) use ($diceList): void {
             $dices = $diceList->getItemsByOwner($item->getPlayer());
-            $points = array_map(fn (Dice $dice) => $dice->getPointAmount(), $dices);
-            $item->setPointAmount($item->getPointAmount() + $points);
+            $points = array_map(fn (Dice $dice) => $dice->getPointAmount(), $dices->getArrayCopy());
+            $item->setPointAmount($item->getPointAmount() + array_sum($points));
         });
     }
 
@@ -41,7 +42,7 @@ final class ScoreList extends AbstractList
      */
     public function getLeaderItem(): ?Score
     {
-        $points = array_map(fn (Score $playerScore) => $playerScore->getPointAmount(), $this->getItems());
+        $points = array_map(fn (Score $playerScore) => $playerScore->getPointAmount(), $this->items);
         $index = array_keys($points, min($points), true);
 
         if (count($index) !== 1) {
@@ -54,6 +55,7 @@ final class ScoreList extends AbstractList
     /**
      * @param PlayerInterface $owner
      * @return Score|null
+     * @deprecated
      */
     public function getItemByOwner(PlayerInterface $owner): ?Score
     {

@@ -58,6 +58,9 @@ final class GameStepHandler extends AbstractGameHandler implements HandlerInterf
                 throw new InvalidStepException();
             }
 
+
+            print_r($step);
+
             $step->getChosenDice()->setBinding($step->getDestinationDice());
             $this->eventManager->addEvent(new GameStepEvent(Id::next(), $this->gameData, $step));
 

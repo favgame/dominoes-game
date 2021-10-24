@@ -12,7 +12,7 @@ final class Step
     private Dice $chosenDice;
 
     /**
-     * @var Dice|null
+     * @var Dice
      */
     private Dice $destinationDice;
 
@@ -37,7 +37,7 @@ final class Step
     /**
      * @return Dice
      */
-    public function getDestinationDice(): ?Dice
+    public function getDestinationDice(): Dice
     {
         return $this->destinationDice;
     }

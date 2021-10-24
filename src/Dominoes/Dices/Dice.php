@@ -161,16 +161,17 @@ final class Dice
             throw new InvalidBindingException();
         }
 
-        if (!$this->getSideA()->isBinding()) {
-            $side = $dice->getFreeSideByValue($this->getSideA()->getValue());
-            $side->setBinding($this->getSideA());
-            $this->getSideA()->setBinding($side);
-        }
+        foreach ([$this->getSideA(), $this->getSideB()] as $selfSide) {
+            if (!$selfSide->isBinding()) {
+                $side = $dice->getFreeSideByValue($selfSide->getValue());
 
-        if (!$this->getSideB()->isBinding()) {
-            $side = $dice->getFreeSideByValue($this->getSideB()->getValue());
-            $side->setBinding($this->getSideA());
-            $this->getSideB()->setBinding($side);
+                if ($side) {
+                    $side->setBinding($selfSide);
+                    $selfSide->setBinding($side);
+
+                    break;
+                }
+            }
         }
 
         if ($side === null) {

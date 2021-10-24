@@ -22,11 +22,14 @@ final class StepList extends AbstractList
         $playerDices = $diceList->getItemsByOwner($player);
         $items = [];
 
-        if ($activeDices->count() == 0) {
-            $activeDices = $playerDices;
-        }
 
         foreach ($playerDices as $playerDice) {
+            if ($activeDices->count() == 0) {
+                $items[] = new Step($playerDice, $playerDice);
+
+                continue;
+            }
+
             foreach ($activeDices as $activeDice) {
                 if ($playerDice->canBinding($activeDice)) {
                     $items[] = new Step($playerDice, $activeDice);
@@ -45,8 +48,9 @@ final class StepList extends AbstractList
         /** @var Step $step */
         $step = null;
 
-        if ($this->getItems()->count()) {
-            $step = array_rand($this->getItems());
+        if (count($this->items)) {
+            $randomKey = array_rand($this->items);
+            $step = $this->items[$randomKey];
         }
 
         return $step;

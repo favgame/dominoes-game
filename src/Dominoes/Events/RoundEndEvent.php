@@ -4,7 +4,7 @@ namespace Dominoes\Events;
 
 use Dominoes\GameData;
 use Dominoes\Id;
-use Dominoes\Players\ScoreList;
+use Dominoes\PlayerScores\ScoreList;
 
 final class RoundEndEvent extends AbstractGameEvent
 {

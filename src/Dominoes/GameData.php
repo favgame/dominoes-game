@@ -6,7 +6,7 @@ use Dominoes\Dices\DiceList;
 use Dominoes\GameRules\RulesInterface;
 use Dominoes\Players\PlayerInterface;
 use Dominoes\Players\PlayerList;
-use Dominoes\Players\ScoreList;
+use Dominoes\PlayerScores\ScoreList;
 
 final class GameData
 {
@@ -129,10 +129,10 @@ final class GameData
     }
 
     /**
-     * @return PlayerInterface
+     * @return PlayerInterface|null
      * @return void
      */
-    public function getActivePlayer(): PlayerInterface
+    public function getActivePlayer(): ?PlayerInterface
     {
         return $this->activePlayer;
     }
