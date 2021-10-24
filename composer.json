@@ -1,0 +1,14 @@
+{
+    "name": "kovalevpw/domino-game",
+    "type": "library",
+    "require": {
+        "php": "~7.4",
+        "ext-memcached": "^3.1"
+    },
+    "authors": [
+        {
+            "name": "Petr Kovalev",
+            "email": "dev-null@kovalev.pw"
+        }
+    ]
+}
