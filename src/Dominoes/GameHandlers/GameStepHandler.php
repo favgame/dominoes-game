@@ -5,6 +5,7 @@ namespace Dominoes\GameHandlers;
 use Dominoes\Dices\InvalidBindingException;
 use Dominoes\Events\GameStepEvent;
 use Dominoes\Events\PlayerChangeEvent;
+use Dominoes\GameSteps\Step;
 use Dominoes\GameSteps\StepList;
 use Dominoes\Id;
 use InfiniteIterator;
@@ -58,8 +59,7 @@ final class GameStepHandler extends AbstractGameHandler implements HandlerInterf
                 throw new InvalidStepException();
             }
 
-
-            print_r($step);
+            $this->logStep($step);
 
             $step->getChosenDice()->setBinding($step->getDestinationDice());
             $this->eventManager->addEvent(new GameStepEvent(Id::next(), $this->gameData, $step));
@@ -124,5 +124,21 @@ final class GameStepHandler extends AbstractGameHandler implements HandlerInterf
 
         $this->gameData->setActivePlayer($player);
         $this->eventManager->addEvent(new PlayerChangeEvent(Id::next(), $this->gameData, $player));
+    }
+
+    /**
+     * @param Step $step
+     * @return void
+     */
+    private function logStep(Step $step): void
+    {
+        echo sprintf(
+            "%s: [%d|%d] -> [%d|%d]\n",
+            $step->getChosenDice()->getOwner()->getName(),
+            $step->getChosenDice()->getSideA()->getValue(),
+            $step->getChosenDice()->getSideB()->getValue(),
+            $step->getDestinationDice()->getSideA()->getValue(),
+            $step->getDestinationDice()->getSideB()->getValue()
+        );
     }
 }
