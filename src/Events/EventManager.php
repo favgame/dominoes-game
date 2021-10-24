@@ -5,9 +5,9 @@ namespace Dominoes\Events;
 final class EventManager
 {
     /**
-     * @var EventSubscription[]
+     * @var EventListenerInterface[]
      */
-    private array $eventSubscriptions = [];
+    private array $eventListeners = [];
 
     /**
      * @var EventInterface[]
@@ -16,27 +16,25 @@ final class EventManager
 
     /**
      * @param EventListenerInterface $listener
-     * @param string $eventName
      * @return void
      */
-    public function subscribe(EventListenerInterface $listener, string $eventName): void
+    public function subscribe(EventListenerInterface $listener): void
     {
-        $this->unsubscribe($listener, $eventName);
-        $this->eventSubscriptions[] = new EventSubscription($listener, $eventName);
+        $this->unsubscribe($listener);
+        $this->eventListeners[] = $listener;
     }
 
     /**
      * @param EventListenerInterface $listener
-     * @param string $eventName
      * @return void
      */
-    public function unsubscribe(EventListenerInterface $listener, string $eventName): void
+    public function unsubscribe(EventListenerInterface $listener): void
     {
-        $callback = function (EventSubscription $subscription) use ($eventName, $listener) {
-            return ($subscription->getEventListener() !== $listener && $subscription->getEventName() != $eventName);
+        $callback = function (EventListenerInterface $item) use ($listener): bool {
+            return ($item !== $listener);
         };
 
-        $this->eventSubscriptions = array_filter($this->eventSubscriptions, $callback);
+        $this->eventListeners = array_filter($this->eventListeners, $callback);
     }
 
     /**
@@ -59,13 +57,12 @@ final class EventManager
 
     /**
      * @param EventInterface $event
+     * @return void
      */
     private function fireEvent(EventInterface $event): void
     {
-        array_walk($this->eventSubscriptions, function (EventSubscription $subscription) use ($event) {
-            if ($subscription->getEventName() == $event->getName()) {
-                $subscription->getEventListener()->handleEvent($event);
-            }
+        array_walk($this->eventListeners, function (EventListenerInterface $listener) use ($event): void {
+            $listener->handleEvent($event);
         });
     }
 }

@@ -29,7 +29,7 @@ final class ScoreList extends AbstractList
      */
     public function updateScore(DiceList $diceList): void
     {
-        array_walk($this->items, function (Score $item) use ($diceList): void {
+        $this->eachItems(function (Score $item) use ($diceList): void {
             $dices = $diceList->getItemsByOwner($item->getPlayer());
             $points = array_map(fn (Dice $dice) => $dice->getPointAmount(), $dices);
             $item->setPointAmount($item->getPointAmount() + $points);

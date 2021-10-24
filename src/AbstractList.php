@@ -46,4 +46,13 @@ abstract class AbstractList
     {
         return (array_search($item, $this->items, true) !== null);
     }
+
+    /**
+     * @param callable $callback
+     * @return void
+     */
+    public function eachItems(callable $callback): void
+    {
+        array_walk($this->items, $callback);
+    }
 }

@@ -55,9 +55,7 @@ final class DiceDistributor
     public function distributeDices(): void
     {
         $this->gameData->setDiceList(new DiceList($this->gameData->getRules()));
-        $players = $this->gameData->getPlayerList()->getItems();
-
-        array_walk($players, function (PlayerInterface $player) {
+        $this->gameData->getPlayerList()->eachItems(function (PlayerInterface $player): void {
             for ($count = 0; $count < $this->gameData->getRules()->getInitialDiceCount(); $count++) {
                 $this->distributeDice($player);
             }

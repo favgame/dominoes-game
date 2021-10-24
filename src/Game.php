@@ -68,10 +68,7 @@ final class Game
      */
     private function subscribePlayers(): void
     {
-        $players = $this->gameData->getPlayerList()->getItems();
-
-        array_walk($players, function (PlayerInterface $player) {
-            $this->eventManager->subscribe($player, DiceGivenEvent::EVENT_NAME);
-        });
+        $playerList = $this->gameData->getPlayerList();
+        $playerList->eachItems(fn(PlayerInterface $player) => $this->eventManager->subscribe($player));
     }
 }
