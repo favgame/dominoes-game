@@ -1,5 +1,2 @@
 .idea
-.env
-/docker-compose.yml
-/docker
 /vendor
