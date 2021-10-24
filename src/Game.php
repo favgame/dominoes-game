@@ -2,7 +2,6 @@
 
 namespace Dominoes;
 
-use Dominoes\Events\DiceGivenEvent;
 use Dominoes\Events\EventManager;
 use Dominoes\GameHandlers\GameStepHandler;
 use Dominoes\GameHandlers\HandlerInterface;
