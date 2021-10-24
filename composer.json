@@ -3,12 +3,17 @@
     "type": "library",
     "require": {
         "php": "~7.4",
-        "ext-memcached": "^3.1"
+        "ext-memcached": "~3.1"
     },
     "authors": [
         {
             "name": "Petr Kovalev",
             "email": "dev-null@kovalev.pw"
         }
-    ]
+    ],
+    "autoload": {
+        "psr-4": {
+            "Dominoes\\": "src/"
+        }
+    }
 }
