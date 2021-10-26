@@ -15,7 +15,8 @@ use Dominoes\Events\GameStepEvent;
 use Dominoes\Events\PlayerChangeEvent;
 use Dominoes\Events\RoundEndEvent;
 use Dominoes\Events\RoundStartEvent;
-use Dominoes\GameFactory;
+use Dominoes\Game;
+use Dominoes\GameDataFactory;
 use Dominoes\GameRules\ClassicRules;
 use Dominoes\Id;
 use RuntimeException;
@@ -96,7 +97,12 @@ class Logger implements EventListenerInterface
 
 $inWork = true;
 $logger = new Logger();
-$game = (new GameFactory)->createGame(new ClassicRules(), new MelissaBot(Id::next()), new SusannaBot(Id::next()));
+$gameData = (new GameDataFactory)->createGameData(
+    new ClassicRules(),
+    new MelissaBot(Id::next()),
+    new SusannaBot(Id::next())
+);
+$game = new Game($gameData);
 $game->getEventManager()->subscribe($logger);
 
 while ($inWork) {

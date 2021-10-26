@@ -2,6 +2,7 @@
 
 namespace Dominoes\Events;
 
+use DateTimeInterface;
 use Dominoes\GameData;
 use Dominoes\GameSteps\Step;
 use Dominoes\Id;
@@ -18,14 +19,15 @@ final class GameStepEvent extends AbstractGameEvent
 
     /**
      * @param Id $id
+     * @param DateTimeInterface $createdAt
      * @param GameData $gameData
      * @param Step $gameStep
      */
-    public function __construct(Id $id, GameData $gameData, Step $gameStep)
+    public function __construct(Id $id, DateTimeInterface $createdAt, GameData $gameData, Step $gameStep)
     {
         $this->gameStep = $gameStep;
 
-        parent::__construct($id, $gameData, self::EVENT_NAME);
+        parent::__construct($id, $createdAt, $gameData, self::EVENT_NAME);
     }
 
     /**

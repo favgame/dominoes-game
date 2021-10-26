@@ -2,7 +2,6 @@
 
 namespace Dominoes\Events;
 
-use DateTimeImmutable;
 use DateTimeInterface;
 use Dominoes\GameData;
 use Dominoes\Id;
@@ -73,16 +72,5 @@ abstract class AbstractGameEvent implements EventInterface
     public function getGameData(): GameData
     {
         return $this->gameData;
-    }
-
-    /**
-     * @param mixed ...$args
-     * @return EventInterface
-     */
-    public function createInstance(...$args): EventInterface
-    {
-        array_unshift($args, Id::next(), new DateTimeImmutable());
-
-        return new static($args);
     }
 }

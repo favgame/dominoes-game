@@ -2,6 +2,7 @@
 
 namespace Dominoes\Events;
 
+use DateTimeInterface;
 use Dominoes\GameData;
 use Dominoes\Id;
 use Dominoes\Players\PlayerInterface;
@@ -18,14 +19,15 @@ final class PlayerChangeEvent extends AbstractGameEvent
 
     /**
      * @param Id $id
+     * @param DateTimeInterface $createdAt
      * @param GameData $gameData
      * @param PlayerInterface $player
      */
-    public function __construct(Id $id, GameData $gameData, PlayerInterface $player)
+    public function __construct(Id $id, DateTimeInterface $createdAt, GameData $gameData, PlayerInterface $player)
     {
         $this->player = $player;
 
-        parent::__construct($id, $gameData, self::EVENT_NAME);
+        parent::__construct($id, $createdAt, $gameData, self::EVENT_NAME);
     }
 
     /**

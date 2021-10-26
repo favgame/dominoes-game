@@ -2,6 +2,7 @@
 
 namespace Dominoes\Events;
 
+use DateTimeInterface;
 use Dominoes\GameData;
 use Dominoes\Id;
 use Dominoes\PlayerScores\ScoreList;
@@ -18,14 +19,15 @@ final class RoundEndEvent extends AbstractGameEvent
 
     /**
      * @param Id $id
+     * @param DateTimeInterface $createdAt
      * @param GameData $gameData
      * @param ScoreList $scoreList
      */
-    public function __construct(Id $id, GameData $gameData, ScoreList $scoreList)
+    public function __construct(Id $id, DateTimeInterface $createdAt, GameData $gameData, ScoreList $scoreList)
     {
         $this->scoreList = $scoreList;
 
-        parent::__construct($id, $gameData, self::EVENT_NAME);
+        parent::__construct($id, $createdAt, $gameData, self::EVENT_NAME);
     }
 
     /**-

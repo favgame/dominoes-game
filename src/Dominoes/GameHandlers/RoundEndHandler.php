@@ -2,6 +2,7 @@
 
 namespace Dominoes\GameHandlers;
 
+use DateTimeImmutable;
 use Dominoes\Events\GameEndEvent;
 use Dominoes\Events\RoundEndEvent;
 use Dominoes\Id;
@@ -18,12 +19,19 @@ final class RoundEndHandler extends AbstractGameHandler
         $scoreList->updateScore($this->gameData->getDiceList());
         $leaderScore = $scoreList->getLeaderItem();
         $this->gameData->getScoreList()->updateScore($this->gameData->getDiceList());
-        $this->eventManager->addEvent(new RoundEndEvent(Id::next(), $this->gameData, $scoreList));
+
+        $this->eventManager->addEvent(
+            new RoundEndEvent(Id::next(), new DateTimeImmutable(), $this->gameData, $scoreList)
+        );
+
         $this->gameData->setActivePlayer($leaderScore ? $leaderScore->getPlayer() : null);
         $this->gameData->getState()->setReady();
 
         if ($this->isGameEnd()) {
-            $this->eventManager->addEvent(new GameEndEvent(Id::next(), $this->gameData));
+            $this->eventManager->addEvent(
+                new GameEndEvent(Id::next(), new DateTimeImmutable(), $this->gameData)
+            );
+
             $this->gameData->getState()->setDone();
 
             return;

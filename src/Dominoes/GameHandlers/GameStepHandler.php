@@ -2,6 +2,7 @@
 
 namespace Dominoes\GameHandlers;
 
+use DateTimeImmutable;
 use Dominoes\Dices\InvalidBindingException;
 use Dominoes\Events\GameStepEvent;
 use Dominoes\Events\PlayerChangeEvent;
@@ -59,10 +60,11 @@ final class GameStepHandler extends AbstractGameHandler implements HandlerInterf
                 throw new InvalidStepException();
             }
 
-            $this->logStep($step);
-
             $step->getChosenDice()->setBinding($step->getDestinationDice());
-            $this->eventManager->addEvent(new GameStepEvent(Id::next(), $this->gameData, $step));
+
+            $this->eventManager->addEvent(
+                new GameStepEvent(Id::next(), new DateTimeImmutable(), $this->gameData, $step)
+            );
 
             return true; // Ход окончен
         }
@@ -123,22 +125,9 @@ final class GameStepHandler extends AbstractGameHandler implements HandlerInterf
         $player = $iterator->current();
 
         $this->gameData->setActivePlayer($player);
-        $this->eventManager->addEvent(new PlayerChangeEvent(Id::next(), $this->gameData, $player));
-    }
 
-    /**
-     * @param Step $step
-     * @return void
-     */
-    private function logStep(Step $step): void
-    {
-        echo sprintf(
-            "%s: [%d|%d] -> [%d|%d]\n",
-            $step->getChosenDice()->getOwner()->getName(),
-            $step->getChosenDice()->getSideA()->getValue(),
-            $step->getChosenDice()->getSideB()->getValue(),
-            $step->getDestinationDice()->getSideA()->getValue(),
-            $step->getDestinationDice()->getSideB()->getValue()
+        $this->eventManager->addEvent(
+            new PlayerChangeEvent(Id::next(), new DateTimeImmutable(), $this->gameData, $player)
         );
     }
 }

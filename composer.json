@@ -16,8 +16,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "Dominoes\\": "src/Dominoes/",
-            "Dominoes\\Tests\\": "tests/Dominoes/Tests/"
+            "Dominoes\\": "src/Dominoes/"
         }
     }
 }

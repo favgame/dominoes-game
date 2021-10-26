@@ -3,5 +3,5 @@
 ## Tests
 
 ```shell
-docker-compose exec php php ./vendor/phpunit/phpunit/phpunit tests
+docker-compose exec php php ./vendor/phpunit/phpunit/phpunit --debug --coverage-text tests
 ```

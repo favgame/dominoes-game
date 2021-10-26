@@ -2,6 +2,7 @@
 
 namespace Dominoes\GameHandlers;
 
+use DateTimeImmutable;
 use Dominoes\Dices\DiceList;
 use Dominoes\Events\DiceGivenEvent;
 use Dominoes\Events\EventManager;
@@ -41,7 +42,9 @@ final class DiceDistributor
 
         if ($dice) {
             $dice->setOwner($player);
-            $this->eventManager->addEvent(new DiceGivenEvent(Id::next(), $this->gameData, $dice));
+            $this->eventManager->addEvent(
+                new DiceGivenEvent(Id::next(), new DateTimeImmutable(), $this->gameData, $dice)
+            );
 
             return true;
         }

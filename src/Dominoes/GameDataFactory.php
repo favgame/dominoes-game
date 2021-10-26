@@ -8,21 +8,20 @@ use Dominoes\Players\PlayerInterface;
 use Dominoes\Players\PlayerList;
 use Dominoes\PlayerScores\ScoreList;
 
-final class GameFactory
+final class GameDataFactory
 {
     /**
      * @param RulesInterface $gameRules
      * @param PlayerInterface ...$players
-     * @return Game
+     * @return GameData
      */
-    public function createGame(RulesInterface $gameRules, PlayerInterface ...$players): Game
+    public function createGameData(RulesInterface $gameRules, PlayerInterface ...$players): GameData
     {
         $gameState = new GameState();
         $playersList = new PlayerList($players);
         $scoreList = new ScoreList($playersList);
         $diceList = new DiceList($gameRules);
-        $gameData = new GameData(Id::next(), $gameState, $gameRules, $playersList, $scoreList, $diceList);
 
-        return new Game($gameData);
+        return new GameData(Id::next(), $gameState, $gameRules, $playersList, $scoreList, $diceList);
     }
 }
