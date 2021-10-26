@@ -2,6 +2,7 @@
 
 namespace Dominoes\Events;
 
+use DateTimeImmutable;
 use Dominoes\GameData;
 use Dominoes\Id;
 
@@ -12,10 +13,11 @@ final class GameEndEvent extends AbstractGameEvent
 
     /**
      * @param Id $id
+     * @param DateTimeImmutable $dateTimeImmutable
      * @param GameData $gameData
      */
-    public function __construct(Id $id, GameData $gameData)
+    public function __construct(Id $id, DateTimeImmutable $dateTimeImmutable, GameData $gameData)
     {
-        parent::__construct($id, $gameData, self::EVENT_NAME);
+        parent::__construct($id, $dateTimeImmutable, $gameData, self::EVENT_NAME);
     }
 }

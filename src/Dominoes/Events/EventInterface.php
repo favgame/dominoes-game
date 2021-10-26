@@ -3,6 +3,7 @@
 namespace Dominoes\Events;
 
 use Dominoes\Id;
+use DateTimeInterface;
 
 interface EventInterface
 {
@@ -15,4 +16,9 @@ interface EventInterface
      * @return string
      */
     public function getName(): string;
+
+    /**
+     * @return DateTimeInterface
+     */
+    public function getCreatedAt(): DateTimeInterface;
 }

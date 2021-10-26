@@ -2,6 +2,7 @@
 
 namespace Dominoes\Events;
 
+use DateTimeInterface;
 use Dominoes\Dices\Dice;
 use Dominoes\GameData;
 use Dominoes\Id;
@@ -18,14 +19,15 @@ final class DiceGivenEvent extends AbstractGameEvent
 
     /**
      * @param Id $id
+     * @param DateTimeInterface $createdAt
      * @param GameData $gameData
      * @param Dice $dice
      */
-    public function __construct(Id $id, GameData $gameData, Dice $dice)
+    public function __construct(Id $id, DateTimeInterface $createdAt, GameData $gameData, Dice $dice)
     {
         $this->dice = $dice;
 
-        parent::__construct($id, $gameData, self::EVENT_NAME);
+        parent::__construct($id, $createdAt, $gameData, self::EVENT_NAME);
     }
 
     /**

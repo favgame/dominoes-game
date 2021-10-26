@@ -63,6 +63,14 @@ final class Game
     }
 
     /**
+     * @return EventManager
+     */
+    public function getEventManager(): EventManager
+    {
+        return $this->eventManager;
+    }
+
+    /**
      * @return void
      */
     private function subscribePlayers(): void
