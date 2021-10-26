@@ -30,6 +30,6 @@ final class Id
      */
     public static function next(): self
     {
-        return new self(uniqid('', true));
+        return new self(hexdec(uniqid('', true)));
     }
 }
