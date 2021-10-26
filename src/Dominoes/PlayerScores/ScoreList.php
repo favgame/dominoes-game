@@ -19,7 +19,7 @@ final class ScoreList extends AbstractList
      */
     public function __construct(PlayerList $playerList)
     {
-        $items = array_map(fn (PlayerInterface $player) => new Score($player), $playerList->getItems()->getArrayCopy());
+        $items = array_map(fn (PlayerInterface $player) => new Score($player), (array) $playerList->getItems());
 
         parent::__construct($items);
     }
@@ -32,7 +32,7 @@ final class ScoreList extends AbstractList
     {
         $this->eachItems(function (Score $item) use ($diceList): void {
             $dices = $diceList->getItemsByOwner($item->getPlayer());
-            $points = array_map(fn (Dice $dice) => $dice->getPointAmount(), $dices->getArrayCopy());
+            $points = array_map(fn (Dice $dice) => $dice->getPointAmount(), (array) $dices);
             $item->setPointAmount($item->getPointAmount() + array_sum($points));
         });
     }
