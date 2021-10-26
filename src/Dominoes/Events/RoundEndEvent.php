@@ -30,7 +30,7 @@ final class RoundEndEvent extends AbstractGameEvent
         parent::__construct($id, $createdAt, $gameData, self::EVENT_NAME);
     }
 
-    /**-
+    /**
      * @return ScoreList
      */
     public function getScoreList(): ScoreList

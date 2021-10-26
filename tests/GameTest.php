@@ -31,7 +31,9 @@ class GameTest extends TestCase
 
         while ($inWork) {
             $inWork = $game->run();
-            $this->assertIsBool($inWork);
         }
+
+        $this->assertIsArray($logger->getMessages());
+        $this->assertNotEmpty($logger->getMessages());
     }
 }
