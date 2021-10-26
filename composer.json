@@ -18,5 +18,10 @@
         "psr-4": {
             "Dominoes\\": "src/Dominoes/"
         }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Dominoes\\Tests\\": "tests/"
+        }
     }
 }
