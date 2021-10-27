@@ -5,22 +5,22 @@ namespace Dominoes;
 final class Id
 {
     /**
-     * @var string
+     * @var int
      */
-    private string $value;
+    private int $value;
 
     /**
-     * @param string $value
+     * @param int $value
      */
-    public function __construct(string $value)
+    public function __construct(int $value)
     {
         $this->value = $value;
     }
 
     /**
-     * @return string
+     * @return int
      */
-    public function getValue(): string
+    public function getValue(): int
     {
         return $this->value;
     }
@@ -30,6 +30,6 @@ final class Id
      */
     public static function next(): self
     {
-        return new self(hexdec(uniqid('', true)));
+        return new self(hexdec(uniqid()));
     }
 }

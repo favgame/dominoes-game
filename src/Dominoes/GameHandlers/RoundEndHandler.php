@@ -47,7 +47,7 @@ final class RoundEndHandler extends AbstractGameHandler
     {
         $leader = $this->gameData->getScoreList()->getLeaderItem();
 
-        if ($leader && $leader->getPointAmount() < $this->gameData->getRules()->getMaxPointAmount()) {
+        if (!$leader || $leader->getPointAmount() < $this->gameData->getRules()->getMaxPointAmount()) {
             return false;
         }
 
