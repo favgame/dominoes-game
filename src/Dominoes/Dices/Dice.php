@@ -5,42 +5,45 @@ namespace Dominoes\Dices;
 use Dominoes\Id;
 use Dominoes\Players\PlayerInterface;
 
+/**
+ * Класс игральной кости
+ */
 final class Dice
 {
     /**
-     * @var Id
+     * @var Id Идентификатор игральной кости
      */
     private Id $id;
 
     /**
-     * @var DiceSide
+     * @var DiceSide Первая сторона игральной кости
      */
     private DiceSide $sideA;
 
     /**
-     * @var DiceSide
+     * @var DiceSide Вторая сторона игральной кости
      */
     private DiceSide $sideB;
 
     /**
-     * @var int
+     * @var int Сумма очков обоих сторон игральной кости
      */
     private int $pointAmount;
 
     /**
-     * @var PlayerInterface|null
+     * @var PlayerInterface|null Текущий владелец игральной кости
      */
     private ?PlayerInterface $owner = null;
 
     /**
-     * @var bool
+     * @var bool Признак использования игральной кости
      */
     private bool $isUsed = false;
 
     /**
-     * @param Id $id
-     * @param DiceSide $sideA
-     * @param DiceSide $sideB
+     * @param Id $id Идентификатор игральной кости
+     * @param DiceSide $sideA Первая сторона игральной кости
+     * @param DiceSide $sideB Вторая сторона игральной кости
      */
     public function __construct(Id $id, DiceSide $sideA, DiceSide $sideB)
     {
@@ -51,6 +54,8 @@ final class Dice
     }
 
     /**
+     * Получить идентификатор игральной кости
+     *
      * @return Id
      */
     public function getId(): Id
@@ -59,6 +64,8 @@ final class Dice
     }
 
     /**
+     * Получить первую сторону игральной кости
+     *
      * @return DiceSide
      */
     public function getSideA(): DiceSide
@@ -67,6 +74,8 @@ final class Dice
     }
 
     /**
+     * Получить второю сторону игральной кости
+     *
      * @return DiceSide
      */
     public function getSideB(): DiceSide
@@ -75,6 +84,8 @@ final class Dice
     }
 
     /**
+     * Получить суммарное количество очков обоих сторон кости
+     *
      * @return int
      */
     public function getPointAmount(): int
@@ -83,6 +94,8 @@ final class Dice
     }
 
     /**
+     * Получить текущего владельца кости
+     *
      * @return PlayerInterface|null
      */
     public function getOwner(): ?PlayerInterface
@@ -91,7 +104,9 @@ final class Dice
     }
 
     /**
-     * @return bool
+     * Проверить признак владения кости
+     *
+     * @return bool Возвращает TRUE, если кость принадлежит игроку, иначе FALSE
      */
     public function hasOwner(): bool
     {
@@ -99,6 +114,8 @@ final class Dice
     }
 
     /**
+     * Установить текущего владельца кости
+     *
      * @param PlayerInterface $owner
      * @return void
      */
@@ -109,17 +126,25 @@ final class Dice
     }
 
     /**
-     * @param Dice $dice
+     * Проверить возможность соединения игральных костей
+     *
+     * @param Dice $dice Другая гральная кость
      * @return bool
      */
     public function canBinding(self $dice): bool
     {
-        if ($this->isUsed() || $dice->isUsed()) {
-            foreach ($this->getSides() as $selfSide) {
-                foreach ($dice->getSides() as $diceSide) {
-                    if ($selfSide->canBinding($diceSide) && $diceSide->canBinding($selfSide)) {
-                        return true;
-                    }
+        if ($dice === $this ?? !$this->isUsed()) { // Первый ход в раунде
+            return true;
+        }
+
+        if (!$this->isUsed() && !$dice->isUsed()) {
+            return false; // Ни одна из костей
+        }
+
+        foreach ($this->getSides() as $selfSide) {
+            foreach ($dice->getSides() as $diceSide) {
+                if ($selfSide->canBinding($diceSide) && $diceSide->canBinding($selfSide)) {
+                    return true;
                 }
             }
         }
@@ -128,13 +153,15 @@ final class Dice
     }
 
     /**
-     * @param Dice $dice
+     * Установить касание с другой игральной костью
+     *
+     * @param Dice $dice Другая игральная кость
      * @return void
-     * @throws InvalidBindingException
+     * @throws InvalidBindingException Бросает исключение, если касание между игральными костями невозможно
      */
     public function setBinding(self $dice): void
     {
-        if ($dice === $this) {
+        if (!$this->isUsed() && $dice === $this) { // Первый ход в раунде
             $this->isUsed = true;
 
             return;
@@ -159,7 +186,9 @@ final class Dice
     }
 
     /**
-     * @return bool
+     * Получить признак использования игральной кости
+     *
+     * @return bool Возвращает TRUE, если игральная кость была использована игроком для хода, иначе FALSE
      */
     public function isUsed(): bool
     {
@@ -167,6 +196,8 @@ final class Dice
     }
 
     /**
+     * Получить обе стороны игральной кости
+     *
      * @return DiceSide[]
      */
     private function getSides(): array

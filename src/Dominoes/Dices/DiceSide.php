@@ -2,17 +2,23 @@
 
 namespace Dominoes\Dices;
 
+/**
+ * Класс одной из сторон игральной кости
+ */
 final class DiceSide
 {
+    /**
+     * @var int Количество очков стороны игральной кости
+     */
     private int $value;
 
     /**
-     * @var static|null
+     * @var static|null Касание с другой стороной другой игральной кости
      */
     private ?self $binding = null;
 
     /**
-     * @param int $value
+     * @param int $value Количество очков стороны игральной кости
      */
     public function __construct(int $value)
     {
@@ -20,6 +26,8 @@ final class DiceSide
     }
 
     /**
+     * Проверить возможность соединения сторон игральных костей
+     *
      * @param DiceSide $side
      * @return bool
      */
@@ -33,6 +41,8 @@ final class DiceSide
     }
 
     /**
+     * Получить количество очков стороны игральной кости
+     *
      * @return int
      */
     public function getValue(): int
@@ -41,9 +51,11 @@ final class DiceSide
     }
 
     /**
-     * @param DiceSide $side
+     * Установить касание с другой стороной другой игральной кости
+     *
+     * @param DiceSide $side Сторона другой игральной кости
      * @return void
-     * @throws InvalidBindingException
+     * @throws InvalidBindingException Бросает исключение, если касание между сторонами игральных костей невозможно
      */
     public function setBinding(self $side): void
     {

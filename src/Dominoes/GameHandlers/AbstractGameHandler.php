@@ -5,6 +5,9 @@ namespace Dominoes\GameHandlers;
 use Dominoes\Events\EventManager;
 use Dominoes\GameData;
 
+/**
+ * Астрактный класс обработчика в цепочке обязанностей
+ */
 abstract class AbstractGameHandler implements HandlerInterface
 {
     /**
@@ -13,18 +16,18 @@ abstract class AbstractGameHandler implements HandlerInterface
     protected ?HandlerInterface $nextHandler = null;
 
     /**
-     * @var EventManager
+     * @var EventManager Менеджер событий
      */
     protected EventManager $eventManager;
 
     /**
-     * @var GameData
+     * @var GameData Игровые данные
      */
     protected GameData $gameData;
 
     /**
-     * @param EventManager $eventManager
-     * @param GameData $gameData
+     * @param EventManager $eventManager Менеджер событий
+     * @param GameData $gameData Игровые данные
      */
     public function __construct(EventManager $eventManager, GameData $gameData)
     {
@@ -33,8 +36,7 @@ abstract class AbstractGameHandler implements HandlerInterface
     }
 
     /**
-     * @param HandlerInterface $handler
-     * @return void
+     * @inheritDoc
      */
     public function setNextHandler(HandlerInterface $handler): void
     {
@@ -42,6 +44,8 @@ abstract class AbstractGameHandler implements HandlerInterface
     }
 
     /**
+     * Выполнить следующий обработчик в цепочке обязанностей
+     *
      * @return void
      */
     protected function handleNext(): void

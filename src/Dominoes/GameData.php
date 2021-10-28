@@ -11,47 +11,47 @@ use Dominoes\PlayerScores\ScoreList;
 final class GameData
 {
     /**
-     * @var RulesInterface
+     * @var RulesInterface Правила игры
      */
     private RulesInterface $rules;
 
     /**
-     * @var PlayerList
+     * @var PlayerList Список игроков
      */
     private PlayerList $playerList;
 
     /**
-     * @var ScoreList
+     * @var ScoreList Список игровых очков
      */
     private ScoreList $scoreList;
 
     /**
-     * @var DiceList
+     * @var DiceList Список игральных костей
      */
     private DiceList $diceList;
 
     /**
-     * @var Id
+     * @var Id Идентификатор игры
      */
     private Id $id;
 
     /**
-     * @var PlayerInterface|null
+     * @var PlayerInterface|null Текущий игрок
      */
-    private ?PlayerInterface $activePlayer;
+    private ?PlayerInterface $activePlayer; // TODO: переименовать в $currentPlayer
 
     /**
-     * @var GameState
+     * @var GameState Текущее состояние игры
      */
     private GameState $gameState;
 
     /**
-     * @param Id $id
-     * @param GameState $gameState
-     * @param RulesInterface $rules
-     * @param PlayerList $playerList
-     * @param ScoreList $scoreList
-     * @param DiceList $diceList
+     * @param Id $id Идентификатор игры
+     * @param GameState $gameState Текущее состояние игры
+     * @param RulesInterface $rules Правила игры
+     * @param PlayerList $playerList Список игроков
+     * @param ScoreList $scoreList Список игровых очков
+     * @param DiceList $diceList Список игральных костей
      * @param PlayerInterface|null $activePlayer
      */
     public function __construct(
@@ -73,6 +73,8 @@ final class GameData
     }
 
     /**
+     * Получить идентификатор игры
+     *
      * @return Id
      */
     public function Id(): Id
@@ -81,6 +83,8 @@ final class GameData
     }
 
     /**
+     * Получить список игроков
+     *
      * @return PlayerList
      */
     public function getPlayerList(): PlayerList
@@ -89,6 +93,8 @@ final class GameData
     }
 
     /**
+     * Получить правила игры
+     *
      * @return RulesInterface
      */
     public function getRules(): RulesInterface
@@ -97,6 +103,8 @@ final class GameData
     }
 
     /**
+     * Получить список игральных костей
+     *
      * @return DiceList
      */
     public function getDiceList(): DiceList
@@ -105,6 +113,8 @@ final class GameData
     }
 
     /**
+     * Установить список игральных костей
+     *
      * @param DiceList $diceList
      */
     public function setDiceList(DiceList $diceList): void
@@ -113,6 +123,8 @@ final class GameData
     }
 
     /**
+     * Получить список игровых очков
+     *
      * @return ScoreList
      */
     public function getScoreList(): ScoreList
@@ -121,6 +133,8 @@ final class GameData
     }
 
     /**
+     * Получить текущее состояние игры
+     *
      * @return GameState
      */
     public function getState(): GameState
@@ -129,6 +143,8 @@ final class GameData
     }
 
     /**
+     * Получить текущего игрока
+     *
      * @return PlayerInterface|null
      * @return void
      */
@@ -138,6 +154,8 @@ final class GameData
     }
 
     /**
+     * Установить текущего игрока
+     *
      * @param PlayerInterface|null $player
      * @return void
      */

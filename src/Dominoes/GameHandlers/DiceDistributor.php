@@ -10,21 +10,24 @@ use Dominoes\GameData;
 use Dominoes\Id;
 use Dominoes\Players\PlayerInterface;
 
+/**
+ * Класс распределителя игральных костей
+ */
 final class DiceDistributor
 {
     /**
-     * @var GameData
+     * @var GameData Игровые данные
      */
     private GameData $gameData;
 
     /**
-     * @var EventManager
+     * @var EventManager Менеджер событий
      */
     private EventManager $eventManager;
 
     /**
-     * @param EventManager $eventManager
-     * @param GameData $gameData
+     * @param EventManager $eventManager Менеджер событий
+     * @param GameData $gameData Игровые данные
      */
     public function __construct(EventManager $eventManager, GameData $gameData)
     {
@@ -33,8 +36,10 @@ final class DiceDistributor
     }
 
     /**
-     * @param PlayerInterface $player
-     * @return bool
+     * Выдать игральную кость игроку
+     *
+     * @param PlayerInterface $player Игрок - получатель игральной кости
+     * @return bool Вернуть TRUE, если игральная кость выдана игроку, иначе FALSE
      */
     public function distributeDice(PlayerInterface $player): bool
     {
@@ -53,6 +58,8 @@ final class DiceDistributor
     }
 
     /**
+     * Раздать игральные кости игрокам
+     *
      * @return void
      */
     public function distributeDices(): void

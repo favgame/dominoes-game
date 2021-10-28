@@ -8,6 +8,9 @@ use Dominoes\Events\RoundEndEvent;
 use Dominoes\Id;
 use Dominoes\PlayerScores\ScoreList;
 
+/**
+ * Класс обработчика окончания игрового раунда
+ */
 final class RoundEndHandler extends AbstractGameHandler
 {
     /**
@@ -16,18 +19,19 @@ final class RoundEndHandler extends AbstractGameHandler
     public function handleData(): void
     {
         $scoreList = new ScoreList($this->gameData->getPlayerList());
-        $scoreList->updateScore($this->gameData->getDiceList());
+        $scoreList->updateScore($this->gameData->getDiceList()); // Количество очков в раунде
         $leaderScore = $scoreList->getLeaderItem();
-        $this->gameData->getScoreList()->updateScore($this->gameData->getDiceList());
+        $this->gameData->getScoreList()->updateScore($this->gameData->getDiceList()); // Кол-во очков в игре
 
         $this->eventManager->addEvent(
             new RoundEndEvent(Id::next(), new DateTimeImmutable(), $this->gameData, $scoreList)
         );
 
+        // Выбор игрока, который начнёт следующий раунд
         $this->gameData->setActivePlayer($leaderScore ? $leaderScore->getPlayer() : null);
         $this->gameData->getState()->setReady();
 
-        if ($this->isGameEnd()) {
+        if ($this->isGameEnd()) { // Игра окончена
             $this->eventManager->addEvent(
                 new GameEndEvent(Id::next(), new DateTimeImmutable(), $this->gameData)
             );
@@ -41,7 +45,9 @@ final class RoundEndHandler extends AbstractGameHandler
     }
 
     /**
-     * @return bool
+     * Определить, закончилась ли игра
+     *
+     * @return bool Возвращает TRUE, если игрок, иначе FALSE
      */
     private function isGameEnd(): bool
     {

@@ -9,12 +9,14 @@ use Dominoes\Id;
 use Dominoes\Players\PlayerInterface;
 
 /**
+ * Класс списка игральных костей
+ *
  * @method ArrayObject|Dice[] getItems()
  */
 final class DiceList extends AbstractList
 {
     /**
-     * @param RulesInterface $gameRules
+     * @param RulesInterface $gameRules Правила игры
      */
     public function __construct(RulesInterface $gameRules)
     {
@@ -30,7 +32,9 @@ final class DiceList extends AbstractList
     }
 
     /**
-     * @param PlayerInterface $owner
+     * Получить игральные кости принадлежащие конкретному игроку
+     *
+     * @param PlayerInterface $owner Владелец
      * @return ArrayObject|Dice[]
      */
     public function getItemsByOwner(PlayerInterface $owner): ArrayObject
@@ -41,7 +45,9 @@ final class DiceList extends AbstractList
     }
 
     /**
-     * @return Dice|null
+     * Получить из набора случайную, не принадлежащию ни кому из игроков, игральную кость
+     *
+     * @return Dice|null Возвращает игральную кость. Либо NULL, если такой игральной кости не нашлось
      */
     public function getFreeItem(): ?Dice
     {
@@ -55,6 +61,8 @@ final class DiceList extends AbstractList
     }
 
     /**
+     * Получить игральные кости, находящиеся на игровом поле
+     *
      * @return ArrayObject|Dice[]
      */
     public function getActiveItems(): ArrayObject
@@ -63,7 +71,10 @@ final class DiceList extends AbstractList
     }
 
     /**
-     * @return Dice|null
+     * Получить игральную кость с максимальным количеством очков, принадлежащую игрокам.
+     * Используется для определения очереди игрока, который должен начать игру.
+     *
+     * @return Dice|null Возвращает игральную кость. Либо NULL, если такой игральной кости не нашлось
      */
     public function getStartItem(): ?Dice
     {

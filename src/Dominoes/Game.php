@@ -13,22 +13,22 @@ use Dominoes\GameHandlers\RoundStartHandler;
 final class Game
 {
     /**
-     * @var EventManager
+     * @var EventManager Менеджер событий
      */
     private EventManager $eventManager;
 
     /**
-     * @var GameData
+     * @var GameData Игровые данные
      */
     private GameData $gameData;
 
     /**
-     * @var HandlerInterface
+     * @var HandlerInterface Нальный обработчик в цепочке обязанностей
      */
     private HandlerInterface $mainHandler;
 
     /**
-     * @param GameData $gameData
+     * @param GameData $gameData Игровые данные
      */
     public function __construct(GameData $gameData)
     {
@@ -47,6 +47,8 @@ final class Game
     }
 
     /**
+     * Выполнить одну итерацию игры
+     *
      * @return bool
      * @throws GameRulesException
      * @throws InvalidBindingException
@@ -55,18 +57,20 @@ final class Game
     public function run(): bool
     {
         $this->checkRules();
-        $this->eventManager->fireEvents();
+        $this->eventManager->fireEvents(); // Отправить события подписчикам
 
         if ($this->gameData->getState()->isDone()) {
-            return false;
+            return false; // Игра окончена
         }
 
-        $this->mainHandler->handleData();
+        $this->mainHandler->handleData(); // Запустить цепочку обязанностей
 
         return true;
     }
 
     /**
+     * Получиь менеджер событий
+     *
      * @return EventManager
      */
     public function getEventManager(): EventManager
@@ -75,6 +79,8 @@ final class Game
     }
 
     /**
+     * Проверить кол-во игроков на соответствие текущим правилам
+     *
      * @throws GameRulesException
      * @return void
      */

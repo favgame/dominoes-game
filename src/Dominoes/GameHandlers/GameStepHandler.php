@@ -10,6 +10,9 @@ use Dominoes\GameSteps\StepList;
 use Dominoes\Id;
 use InfiniteIterator;
 
+/**
+ * Класс обработчика ходов игроков
+ */
 final class GameStepHandler extends AbstractGameHandler implements HandlerInterface
 {
     /**
@@ -19,7 +22,7 @@ final class GameStepHandler extends AbstractGameHandler implements HandlerInterf
      */
     public function handleData(): void
     {
-        if (!$this->handlePlayerStep()) {
+        if (!$this->handlePlayerStep()) { // Игрок не сделал ход
             return;
         }
 
@@ -29,11 +32,13 @@ final class GameStepHandler extends AbstractGameHandler implements HandlerInterf
             return;
         }
 
-        $this->changeNextPlayer();
+        $this->changeNextPlayer(); // Переход хода
     }
 
     /**
-     * @return bool
+     * Обработать ход игрока
+     *
+     * @return bool Возвращает TRUE, если игрок сделал ход, иначе FALSE
      * @throws InvalidStepException
      * @throws InvalidBindingException
      */
@@ -55,11 +60,11 @@ final class GameStepHandler extends AbstractGameHandler implements HandlerInterf
         $step = $player->getStep($stepList); // Ожидание хода игрока
 
         if ($step) { // Игрок сделал ход
-            if (!$stepList->hasItem($step)) {
+            if (!$stepList->hasItem($step)) { // Попытка сделать невозможный игровой ход
                 throw new InvalidStepException();
             }
 
-            $step->getChosenDice()->setBinding($step->getDestinationDice());
+            $step->getChosenDice()->setBinding($step->getDestinationDice()); // Положить игральную кость на поле
 
             $this->eventManager->addEvent(
                 new GameStepEvent(Id::next(), new DateTimeImmutable(), $this->gameData, $step)
@@ -72,7 +77,9 @@ final class GameStepHandler extends AbstractGameHandler implements HandlerInterf
     }
 
     /**
-     * @return bool
+     * Определить наличие возможных игровых ходов
+     *
+     * @return bool Возвращает TRUE, если есть возможные ходы, иначе FALSE
      */
     private function hasGameSteps(): bool
     {
@@ -92,7 +99,9 @@ final class GameStepHandler extends AbstractGameHandler implements HandlerInterf
     }
 
     /**
-     * @return bool
+     * Определить, является ли текущий игрок победителем
+     *
+     * @return bool Возвращает TRUE, если у игрока не осталось игральных костей, иначе FALSE
      */
     private function isPlayerWon(): bool
     {
@@ -107,21 +116,23 @@ final class GameStepHandler extends AbstractGameHandler implements HandlerInterf
     }
 
     /**
+     * Сменить игрока для следующего хода
+     *
      * @return void
      */
     private function changeNextPlayer(): void
     {
-        $iterator = new InfiniteIterator($this->gameData->getPlayerList()->getItems()->getIterator());
+        $queue = new InfiniteIterator($this->gameData->getPlayerList()->getItems()->getIterator());
         $player = $this->gameData->getActivePlayer();
 
         if ($player) {
-            while ($iterator->current() !== $player) {
-                $iterator->next();
+            while ($queue->current() !== $player) { // Перемотать очередь до текущего игрока
+                $queue->next();
             }
         }
 
-        $iterator->next();
-        $player = $iterator->current();
+        $queue->next(); // Сменить очередь на следующего игрока
+        $player = $queue->current();
 
         $this->gameData->setActivePlayer($player);
 

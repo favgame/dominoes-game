@@ -5,16 +5,16 @@ namespace Dominoes;
 final class GameState
 {
     /** @var int */
-    public const INITIAL = 0;
+    public const INITIAL = 0; // Начальное состояние игры
 
     /** @var int */
-    public const READY = 1;
+    public const READY = 1; // Предыдущий раунд закончен
 
     /** @var int  */
-    public const IN_PROGRESS = 2;
+    public const IN_PROGRESS = 2; // Игроки делают ходы
 
     /** @var int */
-    public const DONE = 3;
+    public const DONE = 3; // Игра окончена
 
     /**
      * @var int
@@ -22,7 +22,7 @@ final class GameState
     private int $value;
 
     /**
-     * @param int $value
+     * @param int $value Состояние
      */
     public function __construct(int $value = self::INITIAL)
     {
