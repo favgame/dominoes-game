@@ -38,8 +38,8 @@ final class RoundStartHandler extends AbstractGameHandler
             );
 
             // Выбрать игрока, который начнет игру
-            $player = $this->gameData->getActivePlayer() ?: $this->gameData->getDiceList()->getStartItem()->getOwner();
-            $this->gameData->setActivePlayer($player);
+            $player = $this->gameData->getCurrentPlayer() ?: $this->gameData->getDiceList()->getStartItem()->getOwner();
+            $this->gameData->setCurrentPlayer($player);
             $this->eventManager->addEvent(
                 new PlayerChangeEvent(Id::next(), new DateTimeImmutable(), $this->gameData, $player)
             );

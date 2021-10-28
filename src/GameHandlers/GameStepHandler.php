@@ -44,7 +44,7 @@ final class GameStepHandler extends AbstractGameHandler implements HandlerInterf
      */
     private function handlePlayerStep(): bool
     {
-        $player = $this->gameData->getActivePlayer();
+        $player = $this->gameData->getCurrentPlayer();
         $stepList = new StepList($this->gameData->getDiceList(), $player); // Возможные ходы
 
         if ($stepList->getItems()->count() == 0) { // Поход на базар
@@ -105,7 +105,7 @@ final class GameStepHandler extends AbstractGameHandler implements HandlerInterf
      */
     private function isPlayerWon(): bool
     {
-        $player = $this->gameData->getActivePlayer();
+        $player = $this->gameData->getCurrentPlayer();
         $diceCount = $this->gameData->getDiceList()->getItemsByOwner($player)->count(); // Кол-во костей на руках
 
         if ($diceCount == 0) { // У игрока закончились кости
@@ -123,7 +123,7 @@ final class GameStepHandler extends AbstractGameHandler implements HandlerInterf
     private function changeNextPlayer(): void
     {
         $queue = new InfiniteIterator($this->gameData->getPlayerList()->getItems()->getIterator());
-        $player = $this->gameData->getActivePlayer();
+        $player = $this->gameData->getCurrentPlayer();
 
         if ($player) {
             while ($queue->current() !== $player) { // Перемотать очередь до текущего игрока
@@ -134,7 +134,7 @@ final class GameStepHandler extends AbstractGameHandler implements HandlerInterf
         $queue->next(); // Сменить очередь на следующего игрока
         $player = $queue->current();
 
-        $this->gameData->setActivePlayer($player);
+        $this->gameData->setCurrentPlayer($player);
 
         $this->eventManager->addEvent(
             new PlayerChangeEvent(Id::next(), new DateTimeImmutable(), $this->gameData, $player)
