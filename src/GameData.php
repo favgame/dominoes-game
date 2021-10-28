@@ -6,7 +6,6 @@ use FavGame\Dominoes\Dices\DiceList;
 use FavGame\Dominoes\GameRules\RulesInterface;
 use FavGame\Dominoes\Players\PlayerInterface;
 use FavGame\Dominoes\Players\PlayerList;
-use FavGame\Dominoes\PlayerScores\AbstractScoreList;
 use FavGame\Dominoes\PlayerScores\GameScoreList;
 
 /**
