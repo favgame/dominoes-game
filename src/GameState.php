@@ -17,24 +17,16 @@ final class GameState
     public const DONE = 3; // Игра окончена
 
     /**
-     * @var int
+     * @var int Целочисленное значение состояние
      */
     private int $value;
 
     /**
-     * @param int $value Состояние
+     * @param int $value Целочисленное значение состояние
      */
     public function __construct(int $value = self::INITIAL)
     {
         $this->value = $value;
-    }
-
-    /**
-     * @return int
-     */
-    public function getValue(): int
-    {
-        return $this->value;
     }
 
     /**

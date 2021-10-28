@@ -7,21 +7,24 @@ use FavGame\Dominoes\GameData;
 use FavGame\Dominoes\Id;
 use FavGame\Dominoes\Players\PlayerInterface;
 
+/**
+ * Событие смены игрока
+ */
 final class PlayerChangeEvent extends AbstractGameEvent
 {
-    /** @var string */
+    /** @var string Название события */
     public const EVENT_NAME = 'Player change';
 
     /**
-     * @var PlayerInterface
+     * @var PlayerInterface Выбранный игрок
      */
     private PlayerInterface $player;
 
     /**
-     * @param Id $id
-     * @param DateTimeInterface $createdAt
-     * @param GameData $gameData
-     * @param PlayerInterface $player
+     * @param Id $id Идентификатор события
+     * @param DateTimeInterface $createdAt Дата создания события
+     * @param GameData $gameData Игровые данные
+     * @param PlayerInterface $player Выбранный игрок
      */
     public function __construct(Id $id, DateTimeInterface $createdAt, GameData $gameData, PlayerInterface $player)
     {
@@ -31,6 +34,8 @@ final class PlayerChangeEvent extends AbstractGameEvent
     }
 
     /**
+     * Получить выбранного игрока
+     *
      * @return PlayerInterface
      */
     public function getPlayer(): PlayerInterface

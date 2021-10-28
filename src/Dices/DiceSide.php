@@ -3,7 +3,7 @@
 namespace FavGame\Dominoes\Dices;
 
 /**
- * Класс одной из сторон игральной кости
+ * Сторона игральной кости
  */
 final class DiceSide
 {

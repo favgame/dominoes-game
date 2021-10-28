@@ -11,7 +11,7 @@ use FavGame\Dominoes\Id;
 use FavGame\Dominoes\Players\PlayerInterface;
 
 /**
- * Класс распределителя игральных костей
+ * Распределитель игральных костей
  */
 final class DiceDistributor
 {

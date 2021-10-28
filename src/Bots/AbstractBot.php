@@ -5,21 +5,24 @@ namespace FavGame\Dominoes\Bots;
 use FavGame\Dominoes\Id;
 use FavGame\Dominoes\Players\PlayerInterface;
 
+/**
+ * Абстрактный компьютерный соперник
+ */
 abstract class AbstractBot implements PlayerInterface
 {
     /**
-     * @var Id
+     * @var Id Идентификатор игрока
      */
     private Id $id;
 
     /**
-     * @var string
+     * @var string Имя игрока
      */
     private string $name;
 
     /***
-     * @param Id $id
-     * @param string $name
+     * @param Id $id Идентификатор игрока
+     * @param string $name Имя игрока
      */
     public function __construct(Id $id, string $name)
     {
@@ -28,7 +31,7 @@ abstract class AbstractBot implements PlayerInterface
     }
 
     /**
-     * @return Id
+     * @inheritDoc
      */
     public function getId(): Id
     {
@@ -36,7 +39,7 @@ abstract class AbstractBot implements PlayerInterface
     }
 
     /**
-     * @return string
+     * @inheritDoc
      */
     public function getName(): string
     {

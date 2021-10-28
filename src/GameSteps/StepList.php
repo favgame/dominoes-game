@@ -8,13 +8,15 @@ use FavGame\Dominoes\Dices\DiceList;
 use FavGame\Dominoes\Players\PlayerInterface;
 
 /**
+ * Список достпных игровых шагов
+ *
  * @method ArrayObject|Step[] getItems()
  */
 final class StepList extends AbstractList
 {
     /**
-     * @param DiceList $diceList
-     * @param PlayerInterface $player
+     * @param DiceList $diceList Список игральных костей
+     * @param PlayerInterface $player Игрок, для которого будут расчитаны ходы
      */
     public function __construct(DiceList $diceList, PlayerInterface $player)
     {
@@ -40,7 +42,9 @@ final class StepList extends AbstractList
     }
 
     /**
-     * @return Step|null
+     * Получить случайный игровой ход
+     *
+     * @return Step|null Возвращает случайный игровой ход, если он есть. Либо NULL в случае его отсутствия
      */
     public function getRandomItem(): ?Step
     {

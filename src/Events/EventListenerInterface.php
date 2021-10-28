@@ -2,6 +2,9 @@
 
 namespace FavGame\Dominoes\Events;
 
+/**
+ * Интерфейс наблюдателя событий
+ */
 interface EventListenerInterface
 {
     /**

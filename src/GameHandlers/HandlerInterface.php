@@ -3,7 +3,7 @@
 namespace FavGame\Dominoes\GameHandlers;
 
 /**
- * Интерфейс обработчика из цепочки обязанностей
+ * Интерфейс обработчика цепочки обязанностей
  */
 interface HandlerInterface
 {
@@ -15,7 +15,7 @@ interface HandlerInterface
     public function handleData(): void;
 
     /**
-     * Установить следующий обработчик в цепочку обязанностей
+     * Установить следующий обработчик цепочки обязанностей
      *
      * @param HandlerInterface $handler Следующий обработчик
      * @return void

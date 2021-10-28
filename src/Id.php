@@ -2,15 +2,18 @@
 
 namespace FavGame\Dominoes;
 
+/**
+ * Идентификатор
+ */
 final class Id
 {
     /**
-     * @var int
+     * @var int Целочисленное значение идентификатора
      */
     private int $value;
 
     /**
-     * @param int $value
+     * @param int $value Целочисленное значение идентификатора
      */
     public function __construct(int $value)
     {
@@ -18,7 +21,9 @@ final class Id
     }
 
     /**
-     * @return int
+     * Получить значение идентификатора
+     *
+     * @return int Целочисленное значение идентификатора
      */
     public function getValue(): int
     {
@@ -26,6 +31,8 @@ final class Id
     }
 
     /**
+     * Создать новый экземпляр
+     *
      * @return static
      */
     public static function next(): self

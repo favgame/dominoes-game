@@ -2,20 +2,25 @@
 
 namespace FavGame\Dominoes\Events;
 
+/**
+ * Менеджер событий
+ */
 final class EventManager
 {
     /**
-     * @var EventListenerInterface[]
+     * @var EventListenerInterface[] Список наблюдателей
      */
     private array $eventListeners = [];
 
     /**
-     * @var EventInterface[]
+     * @var EventInterface[] Буффер событий
      */
     private array $events = [];
 
     /**
-     * @param EventListenerInterface $listener
+     * Подписать наблюдателя на получение событий
+     *
+     * @param EventListenerInterface $listener Наблюдатель
      * @return void
      */
     public function subscribe(EventListenerInterface $listener): void
@@ -25,7 +30,9 @@ final class EventManager
     }
 
     /**
-     * @param EventListenerInterface $listener
+     * Отписать наблюдателя от получения событий
+     *
+     * @param EventListenerInterface $listener Наблюдатель
      * @return void
      */
     public function unsubscribe(EventListenerInterface $listener): void
@@ -38,7 +45,10 @@ final class EventManager
     }
 
     /**
-     * @param EventInterface $event
+     * Добавить событие в буффер
+     *
+     * @param EventInterface $event Событие
+     * @return void
      */
     public function addEvent(EventInterface $event): void
     {
@@ -46,6 +56,8 @@ final class EventManager
     }
 
     /**
+     * Отправить все события из буффера наблюдателям
+     *
      * @return void
      */
     public function fireEvents(): void
@@ -56,7 +68,9 @@ final class EventManager
     }
 
     /**
-     * @param EventInterface $event
+     * Отправить событие наблюдателям
+     *
+     * @param EventInterface $event Событие
      * @return void
      */
     private function fireEvent(EventInterface $event): void

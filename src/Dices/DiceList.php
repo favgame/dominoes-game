@@ -9,7 +9,7 @@ use FavGame\Dominoes\Id;
 use FavGame\Dominoes\Players\PlayerInterface;
 
 /**
- * Класс списка игральных костей
+ * Список игральных костей
  *
  * @method ArrayObject|Dice[] getItems()
  */

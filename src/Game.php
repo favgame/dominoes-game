@@ -10,6 +10,9 @@ use FavGame\Dominoes\GameHandlers\InvalidStepException;
 use FavGame\Dominoes\GameHandlers\RoundEndHandler;
 use FavGame\Dominoes\GameHandlers\RoundStartHandler;
 
+/**
+ * Основной класс
+ */
 final class Game
 {
     /**
@@ -69,7 +72,7 @@ final class Game
     }
 
     /**
-     * Получиь менеджер событий
+     * Получить менеджер событий
      *
      * @return EventManager
      */

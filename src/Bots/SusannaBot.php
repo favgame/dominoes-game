@@ -6,13 +6,16 @@ use FavGame\Dominoes\GameSteps\Step;
 use FavGame\Dominoes\GameSteps\StepList;
 use FavGame\Dominoes\Id;
 
+/**
+ * Компьютерный соперник
+ */
 final class SusannaBot extends AbstractBot
 {
     /** @var string */
     private const PLAYER_NAME = 'Bot Susanna';
 
     /**
-     * @param Id $id
+     * @param Id $id Идентификатор игрока
      */
     public function __construct(Id $id)
     {

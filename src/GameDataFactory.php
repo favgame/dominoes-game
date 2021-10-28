@@ -8,6 +8,9 @@ use FavGame\Dominoes\Players\PlayerInterface;
 use FavGame\Dominoes\Players\PlayerList;
 use FavGame\Dominoes\PlayerScores\ScoreList;
 
+/**
+ * Фабрика
+ */
 final class GameDataFactory
 {
     /**

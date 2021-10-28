@@ -6,15 +6,18 @@ use DateTimeInterface;
 use FavGame\Dominoes\GameData;
 use FavGame\Dominoes\Id;
 
+/**
+ * Событие начала новой игры
+ */
 final class GameStartEvent extends AbstractGameEvent
 {
-    /** @var string */
+    /** @var string Название события */
     private const EVENT_NAME = 'Game start';
 
     /**
-     * @param Id $id
-     * @param DateTimeInterface $createdAt
-     * @param GameData $gameData
+     * @param Id $id Идентификатор события
+     * @param DateTimeInterface $createdAt Дата создания события
+     * @param GameData $gameData Игровые данные
      */
     public function __construct(Id $id, DateTimeInterface $createdAt, GameData $gameData)
     {

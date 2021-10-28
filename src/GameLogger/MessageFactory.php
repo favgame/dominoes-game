@@ -14,16 +14,16 @@ use RuntimeException;
 
 final class MessageFactory implements MessageFactoryInterface
 {
-    /** @var string */
+    /** @var string Формат даты и времени по умолчанию */
     private const DEFAULT_DATETIME_FORMAT = 'Y-m-d H:i:s';
 
     /**
-     * @var string
+     * @var string Формат даты и времени
      */
     private string $datetimeFormat;
 
     /**
-     * @param string $datetimeFormat
+     * @param string $datetimeFormat Формат даты и времени
      */
     public function __construct(string $datetimeFormat = self::DEFAULT_DATETIME_FORMAT)
     {
@@ -31,8 +31,7 @@ final class MessageFactory implements MessageFactoryInterface
     }
 
     /**
-     * @param EventInterface $event
-     * @return string
+     * @inheritDoc
      */
     public function createMessage(EventInterface $event): string
     {

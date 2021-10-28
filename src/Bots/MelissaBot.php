@@ -6,13 +6,16 @@ use FavGame\Dominoes\GameSteps\Step;
 use FavGame\Dominoes\GameSteps\StepList;
 use FavGame\Dominoes\Id;
 
+/**
+ * Компьютерный соперник
+ */
 final class MelissaBot extends AbstractBot
 {
-    /** @var string */
+    /** @var string Имя игрока */
     private const PLAYER_NAME = 'Bot Melissa';
 
     /**
-     * @param Id $id
+     * @param Id $id Идентификатор игрока
      */
     public function __construct(Id $id)
     {

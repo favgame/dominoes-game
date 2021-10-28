@@ -4,15 +4,18 @@ namespace FavGame\Dominoes;
 
 use ArrayObject;
 
+/**
+ * Абстрактный список
+ */
 abstract class AbstractList
 {
     /**
-     * @var array
+     * @var array хранимый массив элементов списка
      */
     protected array $items = [];
 
     /**
-     * @param array $items
+     * @param array $items Массив элементов списка
      */
     public function __construct(array $items = [])
     {
@@ -20,6 +23,8 @@ abstract class AbstractList
     }
 
     /**
+     * Получить элементы списка
+     *
      * @return ArrayObject
      */
     public function getItems(): ArrayObject
@@ -28,8 +33,11 @@ abstract class AbstractList
     }
 
     /**
-     * @param callable $callable
+     * Отфильтровать элементы списка
+     *
+     * @param callable $callable Функция обратного вызова
      * @return ArrayObject
+     * @see array_filter()
      */
     protected function filterItems(callable $callable): ArrayObject
     {
@@ -39,8 +47,10 @@ abstract class AbstractList
     }
 
     /**
-     * @param mixed $item
-     * @return bool
+     * Проверить, находится ли элемент в текущем списке
+     *
+     * @param mixed $item Элемент
+     * @return bool Возвращает TRUE, слемент находится в списке, иначе FALSE
      */
     public function hasItem($item): bool
     {
@@ -48,8 +58,11 @@ abstract class AbstractList
     }
 
     /**
-     * @param callable $callback
+     * Применить заданную функцию к каждому элементу списка
+     *
+     * @param callable $callback Функция обратного вызова
      * @return void
+     * @see array_walk()
      */
     public function eachItems(callable $callback): void
     {

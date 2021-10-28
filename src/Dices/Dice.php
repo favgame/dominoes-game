@@ -6,7 +6,7 @@ use FavGame\Dominoes\Id;
 use FavGame\Dominoes\Players\PlayerInterface;
 
 /**
- * Класс игральной кости
+ * Игральная кость
  */
 final class Dice
 {

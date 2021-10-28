@@ -6,7 +6,7 @@ use FavGame\Dominoes\Events\EventManager;
 use FavGame\Dominoes\GameData;
 
 /**
- * Астрактный класс обработчика в цепочке обязанностей
+ * Абстрактный обработчик в цепочке обязанностей
  */
 abstract class AbstractGameHandler implements HandlerInterface
 {

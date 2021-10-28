@@ -9,7 +9,7 @@ use FavGame\Dominoes\Id;
 use FavGame\Dominoes\PlayerScores\ScoreList;
 
 /**
- * Класс обработчика окончания игрового раунда
+ * Обработчик окончания игрового раунда
  */
 final class RoundEndHandler extends AbstractGameHandler
 {

@@ -8,17 +8,17 @@ use FavGame\Dominoes\Events\EventListenerInterface;
 final class Logger implements EventListenerInterface
 {
     /**
-     * @var string[]
+     * @var string[] Буффер сообщений
      */
     private array $messages = [];
 
     /**
-     * @var MessageFactoryInterface
+     * @var MessageFactoryInterface Фабрика сообщений
      */
     private MessageFactoryInterface $messageFactory;
 
     /**
-     * @param MessageFactoryInterface $messageFactory
+     * @param MessageFactoryInterface $messageFactory Фабрика сообщений
      */
     public function __construct(MessageFactoryInterface $messageFactory)
     {
@@ -34,6 +34,8 @@ final class Logger implements EventListenerInterface
     }
 
     /**
+     * Получить буффер созданных сообщений
+     *
      * @return string[]
      */
     public function getMessages(): array

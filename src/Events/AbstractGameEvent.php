@@ -6,33 +6,36 @@ use DateTimeInterface;
 use FavGame\Dominoes\GameData;
 use FavGame\Dominoes\Id;
 
+/**
+ * Абстрактное игровок событие
+ */
 abstract class AbstractGameEvent implements EventInterface
 {
     /**
-     * @var Id
+     * @var Id Идентификатор события
      */
     private Id $id;
 
     /**
-     * @var DateTimeInterface
+     * @var DateTimeInterface Дата создания события
      */
     private DateTimeInterface $createdAt;
 
     /**
-     * @var string
+     * @var string Название события
      */
     private string $eventName;
 
     /**
-     * @var GameData
+     * @var GameData Игровые данные
      */
     private GameData $gameData;
 
     /**
-     * @param Id $id
-     * @param DateTimeInterface $createdAt
-     * @param GameData $gameData
-     * @param string $eventName
+     * @param Id $id Идентификатор события
+     * @param DateTimeInterface $createdAt Дата создания события
+     * @param GameData $gameData Игровые данные
+     * @param string $eventName Название события
      */
     public function __construct(Id $id, DateTimeInterface $createdAt, GameData $gameData, string $eventName)
     {
@@ -59,7 +62,7 @@ abstract class AbstractGameEvent implements EventInterface
     }
 
     /**
-     * @return DateTimeInterface
+     * @inheritDoc
      */
     public function getCreatedAt(): DateTimeInterface
     {
@@ -67,6 +70,8 @@ abstract class AbstractGameEvent implements EventInterface
     }
 
     /**
+     * Получить игровые данные
+     *
      * @return GameData
      */
     public function getGameData(): GameData

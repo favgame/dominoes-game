@@ -11,7 +11,7 @@ use FavGame\Dominoes\Id;
 use InfiniteIterator;
 
 /**
- * Класс обработчика ходов игроков
+ * Обработчик ходов игроков
  */
 final class GameStepHandler extends AbstractGameHandler implements HandlerInterface
 {
@@ -60,7 +60,7 @@ final class GameStepHandler extends AbstractGameHandler implements HandlerInterf
         $step = $player->getStep($stepList); // Ожидание хода игрока
 
         if ($step) { // Игрок сделал ход
-            if (!$stepList->hasItem($step)) { // Попытка сделать невозможный игровой ход
+            if (!$stepList->hasItem($step)) { // Попытка сделать недопустимый игровой ход
                 throw new InvalidStepException();
             }
 

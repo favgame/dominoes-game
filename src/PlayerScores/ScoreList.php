@@ -10,12 +10,14 @@ use FavGame\Dominoes\Players\PlayerInterface;
 use FavGame\Dominoes\Players\PlayerList;
 
 /**
+ * Список игровых очков
+ *
  * @method ArrayObject|Score[] getItems()
  */
 final class ScoreList extends AbstractList
 {
     /**
-     * @param PlayerList $playerList
+     * @param PlayerList $playerList Списко игроков
      */
     public function __construct(PlayerList $playerList)
     {
@@ -25,7 +27,9 @@ final class ScoreList extends AbstractList
     }
 
     /**
-     * @param DiceList $diceList
+     * Обновить игровые очки
+     *
+     * @param DiceList $diceList Список игральных костей
      * @return void
      */
     public function updateScore(DiceList $diceList): void
@@ -38,6 +42,8 @@ final class ScoreList extends AbstractList
     }
 
     /**
+     * Получить лидирующий счёт
+     *
      * @return Score|null
      */
     public function getLeaderItem(): ?Score
@@ -53,11 +59,13 @@ final class ScoreList extends AbstractList
     }
 
     /**
-     * @param PlayerInterface $owner
-     * @return Score|null
+     * Получить игровые очки конкретного игрока
+     *
+     * @param PlayerInterface $owner Игрок
+     * @return Score Возвращает игровые очки
      * @deprecated
      */
-    public function getItemByOwner(PlayerInterface $owner): ?Score
+    public function getItemByOwner(PlayerInterface $owner): Score
     {
         $callback = fn (PlayerInterface $player) => ($player === $owner);
 

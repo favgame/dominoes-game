@@ -2,6 +2,9 @@
 
 namespace FavGame\Dominoes\GameRules;
 
+/**
+ * Правила для классической игры в домино
+ */
 final class ClassicRules implements RulesInterface
 {
     /** @var int */

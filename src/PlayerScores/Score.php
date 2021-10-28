@@ -4,21 +4,24 @@ namespace FavGame\Dominoes\PlayerScores;
 
 use FavGame\Dominoes\Players\PlayerInterface;
 
+/**
+ * Игровые очки
+ */
 final class Score
 {
     /**
-     * @var PlayerInterface
+     * @var PlayerInterface Игрок
      */
     private PlayerInterface $player;
 
     /**
-     * @var int
+     * @var int Количество очков
      */
     private int $pointAmount;
 
     /**
-     * @param PlayerInterface $player
-     * @param int $pointAmount
+     * @param PlayerInterface $player Игрок
+     * @param int $pointAmount Количество очков
      */
     public function __construct(PlayerInterface $player, int $pointAmount = 0)
     {
@@ -27,6 +30,8 @@ final class Score
     }
 
     /**
+     * Получить игрока
+     *
      * @return PlayerInterface
      */
     public function getPlayer(): PlayerInterface
@@ -35,6 +40,8 @@ final class Score
     }
 
     /**
+     * Получить кол-во игровых очков
+     *
      * @return int
      */
     public function getPointAmount(): int
@@ -43,6 +50,8 @@ final class Score
     }
 
     /**
+     * Установить количество игровых очков
+     *
      * @param int $pointAmount
      * @return void
      */

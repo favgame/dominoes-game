@@ -9,7 +9,7 @@ use FavGame\Dominoes\Events\RoundStartEvent;
 use FavGame\Dominoes\Id;
 
 /**
- * Класс обработчика начала игрового раунда
+ * Обработчик начала игрового раунда
  */
 final class RoundStartHandler extends AbstractGameHandler
 {
