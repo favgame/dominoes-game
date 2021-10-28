@@ -12,8 +12,8 @@ use FavGame\Dominoes\Players\PlayerList;
 final class RoundScoreList extends AbstractScoreList
 {
     /**
-     * @param PlayerList $playerList
-     * @param DiceList $diceList
+     * @param PlayerList $playerList Список игроков
+     * @param DiceList $diceList Список игральных костей
      */
     public function __construct(PlayerList $playerList, DiceList $diceList)
     {
@@ -23,9 +23,9 @@ final class RoundScoreList extends AbstractScoreList
     }
 
     /**
-     * Получить лидирующий счёт
+     * Получить счёт очков лидирующего игрока
      *
-     * @return Score|null
+     * @return Score|null Возвращает счёт очков лидирующего игрока
      */
     public function getLeaderItem(): ?Score
     {
@@ -40,7 +40,7 @@ final class RoundScoreList extends AbstractScoreList
     }
 
     /**
-     * Обновить игровые очки
+     * Обновить штрафные очки
      *
      * @param DiceList $diceList Список игральных костей
      * @return void
