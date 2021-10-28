@@ -10,6 +10,7 @@ use Dominoes\GameLogger\Logger;
 use Dominoes\GameLogger\MessageFactory;
 use Dominoes\GameRules\ClassicRules;
 use Dominoes\Id;
+use Dominoes\PlayerCountException;
 use PHPUnit\Framework\TestCase;
 
 class GameTest extends TestCase
@@ -35,5 +36,19 @@ class GameTest extends TestCase
 
         $this->assertIsArray($logger->getMessages());
         $this->assertNotEmpty($logger->getMessages());
+    }
+
+    /**
+     * @return void
+     */
+    public function testPlayerCount(): void
+    {
+        $this->expectException(PlayerCountException::class);
+        $gameData = (new GameDataFactory)->createGameData(
+            new ClassicRules(),
+            new MelissaBot(Id::next())
+        );
+        $game = new Game($gameData);
+        $game->run();
     }
 }

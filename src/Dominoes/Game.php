@@ -50,13 +50,13 @@ final class Game
      * Выполнить одну итерацию игры
      *
      * @return bool
-     * @throws GameRulesException
+     * @throws PlayerCountException
      * @throws InvalidBindingException
      * @throws InvalidStepException
      */
     public function run(): bool
     {
-        $this->checkRules();
+        $this->checkPlayerCount();
         $this->eventManager->fireEvents(); // Отправить события подписчикам
 
         if ($this->gameData->getState()->isDone()) {
@@ -81,16 +81,16 @@ final class Game
     /**
      * Проверить кол-во игроков на соответствие текущим правилам
      *
-     * @throws GameRulesException
      * @return void
+     * @throws PlayerCountException
      */
-    private function checkRules(): void
+    private function checkPlayerCount(): void
     {
         $rules = $this->gameData->getRules();
         $playerCount = $this->gameData->getPlayerList()->getItems()->count();
 
         if ($playerCount < $rules->getMinPlayerCount() || $playerCount > $rules->getMaxPlayerCount()) {
-            throw new GameRulesException();
+            throw new PlayerCountException();
         }
     }
 }

@@ -2,9 +2,9 @@
 
 namespace Dominoes\GameHandlers;
 
-use Exception;
+use LogicException;
 
-final class InvalidStepException extends Exception
+final class InvalidStepException extends LogicException
 {
     /** @var string */
     private const ERROR_MESSAGE = 'Invalid game step';
