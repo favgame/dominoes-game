@@ -38,7 +38,7 @@ final class DiceDistributor
     /**
      * Выдать игральную кость игроку
      *
-     * @param PlayerInterface $player Игрок - получатель игральной кости
+     * @param PlayerInterface $player Получатель игральной кости
      * @return bool Вернуть TRUE, если игральная кость выдана игроку, иначе FALSE
      */
     public function distributeDice(PlayerInterface $player): bool
