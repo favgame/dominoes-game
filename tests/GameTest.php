@@ -5,7 +5,7 @@ namespace FavGame\Dominoes\Tests;
 use FavGame\Dominoes\Bots\MelissaBot;
 use FavGame\Dominoes\Bots\SusannaBot;
 use FavGame\Dominoes\Game;
-use FavGame\Dominoes\GameDataFactory;
+use FavGame\Dominoes\GameData;
 use FavGame\Dominoes\GameLogger\Logger;
 use FavGame\Dominoes\GameLogger\MessageFactory;
 use FavGame\Dominoes\GameRules\ClassicRules;
@@ -21,7 +21,7 @@ class GameTest extends TestCase
     public function testRun(): void
     {
         $inWork = true;
-        $gameData = (new GameDataFactory)->createGameData(
+        $gameData = GameData::createInstance(
             new ClassicRules(),
             new MelissaBot(Id::next()),
             new SusannaBot(Id::next())
@@ -44,7 +44,7 @@ class GameTest extends TestCase
     public function testPlayerCount(): void
     {
         $this->expectException(PlayerCountException::class);
-        $gameData = (new GameDataFactory)->createGameData(
+        $gameData = GameData::createInstance(
             new ClassicRules(),
             new MelissaBot(Id::next())
         );

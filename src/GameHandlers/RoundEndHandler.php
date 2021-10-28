@@ -6,7 +6,7 @@ use DateTimeImmutable;
 use FavGame\Dominoes\Events\GameEndEvent;
 use FavGame\Dominoes\Events\RoundEndEvent;
 use FavGame\Dominoes\Id;
-use FavGame\Dominoes\PlayerScores\ScoreList;
+use FavGame\Dominoes\PlayerScores\RoundScoreList;
 
 /**
  * Обработчик окончания игрового раунда
@@ -18,13 +18,12 @@ final class RoundEndHandler extends AbstractGameHandler
      */
     public function handleData(): void
     {
-        $scoreList = new ScoreList($this->gameData->getPlayerList());
-        $scoreList->updateScore($this->gameData->getDiceList()); // Количество очков в раунде
-        $leaderScore = $scoreList->getLeaderItem();
-        $this->gameData->getScoreList()->updateScore($this->gameData->getDiceList()); // Кол-во очков в игре
+        $roundScoreList = new RoundScoreList($this->gameData->getPlayerList(), $this->gameData->getDiceList());
+        $leaderScore = $roundScoreList->getLeaderItem();
+        $this->gameData->getScoreList()->updateScore($roundScoreList); // Кол-во очков в игре
 
         $this->eventManager->addEvent(
-            new RoundEndEvent(Id::next(), new DateTimeImmutable(), $this->gameData, $scoreList)
+            new RoundEndEvent(Id::next(), new DateTimeImmutable(), $this->gameData, $roundScoreList)
         );
 
         // Выбор игрока, который начнёт следующий раунд

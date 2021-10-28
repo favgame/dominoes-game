@@ -6,7 +6,8 @@ use FavGame\Dominoes\Dices\DiceList;
 use FavGame\Dominoes\GameRules\RulesInterface;
 use FavGame\Dominoes\Players\PlayerInterface;
 use FavGame\Dominoes\Players\PlayerList;
-use FavGame\Dominoes\PlayerScores\ScoreList;
+use FavGame\Dominoes\PlayerScores\AbstractScoreList;
+use FavGame\Dominoes\PlayerScores\GameScoreList;
 
 /**
  * Игровые данные
@@ -24,9 +25,9 @@ final class GameData
     private PlayerList $playerList;
 
     /**
-     * @var ScoreList Список игровых очков
+     * @var GameScoreList Список игровых очков
      */
-    private ScoreList $scoreList;
+    private GameScoreList $scoreList;
 
     /**
      * @var DiceList Список игральных костей
@@ -53,7 +54,7 @@ final class GameData
      * @param GameStatus $gameState Текущее состояние игры
      * @param RulesInterface $rules Правила игры
      * @param PlayerList $playerList Список игроков
-     * @param ScoreList $scoreList Список игровых очков
+     * @param GameScoreList $scoreList Список игровых очков
      * @param DiceList $diceList Список игральных костей
      * @param PlayerInterface|null $activePlayer
      */
@@ -62,7 +63,7 @@ final class GameData
         GameStatus $gameState,
         RulesInterface $rules,
         PlayerList $playerList,
-        ScoreList $scoreList,
+        GameScoreList $scoreList,
         DiceList $diceList,
         PlayerInterface $activePlayer = null
     ) {
@@ -73,6 +74,21 @@ final class GameData
         $this->scoreList = $scoreList;
         $this->diceList = $diceList;
         $this->activePlayer = $activePlayer;
+    }
+
+    /**
+     * @param RulesInterface $gameRules
+     * @param PlayerInterface ...$players
+     * @return GameData
+     */
+    public static function createInstance(RulesInterface $gameRules, PlayerInterface ...$players): GameData
+    {
+        $gameState = new GameStatus();
+        $playersList = new PlayerList($players);
+        $scoreList = new GameScoreList($playersList);
+        $diceList = new DiceList($gameRules);
+
+        return new GameData(Id::next(), $gameState, $gameRules, $playersList, $scoreList, $diceList);
     }
 
     /**
@@ -128,9 +144,9 @@ final class GameData
     /**
      * Получить список игровых очков
      *
-     * @return ScoreList
+     * @return GameScoreList
      */
-    public function getScoreList(): ScoreList
+    public function getScoreList(): GameScoreList
     {
         return $this->scoreList;
     }

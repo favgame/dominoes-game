@@ -5,7 +5,7 @@ namespace FavGame\Dominoes\Events;
 use DateTimeInterface;
 use FavGame\Dominoes\GameData;
 use FavGame\Dominoes\Id;
-use FavGame\Dominoes\PlayerScores\ScoreList;
+use FavGame\Dominoes\PlayerScores\RoundScoreList;
 
 /**
  * Событие завершения раунда
@@ -16,17 +16,17 @@ final class RoundEndEvent extends AbstractGameEvent
     private const EVENT_NAME = 'Round end';
 
     /**
-     * @var ScoreList Список игровых очков раунда
+     * @var RoundScoreList Список штрафных очков
      */
-    private ScoreList $scoreList;
+    private RoundScoreList $scoreList;
 
     /**
      * @param Id $id Идентификатор события
      * @param DateTimeInterface $createdAt Дата создания события
      * @param GameData $gameData Игровые данные
-     * @param ScoreList $scoreList Список игровых очков раунда
+     * @param RoundScoreList $scoreList Список штрафных очков
      */
-    public function __construct(Id $id, DateTimeInterface $createdAt, GameData $gameData, ScoreList $scoreList)
+    public function __construct(Id $id, DateTimeInterface $createdAt, GameData $gameData, RoundScoreList $scoreList)
     {
         $this->scoreList = $scoreList;
 
@@ -36,9 +36,9 @@ final class RoundEndEvent extends AbstractGameEvent
     /**
      * Получить список игровых очков
      *
-     * @return ScoreList
+     * @return RoundScoreList
      */
-    public function getScoreList(): ScoreList
+    public function getScoreList(): RoundScoreList
     {
         return $this->scoreList;
     }
