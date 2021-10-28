@@ -62,7 +62,7 @@ final class Game
         $this->checkPlayerCount();
         $this->eventManager->fireEvents(); // Отправить события подписчикам
 
-        if ($this->gameData->getState()->isDone()) {
+        if ($this->gameData->getStatus()->isDone()) {
             return false; // Игра окончена
         }
 

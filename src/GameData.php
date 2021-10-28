@@ -44,13 +44,13 @@ final class GameData
     private ?PlayerInterface $activePlayer; // TODO: переименовать в $currentPlayer
 
     /**
-     * @var GameState Текущее состояние игры
+     * @var GameStatus Текущее состояние игры
      */
-    private GameState $gameState;
+    private GameStatus $gameStatus;
 
     /**
      * @param Id $id Идентификатор игры
-     * @param GameState $gameState Текущее состояние игры
+     * @param GameStatus $gameState Текущее состояние игры
      * @param RulesInterface $rules Правила игры
      * @param PlayerList $playerList Список игроков
      * @param ScoreList $scoreList Список игровых очков
@@ -59,7 +59,7 @@ final class GameData
      */
     public function __construct(
         Id $id,
-        GameState $gameState,
+        GameStatus $gameState,
         RulesInterface $rules,
         PlayerList $playerList,
         ScoreList $scoreList,
@@ -67,7 +67,7 @@ final class GameData
         PlayerInterface $activePlayer = null
     ) {
         $this->id = $id;
-        $this->gameState = $gameState;
+        $this->gameStatus = $gameState;
         $this->rules = $rules;
         $this->playerList = $playerList;
         $this->scoreList = $scoreList;
@@ -136,13 +136,13 @@ final class GameData
     }
 
     /**
-     * Получить текущее состояние игры
+     * Получить текущей статус игры
      *
-     * @return GameState
+     * @return GameStatus
      */
-    public function getState(): GameState
+    public function getStatus(): GameStatus
     {
-        return $this->gameState;
+        return $this->gameStatus;
     }
 
     /**

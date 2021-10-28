@@ -29,14 +29,14 @@ final class RoundEndHandler extends AbstractGameHandler
 
         // Выбор игрока, который начнёт следующий раунд
         $this->gameData->setActivePlayer($leaderScore ? $leaderScore->getPlayer() : null);
-        $this->gameData->getState()->setReady();
+        $this->gameData->getStatus()->setReady();
 
         if ($this->isGameEnd()) { // Игра окончена
             $this->eventManager->addEvent(
                 new GameEndEvent(Id::next(), new DateTimeImmutable(), $this->gameData)
             );
 
-            $this->gameData->getState()->setDone();
+            $this->gameData->getStatus()->setDone();
 
             return;
         }

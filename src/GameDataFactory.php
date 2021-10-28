@@ -20,7 +20,7 @@ final class GameDataFactory
      */
     public function createGameData(RulesInterface $gameRules, PlayerInterface ...$players): GameData
     {
-        $gameState = new GameState();
+        $gameState = new GameStatus();
         $playersList = new PlayerList($players);
         $scoreList = new ScoreList($playersList);
         $diceList = new DiceList($gameRules);
