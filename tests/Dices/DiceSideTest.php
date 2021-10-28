@@ -1,9 +1,9 @@
 <?php
 
-namespace Dominoes\Tests\Dices;
+namespace FavGame\Dominoes\Tests\Dices;
 
-use Dominoes\Dices\DiceSide;
-use Dominoes\Dices\InvalidBindingException;
+use FavGame\Dominoes\Dices\DiceSide;
+use FavGame\Dominoes\Dices\InvalidBindingException;
 use PHPUnit\Framework\TestCase;
 
 final class DiceSideTest extends TestCase

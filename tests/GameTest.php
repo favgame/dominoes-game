@@ -1,16 +1,16 @@
 <?php
 
-namespace Dominoes\Tests;
+namespace FavGame\Dominoes\Tests;
 
-use Dominoes\Bots\MelissaBot;
-use Dominoes\Bots\SusannaBot;
-use Dominoes\Game;
-use Dominoes\GameDataFactory;
-use Dominoes\GameLogger\Logger;
-use Dominoes\GameLogger\MessageFactory;
-use Dominoes\GameRules\ClassicRules;
-use Dominoes\Id;
-use Dominoes\PlayerCountException;
+use FavGame\Dominoes\Bots\MelissaBot;
+use FavGame\Dominoes\Bots\SusannaBot;
+use FavGame\Dominoes\Game;
+use FavGame\Dominoes\GameDataFactory;
+use FavGame\Dominoes\GameLogger\Logger;
+use FavGame\Dominoes\GameLogger\MessageFactory;
+use FavGame\Dominoes\GameRules\ClassicRules;
+use FavGame\Dominoes\Id;
+use FavGame\Dominoes\PlayerCountException;
 use PHPUnit\Framework\TestCase;
 
 class GameTest extends TestCase

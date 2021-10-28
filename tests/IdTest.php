@@ -1,8 +1,8 @@
 <?php
 
-namespace Dominoes\Tests;
+namespace FavGame\Dominoes\Tests;
 
-use Dominoes\Id;
+use FavGame\Dominoes\Id;
 use PHPUnit\Framework\TestCase;
 
 class IdTest extends TestCase
