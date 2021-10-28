@@ -2,12 +2,13 @@
 
 namespace Dominoes;
 
+use Dominoes\Dices\InvalidBindingException;
 use Dominoes\Events\EventManager;
 use Dominoes\GameHandlers\GameStepHandler;
 use Dominoes\GameHandlers\HandlerInterface;
+use Dominoes\GameHandlers\InvalidStepException;
 use Dominoes\GameHandlers\RoundEndHandler;
 use Dominoes\GameHandlers\RoundStartHandler;
-use Dominoes\Players\PlayerInterface;
 
 final class Game
 {
@@ -43,14 +44,17 @@ final class Game
         $roundEndHandler->setNextHandler($roundStartHandler);
 
         $this->mainHandler = $roundStartHandler;
-        $this->subscribePlayers();
     }
 
     /**
      * @return bool
+     * @throws GameRulesException
+     * @throws InvalidBindingException
+     * @throws InvalidStepException
      */
     public function run(): bool
     {
+        $this->checkRules();
         $this->eventManager->fireEvents();
 
         if ($this->gameData->getState()->isDone()) {
@@ -71,11 +75,16 @@ final class Game
     }
 
     /**
+     * @throws GameRulesException
      * @return void
      */
-    private function subscribePlayers(): void
+    private function checkRules(): void
     {
-        $playerList = $this->gameData->getPlayerList();
-        $playerList->eachItems(fn(PlayerInterface $player) => $this->eventManager->subscribe($player));
+        $rules = $this->gameData->getRules();
+        $playerCount = $this->gameData->getPlayerList()->getItems()->count();
+
+        if ($playerCount < $rules->getMinPlayerCount() || $playerCount > $rules->getMaxPlayerCount()) {
+            throw new GameRulesException();
+        }
     }
 }

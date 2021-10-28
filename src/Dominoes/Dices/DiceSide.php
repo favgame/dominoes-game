@@ -20,6 +20,19 @@ final class DiceSide
     }
 
     /**
+     * @param DiceSide $side
+     * @return bool
+     */
+    public function canBinding(self $side): bool
+    {
+        if ($side === $this || $this->binding !== null || $side->getValue() != $this->getValue()) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
      * @return int
      */
     public function getValue(): int
@@ -34,18 +47,10 @@ final class DiceSide
      */
     public function setBinding(self $side): void
     {
-        if ($side->getValue() !== $this->getValue()) {
+        if (!$this->canBinding($side)) {
             throw new InvalidBindingException();
         }
 
         $this->binding = $side;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isBinding(): bool
-    {
-        return ($this->binding !== null);
     }
 }

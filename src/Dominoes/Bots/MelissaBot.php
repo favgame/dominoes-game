@@ -4,7 +4,6 @@ namespace Dominoes\Bots;
 
 use Dominoes\GameSteps\Step;
 use Dominoes\GameSteps\StepList;
-use Dominoes\Events\EventInterface;
 use Dominoes\Id;
 
 final class MelissaBot extends AbstractBot
@@ -18,14 +17,6 @@ final class MelissaBot extends AbstractBot
     public function __construct(Id $id)
     {
         parent::__construct($id, self::PLAYER_NAME);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function handleEvent(EventInterface $event): void
-    {
-
     }
 
     /**

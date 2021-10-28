@@ -22,7 +22,6 @@ final class StepList extends AbstractList
         $playerDices = $diceList->getItemsByOwner($player);
         $items = [];
 
-
         foreach ($playerDices as $playerDice) {
             if ($activeDices->count() == 0) {
                 $items[] = new Step($playerDice, $playerDice);

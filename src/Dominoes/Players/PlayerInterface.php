@@ -4,10 +4,9 @@ namespace Dominoes\Players;
 
 use Dominoes\GameSteps\Step;
 use Dominoes\GameSteps\StepList;
-use Dominoes\Events\EventListenerInterface;
 use Dominoes\Id;
 
-interface PlayerInterface extends EventListenerInterface
+interface PlayerInterface
 {
     /**
      * @return Id

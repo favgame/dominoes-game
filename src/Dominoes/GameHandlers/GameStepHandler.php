@@ -6,7 +6,6 @@ use DateTimeImmutable;
 use Dominoes\Dices\InvalidBindingException;
 use Dominoes\Events\GameStepEvent;
 use Dominoes\Events\PlayerChangeEvent;
-use Dominoes\GameSteps\Step;
 use Dominoes\GameSteps\StepList;
 use Dominoes\Id;
 use InfiniteIterator;

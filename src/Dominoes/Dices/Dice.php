@@ -75,23 +75,6 @@ final class Dice
     }
 
     /**
-     * @param int $value
-     * @return DiceSide|null
-     */
-    public function getFreeSideByValue(int $value): ?DiceSide
-    {
-        if (!$this->getSideA()->isBinding() && $this->getSideA()->getValue() == $value) {
-            return $this->getSideA();
-        }
-
-        if (!$this->getSideB()->isBinding() && $this->getSideB()->getValue() == $value) {
-            return $this->getSideB();
-        }
-
-        return null;
-    }
-
-    /**
      * @return int
      */
     public function getPointAmount(): int
@@ -131,12 +114,14 @@ final class Dice
      */
     public function canBinding(self $dice): bool
     {
-        if (!$this->getSideA()->isBinding() && $dice->getFreeSideByValue($this->getSideA()->getValue()) !== null) {
-            return true;
-        }
-
-        if (!$this->getSideB()->isBinding() && $dice->getFreeSideByValue($this->getSideB()->getValue()) !== null) {
-            return true;
+        if ($this->isUsed() || $dice->isUsed()) {
+            foreach ($this->getSides() as $selfSide) {
+                foreach ($dice->getSides() as $diceSide) {
+                    if ($selfSide->canBinding($diceSide) && $diceSide->canBinding($selfSide)) {
+                        return true;
+                    }
+                }
+            }
         }
 
         return false;
@@ -149,36 +134,28 @@ final class Dice
      */
     public function setBinding(self $dice): void
     {
-        $side = null;
-
         if ($dice === $this) {
             $this->isUsed = true;
 
             return;
         }
 
-        if (!$dice->isUsed()) {
-            throw new InvalidBindingException();
-        }
+        if ($this->isUsed() || $dice->isUsed()) {
+            foreach ($this->getSides() as $selfSide) {
+                foreach ($dice->getSides() as $diceSide) {
+                    if ($selfSide->canBinding($diceSide) && $diceSide->canBinding($selfSide)) {
+                        $diceSide->setBinding($selfSide);
+                        $selfSide->setBinding($diceSide);
+                        $this->isUsed = true;
+                        $dice->isUsed = true;
 
-        foreach ([$this->getSideA(), $this->getSideB()] as $selfSide) {
-            if (!$selfSide->isBinding()) {
-                $side = $dice->getFreeSideByValue($selfSide->getValue());
-
-                if ($side) {
-                    $side->setBinding($selfSide);
-                    $selfSide->setBinding($side);
-
-                    break;
+                        return;
+                    }
                 }
             }
         }
 
-        if ($side === null) {
-            throw new InvalidBindingException();
-        }
-
-        $this->isUsed = true;
+        throw new InvalidBindingException();
     }
 
     /**
@@ -187,5 +164,13 @@ final class Dice
     public function isUsed(): bool
     {
         return $this->isUsed;
+    }
+
+    /**
+     * @return DiceSide[]
+     */
+    private function getSides(): array
+    {
+        return [$this->getSideA(), $this->getSideB()];
     }
 }
