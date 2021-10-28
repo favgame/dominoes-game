@@ -42,7 +42,7 @@ final class GameData
     /**
      * @var PlayerInterface|null Текущий игрок
      */
-    private ?PlayerInterface $currentPlayer; // TODO: переименовать в $currentPlayer
+    private ?PlayerInterface $currentPlayer;
 
     /**
      * @var GameStatus Текущее состояние игры
