@@ -1,9 +1,9 @@
 <?php
 
-namespace FavGame\Dominoes\PlayerScores;
+namespace FavGame\DominoesGame\PlayerScores;
 
-use FavGame\Dominoes\Dices\Dice;
-use FavGame\Dominoes\Dices\DiceList;
+use FavGame\DominoesGame\Dices\Dice;
+use FavGame\DominoesGame\Dices\DiceList;
 
 /**
  * Список штрафных очков

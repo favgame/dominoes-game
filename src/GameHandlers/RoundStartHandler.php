@@ -1,12 +1,12 @@
 <?php
 
-namespace FavGame\Dominoes\GameHandlers;
+namespace FavGame\DominoesGame\GameHandlers;
 
 use DateTimeImmutable;
-use FavGame\Dominoes\Events\GameStartEvent;
-use FavGame\Dominoes\Events\PlayerChangeEvent;
-use FavGame\Dominoes\Events\RoundStartEvent;
-use FavGame\Dominoes\Id;
+use FavGame\DominoesGame\Events\GameStartEvent;
+use FavGame\DominoesGame\Events\PlayerChangeEvent;
+use FavGame\DominoesGame\Events\RoundStartEvent;
+use FavGame\DominoesGame\Id;
 
 /**
  * Обработчик начала игрового раунда

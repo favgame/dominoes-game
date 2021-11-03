@@ -1,11 +1,11 @@
 <?php
 
-namespace FavGame\Dominoes\Events;
+namespace FavGame\DominoesGame\Events;
 
 use DateTimeInterface;
-use FavGame\Dominoes\GameData;
-use FavGame\Dominoes\Id;
-use FavGame\Dominoes\PlayerScores\RoundScoreList;
+use FavGame\DominoesGame\GameData;
+use FavGame\DominoesGame\Id;
+use FavGame\DominoesGame\PlayerScores\RoundScoreList;
 
 /**
  * Событие завершения раунда

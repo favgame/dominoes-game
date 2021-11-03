@@ -1,9 +1,9 @@
 <?php
 
-namespace FavGame\Dominoes\GameLogger;
+namespace FavGame\DominoesGame\GameLogger;
 
-use FavGame\Dominoes\Events\EventInterface;
-use FavGame\Dominoes\Events\EventListenerInterface;
+use FavGame\DominoesGame\Events\EventInterface;
+use FavGame\DominoesGame\Events\EventListenerInterface;
 
 final class Logger implements EventListenerInterface
 {

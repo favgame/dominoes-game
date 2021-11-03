@@ -1,6 +1,6 @@
 <?php
 
-namespace FavGame\Dominoes\GameRules;
+namespace FavGame\DominoesGame\GameRules;
 
 /**
  * Интерфейс игровых правил

@@ -1,10 +1,10 @@
 <?php
 
-namespace FavGame\Dominoes\Events;
+namespace FavGame\DominoesGame\Events;
 
 use DateTimeInterface;
-use FavGame\Dominoes\GameData;
-use FavGame\Dominoes\Id;
+use FavGame\DominoesGame\GameData;
+use FavGame\DominoesGame\Id;
 
 /**
  * Событие начала раунда

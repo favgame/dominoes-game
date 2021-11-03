@@ -1,12 +1,12 @@
 <?php
 
-namespace FavGame\Dominoes\GameHandlers;
+namespace FavGame\DominoesGame\GameHandlers;
 
 use DateTimeImmutable;
-use FavGame\Dominoes\Events\GameEndEvent;
-use FavGame\Dominoes\Events\RoundEndEvent;
-use FavGame\Dominoes\Id;
-use FavGame\Dominoes\PlayerScores\RoundScoreList;
+use FavGame\DominoesGame\Events\GameEndEvent;
+use FavGame\DominoesGame\Events\RoundEndEvent;
+use FavGame\DominoesGame\Id;
+use FavGame\DominoesGame\PlayerScores\RoundScoreList;
 
 /**
  * Обработчик окончания игрового раунда

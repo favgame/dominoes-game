@@ -1,11 +1,11 @@
 <?php
 
-namespace FavGame\Dominoes\GameSteps;
+namespace FavGame\DominoesGame\GameSteps;
 
 use ArrayObject;
-use FavGame\Dominoes\AbstractList;
-use FavGame\Dominoes\Dices\DiceList;
-use FavGame\Dominoes\Players\PlayerInterface;
+use FavGame\DominoesGame\AbstractList;
+use FavGame\DominoesGame\Dices\DiceList;
+use FavGame\DominoesGame\Players\PlayerInterface;
 
 /**
  * Список доступных игровых шагов

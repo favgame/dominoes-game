@@ -1,12 +1,12 @@
 <?php
 
-namespace FavGame\Dominoes;
+namespace FavGame\DominoesGame;
 
-use FavGame\Dominoes\Dices\DiceList;
-use FavGame\Dominoes\GameRules\RulesInterface;
-use FavGame\Dominoes\Players\PlayerInterface;
-use FavGame\Dominoes\Players\PlayerList;
-use FavGame\Dominoes\PlayerScores\GameScoreList;
+use FavGame\DominoesGame\Dices\DiceList;
+use FavGame\DominoesGame\GameRules\RulesInterface;
+use FavGame\DominoesGame\Players\PlayerInterface;
+use FavGame\DominoesGame\Players\PlayerList;
+use FavGame\DominoesGame\PlayerScores\GameScoreList;
 
 /**
  * Игровые данные

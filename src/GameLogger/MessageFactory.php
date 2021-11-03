@@ -1,15 +1,15 @@
 <?php
 
-namespace FavGame\Dominoes\GameLogger;
+namespace FavGame\DominoesGame\GameLogger;
 
-use FavGame\Dominoes\Events\DiceGivenEvent;
-use FavGame\Dominoes\Events\EventInterface;
-use FavGame\Dominoes\Events\GameEndEvent;
-use FavGame\Dominoes\Events\GameStartEvent;
-use FavGame\Dominoes\Events\GameStepEvent;
-use FavGame\Dominoes\Events\PlayerChangeEvent;
-use FavGame\Dominoes\Events\RoundEndEvent;
-use FavGame\Dominoes\Events\RoundStartEvent;
+use FavGame\DominoesGame\Events\DiceGivenEvent;
+use FavGame\DominoesGame\Events\EventInterface;
+use FavGame\DominoesGame\Events\GameEndEvent;
+use FavGame\DominoesGame\Events\GameStartEvent;
+use FavGame\DominoesGame\Events\GameStepEvent;
+use FavGame\DominoesGame\Events\PlayerChangeEvent;
+use FavGame\DominoesGame\Events\RoundEndEvent;
+use FavGame\DominoesGame\Events\RoundStartEvent;
 use RuntimeException;
 
 final class MessageFactory implements MessageFactoryInterface

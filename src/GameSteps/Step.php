@@ -1,8 +1,8 @@
 <?php
 
-namespace FavGame\Dominoes\GameSteps;
+namespace FavGame\DominoesGame\GameSteps;
 
-use FavGame\Dominoes\Dices\Dice;
+use FavGame\DominoesGame\Dices\Dice;
 
 /**
  * Игровой шаг

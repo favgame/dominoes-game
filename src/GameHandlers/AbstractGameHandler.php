@@ -1,9 +1,9 @@
 <?php
 
-namespace FavGame\Dominoes\GameHandlers;
+namespace FavGame\DominoesGame\GameHandlers;
 
-use FavGame\Dominoes\Events\EventManager;
-use FavGame\Dominoes\GameData;
+use FavGame\DominoesGame\Events\EventManager;
+use FavGame\DominoesGame\GameData;
 
 /**
  * Абстрактный обработчик в цепочке обязанностей

@@ -1,12 +1,12 @@
 <?php
 
-namespace FavGame\Dominoes\PlayerScores;
+namespace FavGame\DominoesGame\PlayerScores;
 
 use ArrayObject;
-use FavGame\Dominoes\AbstractList;
-use FavGame\Dominoes\Id;
-use FavGame\Dominoes\Players\PlayerInterface;
-use FavGame\Dominoes\Players\PlayerList;
+use FavGame\DominoesGame\AbstractList;
+use FavGame\DominoesGame\Id;
+use FavGame\DominoesGame\Players\PlayerInterface;
+use FavGame\DominoesGame\Players\PlayerList;
 
 /**
  * Список игровых очков

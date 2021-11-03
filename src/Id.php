@@ -1,6 +1,6 @@
 <?php
 
-namespace FavGame\Dominoes;
+namespace FavGame\DominoesGame;
 
 /**
  * Идентификатор

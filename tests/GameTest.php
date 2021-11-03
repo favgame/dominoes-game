@@ -1,16 +1,16 @@
 <?php
 
-namespace FavGame\Dominoes\Tests;
+namespace FavGame\DominoesGame\Tests;
 
-use FavGame\Dominoes\Bots\MelissaBot;
-use FavGame\Dominoes\Bots\SusannaBot;
-use FavGame\Dominoes\Game;
-use FavGame\Dominoes\GameData;
-use FavGame\Dominoes\GameLogger\Logger;
-use FavGame\Dominoes\GameLogger\MessageFactory;
-use FavGame\Dominoes\GameRules\ClassicRules;
-use FavGame\Dominoes\Id;
-use FavGame\Dominoes\PlayerCountException;
+use FavGame\DominoesGame\Bots\MelissaBot;
+use FavGame\DominoesGame\Bots\SusannaBot;
+use FavGame\DominoesGame\Game;
+use FavGame\DominoesGame\GameData;
+use FavGame\DominoesGame\GameLogger\Logger;
+use FavGame\DominoesGame\GameLogger\MessageFactory;
+use FavGame\DominoesGame\GameRules\ClassicRules;
+use FavGame\DominoesGame\Id;
+use FavGame\DominoesGame\PlayerCountException;
 use PHPUnit\Framework\TestCase;
 
 class GameTest extends TestCase

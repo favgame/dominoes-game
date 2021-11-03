@@ -1,9 +1,9 @@
 <?php
 
-namespace FavGame\Dominoes\Dices;
+namespace FavGame\DominoesGame\Dices;
 
-use FavGame\Dominoes\Id;
-use FavGame\Dominoes\Players\PlayerInterface;
+use FavGame\DominoesGame\Id;
+use FavGame\DominoesGame\Players\PlayerInterface;
 
 /**
  * Игральная кость

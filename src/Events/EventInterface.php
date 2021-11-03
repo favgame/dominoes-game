@@ -1,8 +1,8 @@
 <?php
 
-namespace FavGame\Dominoes\Events;
+namespace FavGame\DominoesGame\Events;
 
-use FavGame\Dominoes\Id;
+use FavGame\DominoesGame\Id;
 use DateTimeInterface;
 
 /**

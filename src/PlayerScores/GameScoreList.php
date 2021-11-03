@@ -1,6 +1,6 @@
 <?php
 
-namespace FavGame\Dominoes\PlayerScores;
+namespace FavGame\DominoesGame\PlayerScores;
 
 /**
  * Список игровых очков

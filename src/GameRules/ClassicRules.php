@@ -1,6 +1,6 @@
 <?php
 
-namespace FavGame\Dominoes\GameRules;
+namespace FavGame\DominoesGame\GameRules;
 
 /**
  * Правила для классической игры в домино

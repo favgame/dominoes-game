@@ -1,14 +1,14 @@
 <?php
 
-namespace FavGame\Dominoes;
+namespace FavGame\DominoesGame;
 
-use FavGame\Dominoes\Dices\InvalidBindingException;
-use FavGame\Dominoes\Events\EventManager;
-use FavGame\Dominoes\GameHandlers\GameStepHandler;
-use FavGame\Dominoes\GameHandlers\HandlerInterface;
-use FavGame\Dominoes\GameHandlers\InvalidStepException;
-use FavGame\Dominoes\GameHandlers\RoundEndHandler;
-use FavGame\Dominoes\GameHandlers\RoundStartHandler;
+use FavGame\DominoesGame\Dices\InvalidBindingException;
+use FavGame\DominoesGame\Events\EventManager;
+use FavGame\DominoesGame\GameHandlers\GameStepHandler;
+use FavGame\DominoesGame\GameHandlers\HandlerInterface;
+use FavGame\DominoesGame\GameHandlers\InvalidStepException;
+use FavGame\DominoesGame\GameHandlers\RoundEndHandler;
+use FavGame\DominoesGame\GameHandlers\RoundStartHandler;
 
 /**
  * Основной класс

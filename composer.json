@@ -15,12 +15,12 @@
     ],
     "autoload": {
         "psr-4": {
-            "FavGame\\Dominoes\\": "src/"
+            "FavGame\\DominoesGame\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "FavGame\\Dominoes\\Tests\\": "tests/"
+            "FavGame\\DominoesGame\\Tests\\": "tests/"
         }
     }
 }

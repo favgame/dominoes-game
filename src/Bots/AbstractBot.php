@@ -1,9 +1,9 @@
 <?php
 
-namespace FavGame\Dominoes\Bots;
+namespace FavGame\DominoesGame\Bots;
 
-use FavGame\Dominoes\Id;
-use FavGame\Dominoes\Players\PlayerInterface;
+use FavGame\DominoesGame\Id;
+use FavGame\DominoesGame\Players\PlayerInterface;
 
 /**
  * Абстрактный компьютерный соперник

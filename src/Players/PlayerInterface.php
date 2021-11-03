@@ -1,10 +1,10 @@
 <?php
 
-namespace FavGame\Dominoes\Players;
+namespace FavGame\DominoesGame\Players;
 
-use FavGame\Dominoes\GameSteps\Step;
-use FavGame\Dominoes\GameSteps\StepList;
-use FavGame\Dominoes\Id;
+use FavGame\DominoesGame\GameSteps\Step;
+use FavGame\DominoesGame\GameSteps\StepList;
+use FavGame\DominoesGame\Id;
 
 /**
  * Интерфейс игрока

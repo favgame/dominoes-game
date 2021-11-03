@@ -1,11 +1,11 @@
 <?php
 
-namespace FavGame\Dominoes\Events;
+namespace FavGame\DominoesGame\Events;
 
 use DateTimeInterface;
-use FavGame\Dominoes\GameData;
-use FavGame\Dominoes\GameSteps\Step;
-use FavGame\Dominoes\Id;
+use FavGame\DominoesGame\GameData;
+use FavGame\DominoesGame\GameSteps\Step;
+use FavGame\DominoesGame\Id;
 
 /**
  * Событие хода игрока

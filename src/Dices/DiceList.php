@@ -1,12 +1,12 @@
 <?php
 
-namespace FavGame\Dominoes\Dices;
+namespace FavGame\DominoesGame\Dices;
 
 use ArrayObject;
-use FavGame\Dominoes\AbstractList;
-use FavGame\Dominoes\GameRules\RulesInterface;
-use FavGame\Dominoes\Id;
-use FavGame\Dominoes\Players\PlayerInterface;
+use FavGame\DominoesGame\AbstractList;
+use FavGame\DominoesGame\GameRules\RulesInterface;
+use FavGame\DominoesGame\Id;
+use FavGame\DominoesGame\Players\PlayerInterface;
 
 /**
  * Список игральных костей

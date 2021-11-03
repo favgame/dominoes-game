@@ -1,8 +1,8 @@
 <?php
 
-namespace FavGame\Dominoes\GameLogger;
+namespace FavGame\DominoesGame\GameLogger;
 
-use FavGame\Dominoes\Events\EventInterface;
+use FavGame\DominoesGame\Events\EventInterface;
 
 /**
  * Интерфейс фабрики сообщений

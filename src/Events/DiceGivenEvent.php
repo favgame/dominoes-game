@@ -1,11 +1,11 @@
 <?php
 
-namespace FavGame\Dominoes\Events;
+namespace FavGame\DominoesGame\Events;
 
 use DateTimeInterface;
-use FavGame\Dominoes\Dices\Dice;
-use FavGame\Dominoes\GameData;
-use FavGame\Dominoes\Id;
+use FavGame\DominoesGame\Dices\Dice;
+use FavGame\DominoesGame\GameData;
+use FavGame\DominoesGame\Id;
 
 /**
  * Событие получения игральной кости

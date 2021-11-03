@@ -1,6 +1,6 @@
 <?php
 
-namespace FavGame\Dominoes\Dices;
+namespace FavGame\DominoesGame\Dices;
 
 /**
  * Сторона игральной кости

@@ -1,14 +1,14 @@
 <?php
 
-namespace FavGame\Dominoes\GameHandlers;
+namespace FavGame\DominoesGame\GameHandlers;
 
 use DateTimeImmutable;
-use FavGame\Dominoes\Dices\DiceList;
-use FavGame\Dominoes\Events\DiceGivenEvent;
-use FavGame\Dominoes\Events\EventManager;
-use FavGame\Dominoes\GameData;
-use FavGame\Dominoes\Id;
-use FavGame\Dominoes\Players\PlayerInterface;
+use FavGame\DominoesGame\Dices\DiceList;
+use FavGame\DominoesGame\Events\DiceGivenEvent;
+use FavGame\DominoesGame\Events\EventManager;
+use FavGame\DominoesGame\GameData;
+use FavGame\DominoesGame\Id;
+use FavGame\DominoesGame\Players\PlayerInterface;
 
 /**
  * Распределитель игральных костей
@@ -64,7 +64,8 @@ final class DiceDistributor
      */
     public function distributeDices(): void
     {
-        $this->gameData->setDiceList(new DiceList($this->gameData->getRules()));
+        $diceList = DiceList::createInstance($this->gameData->getRules());
+        $this->gameData->setDiceList($diceList);
         $this->gameData->getPlayerList()->eachItems(function (PlayerInterface $player): void {
             for ($count = 0; $count < $this->gameData->getRules()->getInitialDiceCount(); $count++) {
                 $this->distributeDice($player);

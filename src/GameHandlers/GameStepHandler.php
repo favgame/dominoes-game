@@ -1,13 +1,13 @@
 <?php
 
-namespace FavGame\Dominoes\GameHandlers;
+namespace FavGame\DominoesGame\GameHandlers;
 
 use DateTimeImmutable;
-use FavGame\Dominoes\Dices\InvalidBindingException;
-use FavGame\Dominoes\Events\GameStepEvent;
-use FavGame\Dominoes\Events\PlayerChangeEvent;
-use FavGame\Dominoes\GameSteps\StepList;
-use FavGame\Dominoes\Id;
+use FavGame\DominoesGame\Dices\InvalidBindingException;
+use FavGame\DominoesGame\Events\GameStepEvent;
+use FavGame\DominoesGame\Events\PlayerChangeEvent;
+use FavGame\DominoesGame\GameSteps\StepList;
+use FavGame\DominoesGame\Id;
 use InfiniteIterator;
 
 /**

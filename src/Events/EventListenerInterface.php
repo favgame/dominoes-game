@@ -1,6 +1,6 @@
 <?php
 
-namespace FavGame\Dominoes\Events;
+namespace FavGame\DominoesGame\Events;
 
 /**
  * Интерфейс наблюдателя событий

@@ -1,8 +1,8 @@
 <?php
 
-namespace FavGame\Dominoes\Players;
+namespace FavGame\DominoesGame\Players;
 
-use FavGame\Dominoes\AbstractList;
+use FavGame\DominoesGame\AbstractList;
 
 use ArrayObject;
 

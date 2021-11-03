@@ -1,11 +1,11 @@
 <?php
 
-namespace FavGame\Dominoes\Events;
+namespace FavGame\DominoesGame\Events;
 
 use DateTimeInterface;
-use FavGame\Dominoes\GameData;
-use FavGame\Dominoes\Id;
-use FavGame\Dominoes\Players\PlayerInterface;
+use FavGame\DominoesGame\GameData;
+use FavGame\DominoesGame\Id;
+use FavGame\DominoesGame\Players\PlayerInterface;
 
 /**
  * Событие смены игрока
