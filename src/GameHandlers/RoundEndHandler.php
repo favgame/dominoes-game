@@ -18,7 +18,8 @@ final class RoundEndHandler extends AbstractGameHandler
      */
     public function handleData(): void
     {
-        $roundScoreList = new RoundScoreList($this->gameData->getPlayerList(), $this->gameData->getDiceList());
+        $roundScoreList = RoundScoreList::createInstance($this->gameData->getPlayerList());
+        $roundScoreList->updateScore($this->gameData->getDiceList());
         $leaderScore = $roundScoreList->getLeaderItem();
         $this->gameData->getScoreList()->updateScore($roundScoreList); // Кол-во очков в игре
 

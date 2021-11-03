@@ -8,17 +8,20 @@ use FavGame\Dominoes\Dices\DiceList;
 use FavGame\Dominoes\Players\PlayerInterface;
 
 /**
- * Список достпных игровых шагов
+ * Список доступных игровых шагов
  *
  * @method ArrayObject|Step[] getItems()
  */
 final class StepList extends AbstractList
 {
     /**
+     * Создать список доступных игровых шагов
+     *
      * @param DiceList $diceList Список игральных костей
      * @param PlayerInterface $player Игрок, для которого будут расчитаны ходы
+     * @return self
      */
-    public function __construct(DiceList $diceList, PlayerInterface $player)
+    public static function createInstance(DiceList $diceList, PlayerInterface $player): self
     {
         $activeDices = $diceList->getActiveItems();
         $playerDices = $diceList->getItemsByOwner($player);
@@ -38,7 +41,7 @@ final class StepList extends AbstractList
             }
         }
 
-        parent::__construct($items);
+        return new self($items);
     }
 
     /**

@@ -17,7 +17,7 @@ abstract class AbstractList
     /**
      * @param array $items Массив элементов списка
      */
-    public function __construct(array $items = [])
+    public final function __construct(array $items = [])
     {
         $this->items = $items;
     }

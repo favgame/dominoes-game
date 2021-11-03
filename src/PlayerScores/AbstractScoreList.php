@@ -4,6 +4,7 @@ namespace FavGame\Dominoes\PlayerScores;
 
 use ArrayObject;
 use FavGame\Dominoes\AbstractList;
+use FavGame\Dominoes\Id;
 use FavGame\Dominoes\Players\PlayerInterface;
 use FavGame\Dominoes\Players\PlayerList;
 
@@ -15,13 +16,16 @@ use FavGame\Dominoes\Players\PlayerList;
 abstract class AbstractScoreList extends AbstractList
 {
     /**
-     * @param PlayerList $playerList Списко игроков
+     * @param PlayerList $playerList
+     * @return static
      */
-    public function __construct(PlayerList $playerList)
+    public static function createInstance(PlayerList $playerList): self
     {
-        $items = array_map(fn (PlayerInterface $player) => new Score($player), (array) $playerList->getItems());
+        $items = array_map(function (PlayerInterface $player): Score {
+            return new Score(Id::next(), $player);
+        }, (array) $playerList->getItems());
 
-        parent::__construct($items);
+        return new static($items);
     }
 
     /**

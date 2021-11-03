@@ -16,9 +16,12 @@ use FavGame\Dominoes\Players\PlayerInterface;
 final class DiceList extends AbstractList
 {
     /**
+     * Создать новый список игральных костей
+     *
      * @param RulesInterface $gameRules Правила игры
+     * @return static
      */
-    public function __construct(RulesInterface $gameRules)
+    public static function createInstance(RulesInterface $gameRules): self
     {
         $items = [];
 
@@ -28,7 +31,7 @@ final class DiceList extends AbstractList
             }
         }
 
-        parent::__construct($items);
+        return new self($items);
     }
 
     /**

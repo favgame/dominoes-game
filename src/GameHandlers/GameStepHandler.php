@@ -45,7 +45,7 @@ final class GameStepHandler extends AbstractGameHandler implements HandlerInterf
     private function handlePlayerStep(): bool
     {
         $player = $this->gameData->getCurrentPlayer();
-        $stepList = new StepList($this->gameData->getDiceList(), $player); // Возможные ходы
+        $stepList = StepList::createInstance($this->gameData->getDiceList(), $player); // Возможные ходы
 
         if ($stepList->getItems()->count() == 0) { // Поход на базар
             $diceDistributor = new DiceDistributor($this->eventManager, $this->gameData);
@@ -88,7 +88,7 @@ final class GameStepHandler extends AbstractGameHandler implements HandlerInterf
         }
 
         foreach ($this->gameData->getPlayerList()->getItems() as $player) {
-            $stepList = (new StepList($this->gameData->getDiceList(), $player));
+            $stepList = StepList::createInstance($this->gameData->getDiceList(), $player);
 
             if ($stepList->getItems()->count() > 0) { // У игрока есть ход
                 return true;

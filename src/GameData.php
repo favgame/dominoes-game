@@ -84,8 +84,8 @@ final class GameData
     {
         $gameState = new GameStatus();
         $playersList = new PlayerList($players);
-        $scoreList = new GameScoreList($playersList);
-        $diceList = new DiceList($gameRules);
+        $scoreList = GameScoreList::createInstance($playersList);
+        $diceList = DiceList::createInstance($gameRules);
 
         return new GameData(Id::next(), $gameState, $gameRules, $playersList, $scoreList, $diceList);
     }
@@ -95,7 +95,7 @@ final class GameData
      *
      * @return Id
      */
-    public function Id(): Id
+    public function getId(): Id
     {
         return $this->id;
     }
