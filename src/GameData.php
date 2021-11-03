@@ -50,29 +50,29 @@ final class GameData
 
     /**
      * @param Id $id Идентификатор игры
-     * @param GameStatus $gameState Текущее состояние игры
+     * @param GameStatus $status Текущее состояние игры
      * @param RulesInterface $rules Правила игры
      * @param PlayerList $playerList Список игроков
      * @param GameScoreList $scoreList Список игровых очков
      * @param DiceList $diceList Список игральных костей
-     * @param PlayerInterface|null $currentPLayer
+     * @param PlayerInterface|null $currentPlayer
      */
     public function __construct(
         Id $id,
-        GameStatus $gameState,
+        GameStatus $status,
         RulesInterface $rules,
         PlayerList $playerList,
         GameScoreList $scoreList,
         DiceList $diceList,
-        PlayerInterface $currentPLayer = null
+        PlayerInterface $currentPlayer = null
     ) {
         $this->id = $id;
-        $this->gameStatus = $gameState;
+        $this->gameStatus = $status;
         $this->rules = $rules;
         $this->playerList = $playerList;
         $this->scoreList = $scoreList;
         $this->diceList = $diceList;
-        $this->currentPlayer = $currentPLayer;
+        $this->currentPlayer = $currentPlayer;
     }
 
     /**
@@ -180,5 +180,13 @@ final class GameData
     public function setCurrentPlayer(?PlayerInterface $player): void
     {
         $this->currentPlayer = $player;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasCurrentPlayer(): bool
+    {
+        return ($this->currentPlayer !== null);
     }
 }

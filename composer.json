@@ -1,5 +1,5 @@
 {
-    "name": "kovalevpw/domino-game",
+    "name": "favgame/dominoes-game",
     "type": "library",
     "require": {
         "php": "~7.4"

@@ -45,4 +45,12 @@ abstract class AbstractBot implements PlayerInterface
     {
         return $this->name;
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function isBot(): bool
+    {
+        return true;
+    }
 }

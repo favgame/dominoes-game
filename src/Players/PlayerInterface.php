@@ -32,4 +32,9 @@ interface PlayerInterface
      * @return Step|null Возвращает выбранный игровой ход из списка доступных, либо NULL, если ход не сделан
      */
     public function getStep(StepList $availableSteps): ?Step;
+
+    /**
+     * @return bool
+     */
+    public function isBot(): bool;
 }

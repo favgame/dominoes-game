@@ -33,6 +33,14 @@ final class GameStatus
     }
 
     /**
+     * @return int
+     */
+    public function getValue(): int
+    {
+        return $this->value;
+    }
+
+    /**
      * @return bool
      */
     public function isInitial(): bool
