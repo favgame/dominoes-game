@@ -7,6 +7,7 @@ use FavGame\DominoesGame\Dices\DiceList;
 use FavGame\DominoesGame\Events\DiceGivenEvent;
 use FavGame\DominoesGame\Events\EventManager;
 use FavGame\DominoesGame\GameData;
+use FavGame\DominoesGame\GameField\CellList;
 use FavGame\DominoesGame\Id;
 use FavGame\DominoesGame\Players\PlayerInterface;
 
@@ -65,7 +66,9 @@ final class DiceDistributor
     public function distributeDices(): void
     {
         $diceList = DiceList::createInstance($this->gameData->getRules());
+        $cellList = new CellList();
         $this->gameData->setDiceList($diceList);
+        $this->gameData->setCellList($cellList);
         $this->gameData->getPlayerList()->eachItems(function (PlayerInterface $player): void {
             for ($count = 0; $count < $this->gameData->getRules()->getInitialDiceCount(); $count++) {
                 $this->distributeDice($player);

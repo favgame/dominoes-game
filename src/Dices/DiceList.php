@@ -42,7 +42,7 @@ final class DiceList extends AbstractList
      */
     public function getItemsByOwner(PlayerInterface $owner): ArrayObject
     {
-        $callback = fn (Dice $dice) => ($dice->getOwner() === $owner && !$dice->isUsed());
+        $callback = fn (Dice $dice) => ($dice->getOwner() === $owner);
 
         return $this->filterItems($callback);
     }
@@ -61,16 +61,6 @@ final class DiceList extends AbstractList
         }
 
         return null;
-    }
-
-    /**
-     * Получить игральные кости, находящиеся на игровом поле
-     *
-     * @return ArrayObject|Dice[]
-     */
-    public function getActiveItems(): ArrayObject
-    {
-        return $this->filterItems(fn (Dice $dice) => $dice->isUsed());
     }
 
     /**

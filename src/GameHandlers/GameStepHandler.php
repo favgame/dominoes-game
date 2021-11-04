@@ -3,10 +3,11 @@
 namespace FavGame\DominoesGame\GameHandlers;
 
 use DateTimeImmutable;
-use FavGame\DominoesGame\Dices\InvalidBindingException;
 use FavGame\DominoesGame\Events\GameStepEvent;
 use FavGame\DominoesGame\Events\PlayerChangeEvent;
-use FavGame\DominoesGame\GameSteps\StepList;
+use FavGame\DominoesGame\GameField\Field;
+use FavGame\DominoesGame\GameField\InvalidAllocationException;
+use FavGame\DominoesGame\GameField\InvalidStepException;
 use FavGame\DominoesGame\Id;
 use InfiniteIterator;
 
@@ -17,16 +18,18 @@ final class GameStepHandler extends AbstractGameHandler implements HandlerInterf
 {
     /**
      * @inheritDoc
+     * @throws InvalidAllocationException
      * @throws InvalidStepException
-     * @throws InvalidBindingException
      */
     public function handleData(): void
     {
-        if (!$this->handlePlayerStep()) { // Игрок не сделал ход
+        $gameField = new Field($this->gameData->getCellList(), $this->gameData->getDiceList());
+
+        if (!$this->handlePlayerStep($gameField)) { // Игрок не сделал ход
             return;
         }
 
-        if ($this->isPlayerWon() || !$this->hasGameSteps()) { // Игра закончена
+        if ($this->isPlayerWon() || !$gameField->hasSteps()) { // Игра окончена
             $this->handleNext();
 
             return;
@@ -38,14 +41,15 @@ final class GameStepHandler extends AbstractGameHandler implements HandlerInterf
     /**
      * Обработать ход игрока
      *
+     * @param Field $gameField
      * @return bool Возвращает TRUE, если игрок сделал ход, иначе FALSE
+     * @throws InvalidAllocationException
      * @throws InvalidStepException
-     * @throws InvalidBindingException
      */
-    private function handlePlayerStep(): bool
+    private function handlePlayerStep(Field $gameField): bool
     {
-        $player = $this->gameData->getCurrentPlayer();
-        $stepList = StepList::createInstance($this->gameData->getDiceList(), $player); // Возможные ходы
+        $player = $this->gameData->getCurrentPlayer(); // Возможные ходы
+        $stepList = $gameField->getAvailableSteps($player);
 
         if ($stepList->getItems()->count() == 0) { // Поход на базар
             $diceDistributor = new DiceDistributor($this->eventManager, $this->gameData);
@@ -60,39 +64,12 @@ final class GameStepHandler extends AbstractGameHandler implements HandlerInterf
         $step = $player->getStep($stepList); // Ожидание хода игрока
 
         if ($step) { // Игрок сделал ход
-            if (!$stepList->hasItem($step)) { // Попытка сделать недопустимый игровой ход
-                throw new InvalidStepException();
-            }
-
-            $step->getChosenDice()->setBinding($step->getDestinationDice()); // Положить игральную кость на поле
-
+            $gameField->applyStep($step); // Положить игральную кость на поле
             $this->eventManager->addEvent(
                 new GameStepEvent(Id::next(), new DateTimeImmutable(), $this->gameData, $step)
             );
 
             return true; // Ход окончен
-        }
-
-        return false;
-    }
-
-    /**
-     * Определить наличие возможных игровых ходов
-     *
-     * @return bool Возвращает TRUE, если есть возможные ходы, иначе FALSE
-     */
-    private function hasGameSteps(): bool
-    {
-        if ($this->gameData->getDiceList()->getFreeItem() !== null) { // На базаре есть кости
-            return true;
-        }
-
-        foreach ($this->gameData->getPlayerList()->getItems() as $player) {
-            $stepList = StepList::createInstance($this->gameData->getDiceList(), $player);
-
-            if ($stepList->getItems()->count() > 0) { // У игрока есть ход
-                return true;
-            }
         }
 
         return false;
@@ -135,7 +112,6 @@ final class GameStepHandler extends AbstractGameHandler implements HandlerInterf
         $player = $queue->current();
 
         $this->gameData->setCurrentPlayer($player);
-
         $this->eventManager->addEvent(
             new PlayerChangeEvent(Id::next(), new DateTimeImmutable(), $this->gameData, $player)
         );

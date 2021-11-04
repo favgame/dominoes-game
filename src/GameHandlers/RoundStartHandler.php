@@ -18,18 +18,17 @@ final class RoundStartHandler extends AbstractGameHandler
      */
     public function handleData(): void
     {
-        if ($this->gameData->getStatus()->isDone()) {
-            return;
-        }
-
         if ($this->gameData->getStatus()->isInitial()) { // Начало новой игры
             $this->gameData->getStatus()->setReady();
             $this->eventManager->addEvent(
                 new GameStartEvent(Id::next(), new DateTimeImmutable(), $this->gameData)
             );
+
+            return;
         }
 
         if ($this->gameData->getStatus()->isReady()) { // Начало нового раунда
+            $this->gameData->getStatus()->setInProgress();
             $diceDistributor = new DiceDistributor($this->eventManager, $this->gameData);
             $diceDistributor->distributeDices(); // Раздать игрокам игральные кости
 
@@ -43,9 +42,10 @@ final class RoundStartHandler extends AbstractGameHandler
             $this->eventManager->addEvent(
                 new PlayerChangeEvent(Id::next(), new DateTimeImmutable(), $this->gameData, $player)
             );
+
+            return;
         }
 
-        $this->gameData->getStatus()->setInProgress();
         $this->handleNext();
     }
 }

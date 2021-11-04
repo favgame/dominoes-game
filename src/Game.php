@@ -2,11 +2,11 @@
 
 namespace FavGame\DominoesGame;
 
-use FavGame\DominoesGame\Dices\InvalidBindingException;
 use FavGame\DominoesGame\Events\EventManager;
+use FavGame\DominoesGame\GameField\InvalidAllocationException;
 use FavGame\DominoesGame\GameHandlers\GameStepHandler;
 use FavGame\DominoesGame\GameHandlers\HandlerInterface;
-use FavGame\DominoesGame\GameHandlers\InvalidStepException;
+use FavGame\DominoesGame\GameHandlers\InitialHandler;
 use FavGame\DominoesGame\GameHandlers\RoundEndHandler;
 use FavGame\DominoesGame\GameHandlers\RoundStartHandler;
 
@@ -28,7 +28,7 @@ final class Game
     /**
      * @var HandlerInterface Нальный обработчик в цепочке обязанностей
      */
-    private HandlerInterface $mainHandler;
+    private HandlerInterface $initialHandler;
 
     /**
      * @param GameData $gameData Игровые данные
@@ -38,15 +38,15 @@ final class Game
         $this->gameData = $gameData;
         $this->eventManager = new EventManager();
 
+        $this->initialHandler = new InitialHandler($this->eventManager, $gameData);
         $roundStartHandler = new RoundStartHandler($this->eventManager, $gameData);
         $stepHandler = new GameStepHandler($this->eventManager, $gameData);
         $roundEndHandler = new RoundEndHandler($this->eventManager, $gameData);
 
+        $this->initialHandler->setNextHandler($roundStartHandler);
         $roundStartHandler->setNextHandler($stepHandler);
         $stepHandler->setNextHandler($roundEndHandler);
         $roundEndHandler->setNextHandler($roundStartHandler);
-
-        $this->mainHandler = $roundStartHandler;
     }
 
     /**
@@ -54,19 +54,16 @@ final class Game
      *
      * @return bool
      * @throws PlayerCountException
-     * @throws InvalidBindingException
-     * @throws InvalidStepException
+     * @throws InvalidAllocationException
      */
     public function run(): bool
     {
-        $this->checkPlayerCount();
-        $this->eventManager->fireEvents(); // Отправить события подписчикам
-
         if ($this->gameData->getStatus()->isDone()) {
             return false; // Игра окончена
         }
 
-        $this->mainHandler->handleData(); // Запустить цепочку обязанностей
+        $this->initialHandler->handleData(); // Запустить цепочку обязанностей
+        $this->eventManager->fireEvents(); // Отправить события подписчикам
 
         return true;
     }
@@ -79,21 +76,5 @@ final class Game
     public function getEventManager(): EventManager
     {
         return $this->eventManager;
-    }
-
-    /**
-     * Проверить кол-во игроков на соответствие текущим правилам
-     *
-     * @return void
-     * @throws PlayerCountException
-     */
-    private function checkPlayerCount(): void
-    {
-        $rules = $this->gameData->getRules();
-        $playerCount = $this->gameData->getPlayerList()->getItems()->count();
-
-        if ($playerCount < $rules->getMinPlayerCount() || $playerCount > $rules->getMaxPlayerCount()) {
-            throw new PlayerCountException();
-        }
     }
 }

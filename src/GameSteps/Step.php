@@ -3,6 +3,8 @@
 namespace FavGame\DominoesGame\GameSteps;
 
 use FavGame\DominoesGame\Dices\Dice;
+use FavGame\DominoesGame\Dices\DiceSide;
+use FavGame\DominoesGame\GameField\Cell;
 
 /**
  * Игровой шаг
@@ -15,22 +17,23 @@ final class Step
     private Dice $chosenDice;
 
     /**
-     * @var Dice Игральная кость, находящаяся на поле
+     * @var Cell|null Выбранная ячейка игрового поля
      */
-    private Dice $destinationDice;
+    private ?Cell $destinationCell;
 
     /**
-     * @param Dice $chosenDice Выбранная игральная кость
-     * @param Dice $destinationDice Игральная кость, находящаяся на поле
+     * @param Dice $chosen Выбранная игральная кость
+     * @param Cell|null $destinationCell Игральная кость, находящаяся на поле
      */
-    public function __construct(Dice $chosenDice, Dice $destinationDice)
+    public function __construct(Dice $chosen, ?Cell $destinationCell)
     {
-        $this->chosenDice = $chosenDice;
-        $this->destinationDice = $destinationDice;
+        $this->chosenDice = $chosen;
+        $this->destinationCell = $destinationCell;
     }
 
     /**
      * Получить выбранную игральную кость
+     *
      * @return Dice
      */
     public function getChosenDice(): Dice
@@ -39,12 +42,47 @@ final class Step
     }
 
     /**
-     * Получить игральную кость, находящуюся на поле
+     * Получить подходящую сторону выбранной игральной кости
      *
-     * @return Dice
+     * @return DiceSide
      */
-    public function getDestinationDice(): Dice
+    public function getChosenSide(): DiceSide
     {
-        return $this->destinationDice;
+        if ($this->hasDestinationCell()) {
+            if ($this->chosenDice->getSideB()->getValue() === $this->destinationCell->getValue()) {
+                return $this->chosenDice->getSideB();
+            }
+        }
+
+        return $this->chosenDice->getSideA();
+    }
+
+    /**
+     * Получить вторую сторону выбранной игральной кости
+     *
+     * @return DiceSide
+     */
+    public function getOtherSide(): DiceSide
+    {
+        $sideA = $this->chosenDice->getSideA();
+        $sideB = $this->chosenDice->getSideB();
+
+        return $this->getChosenSide() === $sideA ? $sideB : $sideA;
+    }
+
+    /**
+     * @return Cell|null
+     */
+    public function getDestinationCell(): ?Cell
+    {
+        return $this->destinationCell;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasDestinationCell(): bool
+    {
+        return ($this->destinationCell !== null);
     }
 }

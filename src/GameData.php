@@ -3,6 +3,7 @@
 namespace FavGame\DominoesGame;
 
 use FavGame\DominoesGame\Dices\DiceList;
+use FavGame\DominoesGame\GameField\CellList;
 use FavGame\DominoesGame\GameRules\RulesInterface;
 use FavGame\DominoesGame\Players\PlayerInterface;
 use FavGame\DominoesGame\Players\PlayerList;
@@ -34,6 +35,11 @@ final class GameData
     private DiceList $diceList;
 
     /**
+     * @var CellList Список ячеек игрового поля
+     */
+    private CellList $cellList;
+
+    /**
      * @var Id Идентификатор игры
      */
     private Id $id;
@@ -55,6 +61,7 @@ final class GameData
      * @param PlayerList $playerList Список игроков
      * @param GameScoreList $scoreList Список игровых очков
      * @param DiceList $diceList Список игральных костей
+     * @param CellList $cellList Список ячеек игрового поля
      * @param PlayerInterface|null $currentPlayer
      */
     public function __construct(
@@ -64,6 +71,7 @@ final class GameData
         PlayerList $playerList,
         GameScoreList $scoreList,
         DiceList $diceList,
+        CellList $cellList,
         PlayerInterface $currentPlayer = null
     ) {
         $this->id = $id;
@@ -72,6 +80,7 @@ final class GameData
         $this->playerList = $playerList;
         $this->scoreList = $scoreList;
         $this->diceList = $diceList;
+        $this->cellList = $cellList;
         $this->currentPlayer = $currentPlayer;
     }
 
@@ -86,8 +95,9 @@ final class GameData
         $playersList = new PlayerList($players);
         $scoreList = GameScoreList::createInstance($playersList);
         $diceList = DiceList::createInstance($gameRules);
+        $cellList = new CellList();
 
-        return new GameData(Id::next(), $gameState, $gameRules, $playersList, $scoreList, $diceList);
+        return new GameData(Id::next(), $gameState, $gameRules, $playersList, $scoreList, $diceList, $cellList);
     }
 
     /**
@@ -131,6 +141,16 @@ final class GameData
     }
 
     /**
+     * Получить список ячеек игрового поля
+     *
+     * @return CellList
+     */
+    public function getCellList(): CellList
+    {
+        return $this->cellList;
+    }
+
+    /**
      * Установить список игральных костей
      *
      * @param DiceList $diceList
@@ -138,6 +158,16 @@ final class GameData
     public function setDiceList(DiceList $diceList): void
     {
         $this->diceList = $diceList;
+    }
+
+    /**
+     * Установить список ячеек игрового поля
+     *
+     * @param CellList $cellList
+     */
+    public function setCellList(CellList $cellList): void
+    {
+        $this->cellList = $cellList;
     }
 
     /**
@@ -180,13 +210,5 @@ final class GameData
     public function setCurrentPlayer(?PlayerInterface $player): void
     {
         $this->currentPlayer = $player;
-    }
-
-    /**
-     * @return bool
-     */
-    public function hasCurrentPlayer(): bool
-    {
-        return ($this->currentPlayer !== null);
     }
 }

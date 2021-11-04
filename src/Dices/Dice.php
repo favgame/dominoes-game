@@ -36,11 +36,6 @@ final class Dice
     private ?PlayerInterface $owner = null;
 
     /**
-     * @var bool Признак использования игральной кости
-     */
-    private bool $isUsed = false;
-
-    /**
      * @param Id $id Идентификатор игральной кости
      * @param DiceSide $sideA Первая сторона игральной кости
      * @param DiceSide $sideB Вторая сторона игральной кости
@@ -116,92 +111,11 @@ final class Dice
     /**
      * Установить текущего владельца кости
      *
-     * @param PlayerInterface $owner
+     * @param PlayerInterface|null $owner
      * @return void
      */
-    public function setOwner(PlayerInterface $owner): void
+    public function setOwner(?PlayerInterface $owner): void
     {
         $this->owner = $owner;
-       // TODO: exception if owned
-    }
-
-    /**
-     * Проверить возможность соединения игральных костей
-     *
-     * @param Dice $dice Другая гральная кость
-     * @return bool
-     */
-    public function canBinding(self $dice): bool
-    {
-        if ($dice === $this ?? !$this->isUsed()) { // Первый ход в раунде
-            return true;
-        }
-
-        if (!$this->isUsed() && !$dice->isUsed()) {
-            return false; // Ни одна из костей
-        }
-
-        foreach ($this->getSides() as $selfSide) {
-            foreach ($dice->getSides() as $diceSide) {
-                if ($selfSide->canBinding($diceSide) && $diceSide->canBinding($selfSide)) {
-                    return true;
-                }
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * Установить касание с другой игральной костью
-     *
-     * @param Dice $dice Другая игральная кость
-     * @return void
-     * @throws InvalidBindingException Бросает исключение, если касание между игральными костями невозможно
-     */
-    public function setBinding(self $dice): void
-    {
-        if (!$this->isUsed() && $dice === $this) { // Первый ход в раунде
-            $this->isUsed = true;
-
-            return;
-        }
-
-        if ($this->isUsed() || $dice->isUsed()) {
-            foreach ($this->getSides() as $selfSide) {
-                foreach ($dice->getSides() as $diceSide) {
-                    if ($selfSide->canBinding($diceSide) && $diceSide->canBinding($selfSide)) {
-                        $diceSide->setBinding($selfSide);
-                        $selfSide->setBinding($diceSide);
-                        $this->isUsed = true;
-                        $dice->isUsed = true;
-
-                        return;
-                    }
-                }
-            }
-        }
-
-        throw new InvalidBindingException();
-    }
-
-    /**
-     * Получить признак использования игральной кости
-     *
-     * @return bool Возвращает TRUE, если игральная кость была использована игроком для хода, иначе FALSE
-     */
-    public function isUsed(): bool
-    {
-        return $this->isUsed;
-    }
-
-    /**
-     * Получить обе стороны игральной кости
-     *
-     * @return DiceSide[]
-     */
-    private function getSides(): array
-    {
-        return [$this->getSideA(), $this->getSideB()];
     }
 }

@@ -139,6 +139,17 @@ final class MessageFactory implements MessageFactoryInterface
      */
     private function createGameStepMessage(GameStepEvent $event): string
     {
+        if (!$event->getGameStep()->hasDestinationCell()) {
+            return sprintf(
+                '[%s] [%s] event. Player "%s" takes a first step: [%d|%d]',
+                $event->getCreatedAt()->format($this->datetimeFormat),
+                $event->getName(),
+                $event->getGameStep()->getChosenDice()->getOwner()->getName(),
+                $event->getGameStep()->getChosenDice()->getSideA()->getValue(),
+                $event->getGameStep()->getChosenDice()->getSideB()->getValue()
+            );
+        }
+
         return sprintf(
             '[%s] [%s] event. Player "%s" takes a step: [%d|%d] -> [%d|%d]',
             $event->getCreatedAt()->format($this->datetimeFormat),
@@ -146,8 +157,8 @@ final class MessageFactory implements MessageFactoryInterface
             $event->getGameStep()->getChosenDice()->getOwner()->getName(),
             $event->getGameStep()->getChosenDice()->getSideA()->getValue(),
             $event->getGameStep()->getChosenDice()->getSideB()->getValue(),
-            $event->getGameStep()->getDestinationDice()->getSideA()->getValue(),
-            $event->getGameStep()->getDestinationDice()->getSideB()->getValue(),
+            $event->getGameStep()->getDestinationCell()->getLeftDice()->getSideA()->getValue(),
+            $event->getGameStep()->getDestinationCell()->getLeftDice()->getSideB()->getValue(),
         );
     }
 

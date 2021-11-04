@@ -1,13 +1,13 @@
 <?php
 
-namespace FavGame\DominoesGame\Dices;
+namespace FavGame\DominoesGame\GameField;
 
 use LogicException;
 
-final class InvalidBindingException extends LogicException
+final class InvalidStepException extends LogicException
 {
     /** @var string */
-    private const ERROR_MESSAGE = 'Invalid binding';
+    private const ERROR_MESSAGE = 'Invalid game step';
 
     public function __construct()
     {
