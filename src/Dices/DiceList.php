@@ -56,11 +56,7 @@ final class DiceList extends AbstractList
     {
         $items = $this->filterItems(fn (Dice $dice) => !$dice->hasOwner());
 
-        if ($items->count()) {
-            return $items[array_rand((array) $items)];
-        }
-
-        return null;
+        return ($items->count() > 0) ? $items[array_rand((array) $items)] : null;
     }
 
     /**
@@ -94,10 +90,6 @@ final class DiceList extends AbstractList
     {
         $items = $this->filterItems(fn (Dice $dice) => $dice->getId()->getValue() === $id->getValue());
 
-        if ($items->count() > 0) {
-            return $items->getIterator()->current();
-        }
-
-        return null;
+        return ($items->count() > 0) ? $items->getIterator()->current() : null;
     }
 }

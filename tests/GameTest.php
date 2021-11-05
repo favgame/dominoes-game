@@ -20,7 +20,6 @@ class GameTest extends TestCase
      */
     public function testRun(): void
     {
-        $inWork = true;
         $gameData = GameData::createInstance(
             new ClassicRules(),
             new MelissaBot(Id::next()),
@@ -29,10 +28,7 @@ class GameTest extends TestCase
         $logger = new Logger(new MessageFactory());
         $game = new Game($gameData);
         $game->getEventManager()->subscribe($logger);
-
-        while ($inWork) {
-            $inWork = $game->run();
-        }
+        $game->run();
 
         $this->assertIsArray($logger->getMessages());
         $this->assertNotEmpty($logger->getMessages());

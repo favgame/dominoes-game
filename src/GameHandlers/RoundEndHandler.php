@@ -37,8 +37,6 @@ final class RoundEndHandler extends AbstractGameHandler
             );
 
             $this->gameData->getStatus()->setDone();
-
-            return;
         }
 
         $this->handleNext();

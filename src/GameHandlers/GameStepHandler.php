@@ -24,11 +24,11 @@ final class GameStepHandler extends AbstractGameHandler implements HandlerInterf
     public function handleData(): void
     {
         while (true) {
-            if (!$this->handlePlayerStep()) { // Игрок не сделал ход
-                if ($this->distributeDice()) { // Поход на базар
-                    continue; // Новая попытка хода
-                }
+            if ($this->distributeDice()) { // Поход на базар
+                continue; // Новая попытка хода
+            }
 
+            if (!$this->handlePlayerStep()) { // Игрок не сделал ход
                 break; // Прервать обработку ходов
             }
 
@@ -55,8 +55,8 @@ final class GameStepHandler extends AbstractGameHandler implements HandlerInterf
         $gameField = new Field($this->gameData->getCellList(), $this->gameData->getDiceList());
         $stepList = $gameField->getAvailableSteps($player); // Возможные ходы
 
-        if ($stepList->getItems()->count() < 1) {
-            return false;
+        if ($stepList->getItems()->count() == 0) {
+            return true; // У игрока нет доступных ходов
         }
 
         $step = $player->getStep($stepList); // Ожидание хода игрока
@@ -103,11 +103,7 @@ final class GameStepHandler extends AbstractGameHandler implements HandlerInterf
         $diceCount = $this->gameData->getDiceList()->getItemsByOwner($player)->count(); // Кол-во костей на руках
         $gameField = new Field($this->gameData->getCellList(), $this->gameData->getDiceList());
 
-        if ($diceCount == 0) { // У игрока закончились кости
-            return true;
-        }
-
-        if (!$gameField->hasSteps()) { // Закончились возможные игровые ходы - "Рыба"
+        if ($diceCount == 0 || !$gameField->hasSteps()) { // У игрока закончились кости, либо закончились игровые ходы
             return true;
         }
 

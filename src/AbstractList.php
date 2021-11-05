@@ -47,17 +47,6 @@ abstract class AbstractList
     }
 
     /**
-     * Проверить, находится ли элемент в текущем списке
-     *
-     * @param mixed $item Элемент
-     * @return bool Возвращает TRUE, слемент находится в списке, иначе FALSE
-     */
-    public function hasItem($item): bool
-    {
-        return (array_search($item, $this->items, true) !== null);
-    }
-
-    /**
      * Применить заданную функцию к каждому элементу списка
      *
      * @param callable $callback Функция обратного вызова

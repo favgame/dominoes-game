@@ -38,10 +38,6 @@ final class GameScoreList extends AbstractScoreList
         $points = array_map(fn (Score $playerScore) => $playerScore->getPointAmount(), $this->items);
         $index = array_keys($points, max($points), true);
 
-        if (count($index) !== 1) {
-            return null;
-        }
-
-        return $this->getItems()[$index[0]];
+        return (count($index) == 1) ? $this->getItems()[$index[0]] : null;
     }
 }

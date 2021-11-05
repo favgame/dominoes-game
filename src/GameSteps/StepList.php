@@ -29,4 +29,22 @@ final class StepList extends AbstractList
 
         return $step;
     }
+
+    /**
+     * Проверить, находится ли элемент в текущем списке
+     *
+     * @param Step $step Элемент
+     * @return bool Возвращает TRUE, слемент находится в списке, иначе FALSE
+     */
+    public function hasStep(Step $step): bool
+    {
+        $items = $this->filterItems(function (Step $item) use ($step) {
+            $diceIsEqual = $item->getChosenDice() === $step->getChosenDice();
+            $cellIsEqual = $item->getDestinationCell() === $step->getDestinationCell();
+
+            return ($diceIsEqual && $cellIsEqual);
+        });
+
+        return ($items->count() > 0);
+    }
 }

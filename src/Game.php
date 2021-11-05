@@ -30,7 +30,6 @@ final class Game
      */
     public function __construct(GameData $gameData)
     {
-        $this->gameData = $gameData;
         $this->eventManager = new EventManager();
 
         $this->initialHandler = new InitialHandler($this->eventManager, $gameData);

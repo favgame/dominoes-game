@@ -36,12 +36,13 @@ final class Field
      * @param Step $step
      * @return void
      * @throws InvalidAllocationException
+     * @throws InvalidStepException
      */
     public function applyStep(Step $step): void
     {
         $steps = $this->getAvailableSteps($step->getChosenDice()->getOwner());
 
-        if (!$steps->hasItem($step)) {
+        if (!$steps->hasStep($step)) {
             throw new InvalidStepException();
         }
 
