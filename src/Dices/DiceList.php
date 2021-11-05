@@ -83,4 +83,21 @@ final class DiceList extends AbstractList
 
         return $dice;
     }
+
+    /**
+     * Получить игральную кость по идентификатору
+     * 
+     * @param Id $id
+     * @return Dice|null
+     */
+    public function findItemById(Id $id): ?Dice
+    {
+        $items = $this->filterItems(fn (Dice $dice) => $dice->getId()->getValue() === $id->getValue());
+
+        if ($items->count() > 0) {
+            return $items->getIterator()->current();
+        }
+
+        return null;
+    }
 }

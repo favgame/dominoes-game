@@ -65,7 +65,7 @@ final class Field
         $playerDices = $this->diceList->getItemsByOwner($player);
 
         foreach ($playerDices as $dice) {
-            if ($freeCells->count() < 0 && !$this->isUsedDice($dice)) {
+            if ($freeCells->count() < 1 && !$this->isUsedDice($dice)) {
                 $steps[] = new Step($dice, null);
 
                 continue;

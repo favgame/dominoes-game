@@ -23,8 +23,6 @@ final class RoundStartHandler extends AbstractGameHandler
             $this->eventManager->addEvent(
                 new GameStartEvent(Id::next(), new DateTimeImmutable(), $this->gameData)
             );
-
-            return;
         }
 
         if ($this->gameData->getStatus()->isReady()) { // Начало нового раунда
@@ -42,8 +40,6 @@ final class RoundStartHandler extends AbstractGameHandler
             $this->eventManager->addEvent(
                 new PlayerChangeEvent(Id::next(), new DateTimeImmutable(), $this->gameData, $player)
             );
-
-            return;
         }
 
         $this->handleNext();

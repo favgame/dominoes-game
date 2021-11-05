@@ -141,16 +141,6 @@ final class GameData
     }
 
     /**
-     * Получить список ячеек игрового поля
-     *
-     * @return CellList
-     */
-    public function getCellList(): CellList
-    {
-        return $this->cellList;
-    }
-
-    /**
      * Установить список игральных костей
      *
      * @param DiceList $diceList
@@ -158,6 +148,16 @@ final class GameData
     public function setDiceList(DiceList $diceList): void
     {
         $this->diceList = $diceList;
+    }
+
+    /**
+     * Получить список ячеек игрового поля
+     *
+     * @return CellList
+     */
+    public function getCellList(): CellList
+    {
+        return $this->cellList;
     }
 
     /**

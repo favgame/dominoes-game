@@ -102,11 +102,11 @@ final class Cell
      */
     public function setRightDice(Dice $dice): void
     {
-        if ($this->canSetRightDice($dice)) {
-            $this->rightDice = $dice;
+        if (!$this->canSetRightDice($dice)) {
+            throw new InvalidAllocationException();
         }
 
-        throw new InvalidAllocationException();
+        $this->rightDice = $dice;
     }
 
     /**

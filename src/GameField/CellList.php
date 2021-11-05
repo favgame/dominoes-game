@@ -38,12 +38,4 @@ final class CellList extends AbstractList
     {
         $this->items[] = $item;
     }
-
-    /**
-     * @return void
-     */
-    public function resetItems(): void
-    {
-        $this->items = [];
-    }
 }

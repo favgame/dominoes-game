@@ -23,41 +23,39 @@ final class GameStepHandler extends AbstractGameHandler implements HandlerInterf
      */
     public function handleData(): void
     {
-        $gameField = new Field($this->gameData->getCellList(), $this->gameData->getDiceList());
+        while (true) {
+            if (!$this->handlePlayerStep()) { // Игрок не сделал ход
+                if ($this->distributeDice()) { // Поход на базар
+                    continue; // Новая попытка хода
+                }
 
-        if (!$this->handlePlayerStep($gameField)) { // Игрок не сделал ход
-            return;
+                break; // Прервать обработку ходов
+            }
+
+            if ($this->isRoundEnd()) { // Раунд окончен
+                $this->handleNext();
+
+                break; // Прервать обработку ходов
+            }
+
+            $this->changeNextPlayer(); // Переход хода
         }
-
-        if ($this->isPlayerWon() || !$gameField->hasSteps()) { // Игра окончена
-            $this->handleNext();
-
-            return;
-        }
-
-        $this->changeNextPlayer(); // Переход хода
     }
 
     /**
      * Обработать ход игрока
      *
-     * @param Field $gameField
      * @return bool Возвращает TRUE, если игрок сделал ход, иначе FALSE
      * @throws InvalidAllocationException
      * @throws InvalidStepException
      */
-    private function handlePlayerStep(Field $gameField): bool
+    private function handlePlayerStep(): bool
     {
-        $player = $this->gameData->getCurrentPlayer(); // Возможные ходы
-        $stepList = $gameField->getAvailableSteps($player);
+        $player = $this->gameData->getCurrentPlayer();
+        $gameField = new Field($this->gameData->getCellList(), $this->gameData->getDiceList());
+        $stepList = $gameField->getAvailableSteps($player); // Возможные ходы
 
-        if ($stepList->getItems()->count() == 0) { // Поход на базар
-            $diceDistributor = new DiceDistributor($this->eventManager, $this->gameData);
-
-            if (!$diceDistributor->distributeDice($player)) { // На базаре пусто
-                return true; // Ход окончен
-            }
-
+        if ($stepList->getItems()->count() < 1) {
             return false;
         }
 
@@ -76,16 +74,40 @@ final class GameStepHandler extends AbstractGameHandler implements HandlerInterf
     }
 
     /**
-     * Определить, является ли текущий игрок победителем
+     * Выдать игральную кость игроку
      *
      * @return bool Возвращает TRUE, если у игрока не осталось игральных костей, иначе FALSE
      */
-    private function isPlayerWon(): bool
+    private function distributeDice(): bool
+    {
+        $player = $this->gameData->getCurrentPlayer();
+        $diceDistributor = new DiceDistributor($this->eventManager, $this->gameData);
+        $gameField = new Field($this->gameData->getCellList(), $this->gameData->getDiceList());
+        $stepList = $gameField->getAvailableSteps($player);
+
+        if ($stepList->getItems()->count() < 1 && $diceDistributor->distributeDice($player)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Определить, закончился ли текущий раунд
+     *
+     * @return bool Возвращает TRUE, если у игрока не осталось игральных костей, иначе FALSE
+     */
+    private function isRoundEnd(): bool
     {
         $player = $this->gameData->getCurrentPlayer();
         $diceCount = $this->gameData->getDiceList()->getItemsByOwner($player)->count(); // Кол-во костей на руках
+        $gameField = new Field($this->gameData->getCellList(), $this->gameData->getDiceList());
 
         if ($diceCount == 0) { // У игрока закончились кости
+            return true;
+        }
+
+        if (!$gameField->hasSteps()) { // Закончились возможные игровые ходы - "Рыба"
             return true;
         }
 

@@ -46,7 +46,7 @@ final class Game
         $this->initialHandler->setNextHandler($roundStartHandler);
         $roundStartHandler->setNextHandler($stepHandler);
         $stepHandler->setNextHandler($roundEndHandler);
-        $roundEndHandler->setNextHandler($roundStartHandler);
+        $roundEndHandler->setNextHandler($this->initialHandler);
     }
 
     /**
