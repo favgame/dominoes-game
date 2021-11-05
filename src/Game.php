@@ -21,11 +21,6 @@ final class Game
     private EventManager $eventManager;
 
     /**
-     * @var GameData Игровые данные
-     */
-    private GameData $gameData;
-
-    /**
      * @var HandlerInterface Нальный обработчик в цепочке обязанностей
      */
     private HandlerInterface $initialHandler;
@@ -50,22 +45,16 @@ final class Game
     }
 
     /**
-     * Выполнить одну итерацию игры
+     * Выполнить доступные итерации игры
      *
-     * @return bool
+     * @return void
      * @throws PlayerCountException
      * @throws InvalidAllocationException
      */
-    public function run(): bool
+    public function run(): void
     {
-        if ($this->gameData->getStatus()->isDone()) {
-            return false; // Игра окончена
-        }
-
         $this->initialHandler->handleData(); // Запустить цепочку обязанностей
         $this->eventManager->fireEvents(); // Отправить события подписчикам
-
-        return true;
     }
 
     /**
