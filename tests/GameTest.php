@@ -25,13 +25,18 @@ class GameTest extends TestCase
             new MelissaBot(Id::next()),
             new SusannaBot(Id::next())
         );
-        $logger = new Logger(new MessageFactory());
+
         $game = new Game($gameData);
+        $logger = new Logger(new MessageFactory());
         $game->getEventManager()->subscribe($logger);
         $game->run();
 
         $this->assertIsArray($logger->getMessages());
         $this->assertNotEmpty($logger->getMessages());
+
+        foreach ($logger->getMessages() as $message) {
+            fwrite(STDOUT, $message . PHP_EOL);
+        }
     }
 
     /**
