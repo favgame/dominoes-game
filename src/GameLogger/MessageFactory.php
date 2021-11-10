@@ -141,7 +141,7 @@ final class MessageFactory implements MessageFactoryInterface
     {
         if (!$event->getGameStep()->hasDestinationCell()) {
             return sprintf(
-                '[%s] [%s] event. Player "%s" takes a first step: [%d|%d]',
+                '[%s] %s event. Player "%s" takes a first step: [%d|%d]',
                 $event->getCreatedAt()->format($this->datetimeFormat),
                 $event->getName(),
                 $event->getGameStep()->getChosenDice()->getOwner()->getName(),
@@ -151,7 +151,7 @@ final class MessageFactory implements MessageFactoryInterface
         }
 
         return sprintf(
-            '[%s] [%s] event. Player "%s" takes a step: [%d|%d] -> [%d|%d]',
+            '[%s] %s event. Player "%s" takes a step: [%d|%d] -> [%d|%d]',
             $event->getCreatedAt()->format($this->datetimeFormat),
             $event->getName(),
             $event->getGameStep()->getChosenDice()->getOwner()->getName(),
