@@ -76,7 +76,7 @@ final class GameStepHandler extends AbstractGameHandler implements HandlerInterf
     /**
      * Выдать игральную кость игроку
      *
-     * @return bool Возвращает TRUE, если у игрока не осталось игральных костей, иначе FALSE
+     * @return bool Возвращает TRUE, если игроку была выдана игральная кость, иначе FALSE
      */
     private function distributeDice(): bool
     {
