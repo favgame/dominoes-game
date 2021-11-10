@@ -1,7 +1,13 @@
-# domino-game
+# Dominoes
+
+## Install
+
+```shell
+composer install
+```
 
 ## Tests
 
 ```shell
-docker-compose exec php php ./vendor/phpunit/phpunit/phpunit --debug --coverage-text tests
+php ./vendor/phpunit/phpunit/phpunit
 ```
