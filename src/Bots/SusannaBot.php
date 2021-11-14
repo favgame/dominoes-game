@@ -7,11 +7,11 @@ use FavGame\DominoesGame\GameSteps\StepList;
 use FavGame\DominoesGame\Id;
 
 /**
- * Компьютерный соперник
+ * Компьютерный соперник, который всегда делает случайный ход
  */
 final class SusannaBot extends AbstractBot
 {
-    /** @var string */
+    /** @var string Имя игрока */
     private const PLAYER_NAME = 'Bot Susanna';
 
     /**

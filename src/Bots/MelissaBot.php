@@ -7,7 +7,7 @@ use FavGame\DominoesGame\GameSteps\StepList;
 use FavGame\DominoesGame\Id;
 
 /**
- * Компьютерный соперник
+ * Компьютерный соперник, который всегда выбирает для хода игральную кость с наибольшим количеством очков
  */
 final class MelissaBot extends AbstractBot
 {
@@ -27,6 +27,14 @@ final class MelissaBot extends AbstractBot
      */
     public function getStep(StepList $availableSteps): ?Step
     {
-        return $availableSteps->getRandomItem();
+        $step = null;
+
+        foreach ($availableSteps->getItems() as $item) {
+            if ($step === null || $item->getChosenDice()->getPointAmount() > $step->getChosenDice()->getPointAmount()) {
+                $step = $item;
+            }
+        }
+
+        return $step;
     }
 }
