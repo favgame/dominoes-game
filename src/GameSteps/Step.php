@@ -7,7 +7,7 @@ use FavGame\DominoesGame\Dices\DiceSide;
 use FavGame\DominoesGame\GameField\Cell;
 
 /**
- * Игровой шаг
+ * Игровой ход
  */
 final class Step
 {
@@ -71,6 +71,9 @@ final class Step
     }
 
     /**
+     * Получить ячейку игрового поля, в которой будет размещена игральная кость
+     * Для первого хода в раунде всегда NULL
+     *
      * @return Cell|null
      */
     public function getDestinationCell(): ?Cell
@@ -79,7 +82,9 @@ final class Step
     }
 
     /**
-     * @return bool
+     * Признак наличия, указанной в ходе, ячейки игрового поля
+     *
+     * @return bool Возвращает TRUE, если в ходе указана ячейка игрового поля, иначе FALSE
      */
     public function hasDestinationCell(): bool
     {

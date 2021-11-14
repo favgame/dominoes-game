@@ -28,6 +28,8 @@ final class GameStepEvent extends AbstractEvent
     }
 
     /**
+     * Получить игровой ход
+     *
      * @return Step
      */
     public function getGameStep(): Step

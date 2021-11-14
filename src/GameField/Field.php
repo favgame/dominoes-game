@@ -9,22 +9,24 @@ use FavGame\DominoesGame\GameSteps\StepList;
 use FavGame\DominoesGame\Id;
 use FavGame\DominoesGame\Players\PlayerInterface;
 
+/**
+ * Игровое поле
+ */
 final class Field
 {
     /**
-     * @var CellList
+     * @var CellList Список ячеек игрового поля
      */
     private CellList $cellList;
 
     /**
-     * @var DiceList
+     * @var DiceList Список игральных костей
      */
     private DiceList $diceList;
 
     /**
-     * @param CellList $cellList
-     * @param DiceList $diceList
-     * @return void
+     * @param CellList $cellList Список ячеек игрового поля
+     * @param DiceList $diceList Список игральных костей
      */
     public function __construct(CellList $cellList, DiceList $diceList)
     {
@@ -33,10 +35,12 @@ final class Field
     }
 
     /**
-     * @param Step $step
+     * Применить ход игрока к игральному полю
+     *
+     * @param Step $step Ход игрока
      * @return void
-     * @throws InvalidAllocationException
-     * @throws InvalidStepException
+     * @throws InvalidStepException Бросает исключение, если был передан недопустимый игровой ход
+     * @throws InvalidAllocationException Бросает исключение, если невозможно установить кость в ячейку
      */
     public function applyStep(Step $step): void
     {
@@ -56,8 +60,10 @@ final class Field
     }
 
     /**
-     * @param PlayerInterface $player
-     * @return StepList
+     * Получить список доступных игровых ходов
+     *
+     * @param PlayerInterface $player Игрок, для которого будет расчитан список ходов
+     * @return StepList Возвращает список доступных игровых ходов
      */
     public function getAvailableSteps(PlayerInterface $player): StepList
     {
@@ -83,7 +89,9 @@ final class Field
     }
 
     /**
-     * @return bool
+     * Проверить наличие игровых ходов
+     *
+     * @return bool Возвращает TRUE, если кто-то из игроков может сделать ход, иначе FALSE
      */
     public function hasSteps(): bool
     {
@@ -95,12 +103,14 @@ final class Field
             }
         }
 
-        return ($this->cellList->getFreeCells()->count() === 0);
+        return ($this->cellList->getFreeCells()->count() === 0); // Всегда TRUE, если это первый ход в раунде
     }
 
     /**
-     * @param Dice $dice
-     * @return bool
+     * Проверить признак испозования игральной кости
+     *
+     * @param Dice $dice Игральная кость
+     * @return bool Возвращает TRUE, если игральная кость находится на игровом поле, иначе FALSE
      */
     private function isUsedDice(Dice $dice): bool
     {

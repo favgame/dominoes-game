@@ -14,8 +14,10 @@ use FavGame\DominoesGame\Dices\Dice;
 final class CellList extends AbstractList
 {
     /**
-     * @param Dice $dice
-     * @return ArrayObject|Cell[]
+     * Получить список ячеек игрового поля, в которых находится игральная кость
+     *
+     * @param Dice $dice Игральная кость
+     * @return ArrayObject|Cell[] Возвращает массив ячеек игрового поля
      */
     public function getItemsByDice(Dice $dice): ArrayObject
     {
@@ -23,6 +25,8 @@ final class CellList extends AbstractList
     }
 
     /**
+     * Получить список свободных ячеек игрового поля
+     *
      * @return ArrayObject|Cell[]
      */
     public function getFreeCells(): ArrayObject
@@ -31,7 +35,9 @@ final class CellList extends AbstractList
     }
 
     /**
-     * @param Cell $item
+     * Добавить в список ячейку игрового поля
+     *
+     * @param Cell $item Ячейка игрового поля
      * @return void
      */
     public function addItem(Cell $item): void

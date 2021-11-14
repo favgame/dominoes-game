@@ -98,7 +98,7 @@ final class Cell
      *
      * @param Dice $dice Игральная кость
      * @return void
-     * @throws InvalidAllocationException
+     * @throws InvalidAllocationException Бросает исключение, если невозможно установить кость в ячейку
      */
     public function setRightDice(Dice $dice): void
     {

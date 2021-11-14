@@ -39,7 +39,7 @@ final class RoundEndHandler extends AbstractGameHandler
     /**
      * Определить, закончилась ли игра
      *
-     * @return bool Возвращает TRUE, если игрок, иначе FALSE
+     * @return bool Возвращает TRUE, если игрок набрал необходимое для победы количество очков, иначе FALSE
      */
     private function isGameEnd(): bool
     {
