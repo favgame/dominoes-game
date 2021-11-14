@@ -55,6 +55,8 @@ abstract class AbstractList
      */
     public function eachItems(callable $callback): void
     {
-        array_walk($this->items, $callback);
+        $items = $this->getItems()->getArrayCopy();
+
+        array_walk($items, $callback);
     }
 }

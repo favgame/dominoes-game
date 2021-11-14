@@ -17,7 +17,7 @@ final class GameData
     /**
      * @var RulesInterface Правила игры
      */
-    private RulesInterface $rules;
+    private RulesInterface $gameRules;
 
     /**
      * @var PlayerList Список игроков
@@ -59,45 +59,27 @@ final class GameData
      * @param GameStatus $status Текущее состояние игры
      * @param RulesInterface $rules Правила игры
      * @param PlayerList $playerList Список игроков
-     * @param GameScoreList $scoreList Список игровых очков
-     * @param DiceList $diceList Список игральных костей
-     * @param CellList $cellList Список ячеек игрового поля
-     * @param PlayerInterface|null $currentPlayer
      */
-    public function __construct(
-        Id $id,
-        GameStatus $status,
-        RulesInterface $rules,
-        PlayerList $playerList,
-        GameScoreList $scoreList,
-        DiceList $diceList,
-        CellList $cellList,
-        PlayerInterface $currentPlayer = null
-    ) {
+    public function __construct(Id $id, GameStatus $status, RulesInterface $rules, PlayerList $playerList)
+    {
         $this->id = $id;
         $this->gameStatus = $status;
-        $this->rules = $rules;
+        $this->gameRules = $rules;
         $this->playerList = $playerList;
-        $this->scoreList = $scoreList;
-        $this->diceList = $diceList;
-        $this->cellList = $cellList;
-        $this->currentPlayer = $currentPlayer;
+        $this->scoreList = GameScoreList::createInstance($playerList);
+        $this->diceList = DiceList::createInstance($rules);
+        $this->cellList = new CellList();
+        $this->currentPlayer = null;
     }
 
     /**
-     * @param RulesInterface $gameRules
+     * @param RulesInterface $rules
      * @param PlayerInterface ...$players
      * @return GameData
      */
-    public static function createInstance(RulesInterface $gameRules, PlayerInterface ...$players): GameData
+    public static function createInstance(RulesInterface $rules, PlayerInterface ...$players): GameData
     {
-        $gameState = new GameStatus();
-        $playersList = new PlayerList($players);
-        $scoreList = GameScoreList::createInstance($playersList);
-        $diceList = DiceList::createInstance($gameRules);
-        $cellList = new CellList();
-
-        return new GameData(Id::next(), $gameState, $gameRules, $playersList, $scoreList, $diceList, $cellList);
+        return new GameData(Id::next(), new GameStatus(), $rules, new PlayerList($players));
     }
 
     /**
@@ -127,7 +109,7 @@ final class GameData
      */
     public function getRules(): RulesInterface
     {
-        return $this->rules;
+        return $this->gameRules;
     }
 
     /**
