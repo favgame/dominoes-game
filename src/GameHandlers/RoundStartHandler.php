@@ -21,7 +21,7 @@ final class RoundStartHandler extends AbstractGameHandler
         if ($this->gameData->getStatus()->isInitial()) { // Начало новой игры
             $this->gameData->getStatus()->setReady();
             $this->eventManager->addEvent(
-                new GameStartEvent(Id::next(), new DateTimeImmutable(), $this->gameData)
+                new GameStartEvent(Id::next(), new DateTimeImmutable(), $this->gameData->getPlayerList())
             );
         }
 
@@ -31,14 +31,14 @@ final class RoundStartHandler extends AbstractGameHandler
             $diceDistributor->distributeDices(); // Раздать игрокам игральные кости
 
             $this->eventManager->addEvent(
-                new RoundStartEvent(Id::next(), new DateTimeImmutable(), $this->gameData)
+                new RoundStartEvent(Id::next(), new DateTimeImmutable())
             );
 
             // Выбрать игрока, который начнет игру
             $player = $this->gameData->getCurrentPlayer() ?: $this->gameData->getDiceList()->getStartItem()->getOwner();
             $this->gameData->setCurrentPlayer($player);
             $this->eventManager->addEvent(
-                new PlayerChangeEvent(Id::next(), new DateTimeImmutable(), $this->gameData, $player)
+                new PlayerChangeEvent(Id::next(), new DateTimeImmutable(), $player)
             );
         }
 

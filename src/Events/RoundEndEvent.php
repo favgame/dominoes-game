@@ -3,7 +3,6 @@
 namespace FavGame\DominoesGame\Events;
 
 use DateTimeInterface;
-use FavGame\DominoesGame\GameData;
 use FavGame\DominoesGame\Id;
 use FavGame\DominoesGame\PlayerScores\RoundScoreList;
 
@@ -23,14 +22,13 @@ final class RoundEndEvent extends AbstractGameEvent
     /**
      * @param Id $id Идентификатор события
      * @param DateTimeInterface $createdAt Дата создания события
-     * @param GameData $gameData Игровые данные
      * @param RoundScoreList $scoreList Список штрафных очков
      */
-    public function __construct(Id $id, DateTimeInterface $createdAt, GameData $gameData, RoundScoreList $scoreList)
+    public function __construct(Id $id, DateTimeInterface $createdAt, RoundScoreList $scoreList)
     {
         $this->scoreList = $scoreList;
 
-        parent::__construct($id, $createdAt, $gameData, self::EVENT_NAME);
+        parent::__construct($id, $createdAt, self::EVENT_NAME);
     }
 
     /**

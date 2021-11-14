@@ -18,13 +18,14 @@ final class RoundEndHandler extends AbstractGameHandler
      */
     public function handleData(): void
     {
+        $gameScoreList = $this->gameData->getScoreList();
         $roundScoreList = RoundScoreList::createInstance($this->gameData->getPlayerList());
         $roundScoreList->updateScore($this->gameData->getDiceList());
         $leaderScore = $roundScoreList->getLeaderItem();
-        $this->gameData->getScoreList()->updateScore($roundScoreList); // Кол-во очков в игре
+        $gameScoreList->updateScore($roundScoreList); // Кол-во очков в игре
 
         $this->eventManager->addEvent(
-            new RoundEndEvent(Id::next(), new DateTimeImmutable(), $this->gameData, $roundScoreList)
+            new RoundEndEvent(Id::next(), new DateTimeImmutable(), $roundScoreList)
         );
 
         // Выбор игрока, который начнёт следующий раунд
@@ -33,7 +34,7 @@ final class RoundEndHandler extends AbstractGameHandler
 
         if ($this->isGameEnd()) { // Игра окончена
             $this->eventManager->addEvent(
-                new GameEndEvent(Id::next(), new DateTimeImmutable(), $this->gameData)
+                new GameEndEvent(Id::next(), new DateTimeImmutable(), $gameScoreList)
             );
 
             $this->gameData->getStatus()->setDone();

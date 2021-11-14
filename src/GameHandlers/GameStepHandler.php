@@ -64,7 +64,7 @@ final class GameStepHandler extends AbstractGameHandler implements HandlerInterf
         if ($step) { // Игрок сделал ход
             $gameField->applyStep($step); // Положить игральную кость на поле
             $this->eventManager->addEvent(
-                new GameStepEvent(Id::next(), new DateTimeImmutable(), $this->gameData, $step)
+                new GameStepEvent(Id::next(), new DateTimeImmutable(), $step)
             );
 
             return true; // Ход окончен
@@ -131,7 +131,7 @@ final class GameStepHandler extends AbstractGameHandler implements HandlerInterf
 
         $this->gameData->setCurrentPlayer($player);
         $this->eventManager->addEvent(
-            new PlayerChangeEvent(Id::next(), new DateTimeImmutable(), $this->gameData, $player)
+            new PlayerChangeEvent(Id::next(), new DateTimeImmutable(), $player)
         );
     }
 }

@@ -3,7 +3,6 @@
 namespace FavGame\DominoesGame\Events;
 
 use DateTimeInterface;
-use FavGame\DominoesGame\GameData;
 use FavGame\DominoesGame\GameSteps\Step;
 use FavGame\DominoesGame\Id;
 
@@ -23,14 +22,13 @@ final class GameStepEvent extends AbstractGameEvent
     /**
      * @param Id $id Идентификатор события
      * @param DateTimeInterface $createdAt Дата создания события
-     * @param GameData $gameData Игровые данные
      * @param Step $gameStep Ход игрока
      */
-    public function __construct(Id $id, DateTimeInterface $createdAt, GameData $gameData, Step $gameStep)
+    public function __construct(Id $id, DateTimeInterface $createdAt, Step $gameStep)
     {
         $this->gameStep = $gameStep;
 
-        parent::__construct($id, $createdAt, $gameData, self::EVENT_NAME);
+        parent::__construct($id, $createdAt, self::EVENT_NAME);
     }
 
     /**

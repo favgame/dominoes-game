@@ -10,6 +10,7 @@ use FavGame\DominoesGame\Events\GameStepEvent;
 use FavGame\DominoesGame\Events\PlayerChangeEvent;
 use FavGame\DominoesGame\Events\RoundEndEvent;
 use FavGame\DominoesGame\Events\RoundStartEvent;
+use FavGame\DominoesGame\Players\PlayerInterface;
 use RuntimeException;
 
 final class MessageFactory implements MessageFactoryInterface
@@ -61,10 +62,14 @@ final class MessageFactory implements MessageFactoryInterface
      */
     private function createGameStartMessage(GameStartEvent $event): string
     {
+        $callback = fn (PlayerInterface $player) => sprintf('"%s"', $player->getName());
+        $playerNames = array_map($callback, (array) $event->getPlayerList()->getItems());
+
         return sprintf(
-            '[%s] %s event',
+            '[%s] %s event. Game players: %s',
             $event->getCreatedAt()->format($this->datetimeFormat),
-            $event->getName()
+            $event->getName(),
+            implode(', ', $playerNames)
         );
     }
 
@@ -115,7 +120,7 @@ final class MessageFactory implements MessageFactoryInterface
             '[%s] %s event. Player "%s" won',
             $event->getCreatedAt()->format($this->datetimeFormat),
             $event->getName(),
-            $event->getGameData()->getScoreList()->getLeaderItem()->getPlayer()->getName()
+            $event->getScoreList()->getLeaderItem()->getPlayer()->getName()
         );
     }
 

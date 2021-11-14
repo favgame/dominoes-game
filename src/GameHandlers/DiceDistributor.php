@@ -49,7 +49,7 @@ final class DiceDistributor
         if ($dice) {
             $dice->setOwner($player);
             $this->eventManager->addEvent(
-                new DiceGivenEvent(Id::next(), new DateTimeImmutable(), $this->gameData, $dice)
+                new DiceGivenEvent(Id::next(), new DateTimeImmutable(), $dice)
             );
 
             return true;

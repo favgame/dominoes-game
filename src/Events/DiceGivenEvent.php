@@ -4,7 +4,6 @@ namespace FavGame\DominoesGame\Events;
 
 use DateTimeInterface;
 use FavGame\DominoesGame\Dices\Dice;
-use FavGame\DominoesGame\GameData;
 use FavGame\DominoesGame\Id;
 
 /**
@@ -23,14 +22,13 @@ final class DiceGivenEvent extends AbstractGameEvent
     /**
      * @param Id $id Идентификатор события
      * @param DateTimeInterface $createdAt Дата создания события
-     * @param GameData $gameData Игровые данные
      * @param Dice $dice Игральная кость
      */
-    public function __construct(Id $id, DateTimeInterface $createdAt, GameData $gameData, Dice $dice)
+    public function __construct(Id $id, DateTimeInterface $createdAt, Dice $dice)
     {
         $this->dice = $dice;
 
-        parent::__construct($id, $createdAt, $gameData, self::EVENT_NAME);
+        parent::__construct($id, $createdAt, self::EVENT_NAME);
     }
 
     /**
