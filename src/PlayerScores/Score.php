@@ -2,7 +2,6 @@
 
 namespace FavGame\DominoesGame\PlayerScores;
 
-use FavGame\DominoesGame\Id;
 use FavGame\DominoesGame\Players\PlayerInterface;
 
 /**
@@ -10,11 +9,6 @@ use FavGame\DominoesGame\Players\PlayerInterface;
  */
 final class Score
 {
-    /**
-     * @var Id
-     */
-    private Id $id;
-
     /**
      * @var PlayerInterface Игрок
      */
@@ -26,25 +20,13 @@ final class Score
     private int $pointAmount;
 
     /**
-     * @param Id $id Идентификатор игровых очков
      * @param PlayerInterface $player Игрок
      * @param int $pointAmount Количество очков
      */
-    public function __construct(Id $id, PlayerInterface $player, int $pointAmount = 0)
+    public function __construct(PlayerInterface $player, int $pointAmount = 0)
     {
-        $this->id = $id;
         $this->player = $player;
         $this->pointAmount = $pointAmount;
-    }
-
-    /**
-     * Получить идентификатор игровых очков
-     *
-     * @return Id
-     */
-    public function getId(): Id
-    {
-        return $this->id;
     }
 
     /**
