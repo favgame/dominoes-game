@@ -2,14 +2,12 @@
 
 namespace FavGame\DominoesGame\Events;
 
-use DateTimeInterface;
 use FavGame\DominoesGame\Dices\Dice;
-use FavGame\DominoesGame\Id;
 
 /**
  * Событие получения игральной кости
  */
-final class DiceGivenEvent extends AbstractGameEvent
+final class DiceGivenEvent extends AbstractEvent
 {
     /** @var string Название события */
     public const EVENT_NAME = 'Dice given';
@@ -20,15 +18,13 @@ final class DiceGivenEvent extends AbstractGameEvent
     private Dice $dice;
 
     /**
-     * @param Id $id Идентификатор события
-     * @param DateTimeInterface $createdAt Дата создания события
      * @param Dice $dice Игральная кость
      */
-    public function __construct(Id $id, DateTimeInterface $createdAt, Dice $dice)
+    public function __construct(Dice $dice)
     {
         $this->dice = $dice;
 
-        parent::__construct($id, $createdAt, self::EVENT_NAME);
+        parent::__construct(self::EVENT_NAME);
     }
 
     /**

@@ -2,23 +2,19 @@
 
 namespace FavGame\DominoesGame\Events;
 
-use DateTimeInterface;
-use FavGame\DominoesGame\Id;
-
 /**
  * Событие начала раунда
  */
-final class RoundStartEvent extends AbstractGameEvent
+final class RoundStartEvent extends AbstractEvent
 {
     /** @var string Название события */
     private const EVENT_NAME = 'Round start';
 
     /**
-     * @param Id $id Идентификатор события
-     * @param DateTimeInterface $createdAt Дата создания события
+     * @inheritDoc
      */
-    public function __construct(Id $id, DateTimeInterface $createdAt)
+    public function __construct()
     {
-        parent::__construct($id, $createdAt, self::EVENT_NAME);
+        parent::__construct(self::EVENT_NAME);
     }
 }

@@ -2,14 +2,12 @@
 
 namespace FavGame\DominoesGame\Events;
 
-use DateTimeInterface;
-use FavGame\DominoesGame\Id;
 use FavGame\DominoesGame\Players\PlayerInterface;
 
 /**
  * Событие смены игрока
  */
-final class PlayerChangeEvent extends AbstractGameEvent
+final class PlayerChangeEvent extends AbstractEvent
 {
     /** @var string Название события */
     public const EVENT_NAME = 'Player change';
@@ -20,15 +18,13 @@ final class PlayerChangeEvent extends AbstractGameEvent
     private PlayerInterface $player;
 
     /**
-     * @param Id $id Идентификатор события
-     * @param DateTimeInterface $createdAt Дата создания события
      * @param PlayerInterface $player Выбранный игрок
      */
-    public function __construct(Id $id, DateTimeInterface $createdAt, PlayerInterface $player)
+    public function __construct(PlayerInterface $player)
     {
         $this->player = $player;
 
-        parent::__construct($id, $createdAt, self::EVENT_NAME);
+        parent::__construct(self::EVENT_NAME);
     }
 
     /**

@@ -2,13 +2,11 @@
 
 namespace FavGame\DominoesGame\GameHandlers;
 
-use DateTimeImmutable;
 use FavGame\DominoesGame\Dices\DiceList;
 use FavGame\DominoesGame\Events\DiceGivenEvent;
 use FavGame\DominoesGame\Events\EventManager;
 use FavGame\DominoesGame\GameData;
 use FavGame\DominoesGame\GameField\CellList;
-use FavGame\DominoesGame\Id;
 use FavGame\DominoesGame\Players\PlayerInterface;
 
 /**
@@ -48,9 +46,7 @@ final class DiceDistributor
 
         if ($dice) {
             $dice->setOwner($player);
-            $this->eventManager->addEvent(
-                new DiceGivenEvent(Id::next(), new DateTimeImmutable(), $dice)
-            );
+            $this->eventManager->addEvent(new DiceGivenEvent($dice));
 
             return true;
         }

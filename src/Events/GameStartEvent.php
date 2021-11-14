@@ -2,14 +2,12 @@
 
 namespace FavGame\DominoesGame\Events;
 
-use DateTimeInterface;
-use FavGame\DominoesGame\Id;
 use FavGame\DominoesGame\Players\PlayerList;
 
 /**
  * Событие начала новой игры
  */
-final class GameStartEvent extends AbstractGameEvent
+final class GameStartEvent extends AbstractEvent
 {
     /** @var string Название события */
     private const EVENT_NAME = 'Game start';
@@ -20,15 +18,13 @@ final class GameStartEvent extends AbstractGameEvent
     private PlayerList $playerList;
 
     /**
-     * @param Id $id Идентификатор события
-     * @param DateTimeInterface $createdAt Дата создания события
      * @param PlayerList $playerList Список игроков
      */
-    public function __construct(Id $id, DateTimeInterface $createdAt, PlayerList $playerList)
+    public function __construct(PlayerList $playerList)
     {
         $this->playerList = $playerList;
 
-        parent::__construct($id, $createdAt, self::EVENT_NAME);
+        parent::__construct(self::EVENT_NAME);
     }
 
     /**

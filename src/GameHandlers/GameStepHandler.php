@@ -2,13 +2,11 @@
 
 namespace FavGame\DominoesGame\GameHandlers;
 
-use DateTimeImmutable;
 use FavGame\DominoesGame\Events\GameStepEvent;
 use FavGame\DominoesGame\Events\PlayerChangeEvent;
 use FavGame\DominoesGame\GameField\Field;
 use FavGame\DominoesGame\GameField\InvalidAllocationException;
 use FavGame\DominoesGame\GameField\InvalidStepException;
-use FavGame\DominoesGame\Id;
 use InfiniteIterator;
 
 /**
@@ -63,9 +61,7 @@ final class GameStepHandler extends AbstractGameHandler implements HandlerInterf
 
         if ($step) { // Игрок сделал ход
             $gameField->applyStep($step); // Положить игральную кость на поле
-            $this->eventManager->addEvent(
-                new GameStepEvent(Id::next(), new DateTimeImmutable(), $step)
-            );
+            $this->eventManager->addEvent(new GameStepEvent($step));
 
             return true; // Ход окончен
         }
@@ -130,8 +126,6 @@ final class GameStepHandler extends AbstractGameHandler implements HandlerInterf
         $player = $queue->current();
 
         $this->gameData->setCurrentPlayer($player);
-        $this->eventManager->addEvent(
-            new PlayerChangeEvent(Id::next(), new DateTimeImmutable(), $player)
-        );
+        $this->eventManager->addEvent(new PlayerChangeEvent($player));
     }
 }

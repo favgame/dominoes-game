@@ -2,14 +2,12 @@
 
 namespace FavGame\DominoesGame\Events;
 
-use DateTimeInterface;
-use FavGame\DominoesGame\Id;
 use FavGame\DominoesGame\PlayerScores\RoundScoreList;
 
 /**
  * Событие завершения раунда
  */
-final class RoundEndEvent extends AbstractGameEvent
+final class RoundEndEvent extends AbstractEvent
 {
     /** @var string Название события */
     private const EVENT_NAME = 'Round end';
@@ -20,15 +18,13 @@ final class RoundEndEvent extends AbstractGameEvent
     private RoundScoreList $scoreList;
 
     /**
-     * @param Id $id Идентификатор события
-     * @param DateTimeInterface $createdAt Дата создания события
      * @param RoundScoreList $scoreList Список штрафных очков
      */
-    public function __construct(Id $id, DateTimeInterface $createdAt, RoundScoreList $scoreList)
+    public function __construct(RoundScoreList $scoreList)
     {
         $this->scoreList = $scoreList;
 
-        parent::__construct($id, $createdAt, self::EVENT_NAME);
+        parent::__construct(self::EVENT_NAME);
     }
 
     /**

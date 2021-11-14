@@ -2,14 +2,12 @@
 
 namespace FavGame\DominoesGame\Events;
 
-use DateTimeImmutable;
-use FavGame\DominoesGame\Id;
 use FavGame\DominoesGame\PlayerScores\GameScoreList;
 
 /**
  * Событие завершения игры
  */
-final class GameEndEvent extends AbstractGameEvent
+final class GameEndEvent extends AbstractEvent
 {
     /** @var string Название события */
     private const EVENT_NAME = 'Game end';
@@ -20,15 +18,13 @@ final class GameEndEvent extends AbstractGameEvent
     private GameScoreList $scoreList;
 
     /**
-     * @param Id $id Идентификатор события
-     * @param DateTimeImmutable $createdAt Дата создания события
      * @param GameScoreList $scoreList Список игровых очков
      */
-    public function __construct(Id $id, DateTimeImmutable $createdAt, GameScoreList $scoreList)
+    public function __construct(GameScoreList $scoreList)
     {
         $this->scoreList = $scoreList;
 
-        parent::__construct($id, $createdAt, self::EVENT_NAME);
+        parent::__construct(self::EVENT_NAME);
     }
 
     /**

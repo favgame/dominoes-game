@@ -2,13 +2,14 @@
 
 namespace FavGame\DominoesGame\Events;
 
+use DateTimeImmutable;
 use DateTimeInterface;
 use FavGame\DominoesGame\Id;
 
 /**
  * Абстрактное игровок событие
  */
-abstract class AbstractGameEvent implements EventInterface
+abstract class AbstractEvent implements EventInterface
 {
     /**
      * @var Id Идентификатор события
@@ -26,14 +27,12 @@ abstract class AbstractGameEvent implements EventInterface
     private string $eventName;
 
     /**
-     * @param Id $id Идентификатор события
-     * @param DateTimeInterface $createdAt Дата создания события
      * @param string $eventName Название события
      */
-    public function __construct(Id $id, DateTimeInterface $createdAt, string $eventName)
+    public function __construct(string $eventName)
     {
-        $this->id = $id;
-        $this->createdAt = $createdAt;
+        $this->id = Id::next();
+        $this->createdAt = new DateTimeImmutable();
         $this->eventName = $eventName;
     }
 
