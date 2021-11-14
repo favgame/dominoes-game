@@ -6,11 +6,11 @@ use FavGame\DominoesGame\Bots\MelissaBot;
 use FavGame\DominoesGame\Bots\SusannaBot;
 use FavGame\DominoesGame\Game;
 use FavGame\DominoesGame\GameData;
+use FavGame\DominoesGame\GameHandlers\PlayerCountException;
 use FavGame\DominoesGame\GameLogger\Logger;
 use FavGame\DominoesGame\GameLogger\MessageFactory;
 use FavGame\DominoesGame\GameRules\ClassicRules;
 use FavGame\DominoesGame\Id;
-use FavGame\DominoesGame\PlayerCountException;
 use PHPUnit\Framework\TestCase;
 
 class GameTest extends TestCase

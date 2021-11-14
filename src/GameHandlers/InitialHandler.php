@@ -2,8 +2,6 @@
 
 namespace FavGame\DominoesGame\GameHandlers;
 
-use FavGame\DominoesGame\PlayerCountException;
-
 /**
  * Начальный обработчик
  */

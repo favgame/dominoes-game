@@ -1,6 +1,6 @@
 <?php
 
-namespace FavGame\DominoesGame;
+namespace FavGame\DominoesGame\GameHandlers;
 
 use LogicException;
 

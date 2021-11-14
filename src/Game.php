@@ -7,6 +7,7 @@ use FavGame\DominoesGame\GameField\InvalidAllocationException;
 use FavGame\DominoesGame\GameHandlers\GameStepHandler;
 use FavGame\DominoesGame\GameHandlers\HandlerInterface;
 use FavGame\DominoesGame\GameHandlers\InitialHandler;
+use FavGame\DominoesGame\GameHandlers\PlayerCountException;
 use FavGame\DominoesGame\GameHandlers\RoundEndHandler;
 use FavGame\DominoesGame\GameHandlers\RoundStartHandler;
 
