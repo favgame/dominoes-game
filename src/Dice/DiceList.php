@@ -3,6 +3,7 @@
 namespace FavGame\DominoesGame\Dice;
 
 use FavGame\DominoesGame\Collection\Collection;
+use FavGame\DominoesGame\Collection\EmptyCollectionException;
 use FavGame\DominoesGame\Player\Player;
 
 /**
@@ -37,5 +38,19 @@ class DiceList extends Collection
         } else {
             return $this->filter(fn (Dice $dice) => $dice->getState()->isInHand());
         }
+    }
+    
+    /**
+     * @return Dice
+     */
+    public function getFreeDice(): Dice
+    {
+        $dices = $this->inBank()->getIterator();
+    
+        if ($dices->count()) {
+            return $dices->current();
+        }
+        
+        throw new EmptyCollectionException();
     }
 }

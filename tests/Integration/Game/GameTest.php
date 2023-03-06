@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Integration\FavGame\DominoesGame\Round;
+namespace Tests\Integration\FavGame\DominoesGame\Game;
 
 use FavGame\DominoesGame\Dice\Dice;
 use FavGame\DominoesGame\Game\Game;
@@ -8,6 +8,7 @@ use FavGame\DominoesGame\Game\GameData;
 use FavGame\DominoesGame\Player\Player;
 use FavGame\DominoesGame\Player\PlayerQueue;
 use FavGame\DominoesGame\Round\Round;
+use FavGame\DominoesGame\Round\RoundList;
 use FavGame\DominoesGame\Rules\GameRulesInterface;
 use FavGame\DominoesGame\ServiceContainer;
 use PHPUnit\Framework\TestCase;
@@ -21,6 +22,8 @@ class GameTest extends TestCase
     private GameRulesInterface $rules;
     
     private Round $round;
+    
+    private RoundList $rounds;
     
     private Game $game;
     
@@ -56,19 +59,15 @@ class GameTest extends TestCase
         
         $this->queue = $this->container->getPlayerQueue([$this->player1, $this->player2]);
         $this->round = $this->container->createRound($this->queue, $this->container->getDiceList($this->dices));
-        
-        $this->gameData = $this->container->getGameData($this->queue, [$this->round], GameState::inProgress);
+        $this->rounds = $this->container->getRoundList([$this->round]);
+        $this->gameData = $this->container->getGameData($this->queue, $this->rules, $this->rounds);
         $this->game = $this->container->getGame($this->gameData);
     }
     
     public function testGame(): void
     {
-        $this->assertTrue($this->game->getState()->isInProgress());
         $this->assertTrue($this->round->getState()->isInitial());
         $this->game->beginGame();
-        $this->assertTrue($this->round->getState()->isInProgress());
-        
-        $this->round->updateState($this->rules, $this->queue);
         $this->assertTrue($this->round->getState()->isInProgress());
         // 1
         $this->assertEquals($this->player2, $this->queue->getCurrent());
@@ -95,8 +94,6 @@ class GameTest extends TestCase
         $this->game->takeStep($steps->getStepWithMaxPoints());
         $this->assertCount(4, $this->round->getField());
         
-        $this->round->updateState($this->rules, $this->queue);
         $this->assertTrue($this->round->getState()->isComplete());
-        //$this->assertTrue($this->game->getState()->isComplete());
     }
 }

@@ -15,8 +15,8 @@ class GameData
     public function __construct(
         protected PlayerQueue $queue,
         protected GameRulesInterface $rules,
-        protected GameScore $score,
         protected RoundList $rounds,
+        protected GameScore $score,
     ) {
     }
     

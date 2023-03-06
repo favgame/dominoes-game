@@ -21,7 +21,7 @@ class Game extends GameData
         RoundFactoryInterface $roundFactory,
         GameData $data,
     ) {
-        parent::__construct($data->queue, $data->rules, $data->score, $data->rounds);
+        parent::__construct($data->queue, $data->rules, $data->rounds, $data->score);
         
         if ($this->rounds->isEmpty()) {
             $round = $roundFactory->createRound($this->getQueue());

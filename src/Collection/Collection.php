@@ -4,6 +4,7 @@ namespace FavGame\DominoesGame\Collection;
 
 use Countable;
 use IteratorAggregate;
+use Traversable;
 
 /**
  * @template TKey of array-key
@@ -22,7 +23,7 @@ class Collection implements IteratorAggregate, Countable
     /**
      * @return TValue[]|CollectionIterator
      */
-    public function getIterator(): CollectionIterator
+    public function getIterator(): Traversable
     {
         return new CollectionIterator($this->items);
     }

@@ -2,6 +2,7 @@
 
 namespace FavGame\DominoesGame\Dice;
 
+use FavGame\DominoesGame\Collection\EmptyCollectionException;
 use FavGame\DominoesGame\Event\EventManager;
 use FavGame\DominoesGame\Player\Player;
 use FavGame\DominoesGame\Player\PlayerQueue;
@@ -25,16 +26,12 @@ class DiceDistributor
     
     public function distributeDice(DiceList $diceList, Player $player): bool
     {
-        $dices = $diceList->inBank()->getIterator();
-        
-        if ($dices->count()) {
-            $dice = $dices->current();
-            $dice->distributeToPlayer($player);
-            $this->eventManager->dispatchDiceGivenEvent($dice);
+        try {
+            $diceList->getFreeDice()->distributeToPlayer($player);
             
             return true;
+        } catch (EmptyCollectionException) {
+            return false;
         }
-        
-        return false;
     }
 }

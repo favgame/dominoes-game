@@ -57,6 +57,19 @@ class Dice
     /**
      * @throws LogicException
      */
+    public function distributeToPlayer(Player $player): void
+    {
+        if ($this->state !== DiceState::inBank) {
+            throw new LogicException('Invalid dice state');
+        }
+        
+        $this->owner = $player;
+        $this->state = DiceState::inHand;
+    }
+    
+    /**
+     * @throws LogicException
+     */
     public function putOnField(): void
     {
         if ($this->state !== DiceState::inHand) {

@@ -30,6 +30,7 @@ use FavGame\DominoesGame\Player\PlayerScore;
 use FavGame\DominoesGame\Round\Round;
 use FavGame\DominoesGame\Round\RoundData;
 use FavGame\DominoesGame\Round\RoundFactoryInterface;
+use FavGame\DominoesGame\Round\RoundList;
 use FavGame\DominoesGame\Round\RoundScore;
 use FavGame\DominoesGame\Rules\ClassicRules;
 use FavGame\DominoesGame\Rules\GameRulesInterface;
@@ -51,7 +52,6 @@ class ServiceContainer implements
         $this->eventDispatcher = new EventDispatcher();
         $this->eventManager = new EventManager($this->eventDispatcher, $this);
         $this->diceDistributor = new DiceDistributor($this->eventManager);
-        
     }
     
     public function getDiceDistributor(): DiceDistributor
@@ -165,13 +165,22 @@ class ServiceContainer implements
         return new GameScore($playersScore);
     }
     
-    public function getGameData(PlayerQueue $queue, array $rounds = []): GameData
+    public function getRoundList(array $rounds = []): RoundList
     {
+        return new RoundList($rounds);
+    }
+    
+    public function getGameData(
+        PlayerQueue $queue,
+        GameRulesInterface $rules,
+        RoundList $rounds = null,
+        GameScore $score = null,
+    ): GameData {
         return new GameData(
             $queue,
-            $this->getClassicRules(),
-            $this->getGameScore($queue),
-            $rounds,
+            $rules,
+            $rounds ?: $this->getRoundList(),
+            $score ?: $this->getGameScore($queue),
         );
     }
     

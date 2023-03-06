@@ -11,7 +11,6 @@ use FavGame\DominoesGame\Collection\EmptyCollectionException;
 class RoundList extends Collection
 {
     public function __construct(
-        
         array $rounds = [],
     ) {
         parent::__construct($rounds);
@@ -28,7 +27,7 @@ class RoundList extends Collection
             throw new InvalidStateException();
         }
         
-        if ($round->getState()->isInitial()) {
+        if (!$round->getState()->isInitial()) {
             throw new InvalidStateException();
         }
         
