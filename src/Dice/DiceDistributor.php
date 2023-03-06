@@ -27,7 +27,9 @@ class DiceDistributor
     public function distributeDice(DiceList $diceList, Player $player): bool
     {
         try {
-            $diceList->getFreeDice()->distributeToPlayer($player);
+            $dice = $diceList->getFreeDice();
+            $dice->distributeToPlayer($player);
+            $this->eventManager->dispatchDiceGivenEvent($dice);
             
             return true;
         } catch (EmptyCollectionException) {
