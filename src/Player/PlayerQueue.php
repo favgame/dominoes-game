@@ -19,7 +19,7 @@ class PlayerQueue extends Collection
      */
     public function __construct(
         private EventManager $eventManager,
-        array $items
+        array $items,
     ) {
         parent::__construct($items);
         $this->initQueue();

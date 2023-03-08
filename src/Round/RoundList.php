@@ -10,12 +10,6 @@ use FavGame\DominoesGame\Collection\EmptyCollectionException;
  */
 class RoundList extends Collection
 {
-    public function __construct(
-        array $rounds = [],
-    ) {
-        parent::__construct($rounds);
-    }
-    
     /**
      * @throws InvalidStateException
      */

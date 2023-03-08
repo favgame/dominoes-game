@@ -9,9 +9,8 @@ use FavGame\DominoesGame\Game\GameData;
 use FavGame\DominoesGame\Player\Player;
 use FavGame\DominoesGame\Player\PlayerQueue;
 use FavGame\DominoesGame\Round\RoundData;
-use FavGame\DominoesGame\Round\RoundScore;
 
-class RoundInProgressHandler extends AbstractRoundHandler
+class RoundInProgressHandler implements RoundHandlerInterface
 {
     public function __construct(
         private EventManager $eventManager,
@@ -24,20 +23,13 @@ class RoundInProgressHandler extends AbstractRoundHandler
             $winner = $this->getWinner($game->getQueue(), $round->getDiceList());
             
             if ($winner || $this->isDraw($round->getDiceList(), $round->getField())) {
-                $this->finishRound($round->getScore(), $round->getDiceList(), $winner);
+                $round->getScore()->calculateValues($round->getDiceList(), $winner);
                 $round->setComplete();
                 $this->eventManager->dispatchRoundFinishEvent($round->getScore());
             } else {
                 $this->updateQueue($game->getQueue(), $round->getDiceList(), $round->getField());
             }
-            
-            $this->handleNext($game, $round);
         }
-    }
-    
-    private function finishRound(RoundScore $score, DiceList $diceList, Player|null $winner): void
-    {
-        $score->calculateValues($diceList, $winner);
     }
     
     private function getWinner(PlayerQueue $queue, DiceList $diceList): Player|null // Есть победитель

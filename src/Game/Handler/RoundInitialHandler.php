@@ -11,7 +11,7 @@ use FavGame\DominoesGame\Game\GameData;
 use FavGame\DominoesGame\Player\PlayerQueue;
 use FavGame\DominoesGame\Round\RoundData;
 
-class RoundInitialHandler extends AbstractRoundHandler
+class RoundInitialHandler implements RoundHandlerInterface
 {
     public function __construct(
         private EventManager $eventManager,
@@ -34,8 +34,6 @@ class RoundInitialHandler extends AbstractRoundHandler
             $this->changePlayer($game->getQueue(), $round->getDiceList(), $round->getField());
             $round->setInProgress();
         }
-        
-        $this->handleNext($game, $round);
     }
     
     /**

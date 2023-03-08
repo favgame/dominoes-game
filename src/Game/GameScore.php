@@ -5,6 +5,7 @@ namespace FavGame\DominoesGame\Game;
 use FavGame\DominoesGame\Collection\Collection;
 use FavGame\DominoesGame\Player\PlayerScore;
 use FavGame\DominoesGame\Round\RoundList;
+use FavGame\DominoesGame\Rules\GameRulesInterface;
 
 /**
  * @implements Collection<int, PlayerScore>
@@ -27,7 +28,18 @@ class GameScore extends Collection
         }
     }
     
-    public function getBestScore(): ?PlayerScore
+    public function getWinnerScore(GameRulesInterface $rules): ?PlayerScore
+    {
+        $playerScore = $this->getBestScore();
+        
+        if ($playerScore && $playerScore->getScore() >= $rules->getMaxScoreAmount()) {
+            return $playerScore;
+        }
+        
+        return null;
+    }
+    
+    private function getBestScore(): ?PlayerScore
     {
         $score = [];
     

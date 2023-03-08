@@ -13,4 +13,9 @@ class Player
     {
         return $this->name;
     }
+    
+    public function isBot(): bool
+    {
+        return false;
+    }
 }

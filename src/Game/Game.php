@@ -15,9 +15,7 @@ use LogicException;
 class Game extends GameData
 {
     public function __construct(
-        private RoundHandlerInterface $initialHandler,
-        private RoundHandlerInterface $inProgressHandler,
-        private RoundHandlerInterface $completeHandler,
+        private RoundHandlerInterface $roundHandler,
         RoundFactoryInterface $roundFactory,
         GameData $data,
     ) {
@@ -27,10 +25,6 @@ class Game extends GameData
             $round = $roundFactory->createRound($this->getQueue());
             $this->rounds->addRound($round);
         }
-        
-        $this->initialHandler->setNext($this->inProgressHandler);
-        $this->inProgressHandler->setNext($this->completeHandler);
-        $this->completeHandler->setNext($this->initialHandler);
     }
     
     /**
@@ -38,7 +32,7 @@ class Game extends GameData
      */
     public function beginGame(): void
     {
-        $this->initialHandler->handle($this, $this->getRound());
+        $this->roundHandler->handle($this, $this->getRound());
     }
     
     /**

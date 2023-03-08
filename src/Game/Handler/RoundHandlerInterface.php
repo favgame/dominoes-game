@@ -12,6 +12,4 @@ interface RoundHandlerInterface
      * @throws LogicException
      */
     public function handle(GameData $game, RoundData $round): void;
-    
-    public function setNext(self $roundHandler): void;
 }

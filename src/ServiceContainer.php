@@ -21,6 +21,7 @@ use FavGame\DominoesGame\Field\GameStepList;
 use FavGame\DominoesGame\Game\Game;
 use FavGame\DominoesGame\Game\GameData;
 use FavGame\DominoesGame\Game\GameScore;
+use FavGame\DominoesGame\Game\Handler\CompositeRoundHandler;
 use FavGame\DominoesGame\Game\Handler\RoundCompleteHandler;
 use FavGame\DominoesGame\Game\Handler\RoundInitialHandler;
 use FavGame\DominoesGame\Game\Handler\RoundInProgressHandler;
@@ -184,14 +185,17 @@ class ServiceContainer implements
         );
     }
     
-    public function getGame(GameData $gameData): Game
+    public function getCompositeRoundHandler(): CompositeRoundHandler
     {
-        return new Game(
+        return new CompositeRoundHandler(
             new RoundInitialHandler($this->getEventManager(), $this->getDiceDistributor()),
             new RoundInProgressHandler($this->getEventManager()),
-            new RoundCompleteHandler($this->getEventManager(), $this),
-            $this,
-            $gameData,
+            new RoundCompleteHandler($this->getEventManager(), $this)
         );
+    }
+    
+    public function getGame(GameData $gameData): Game
+    {
+        return new Game($this->getCompositeRoundHandler(), $this, $gameData);
     }
 }
